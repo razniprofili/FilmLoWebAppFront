@@ -1,0 +1,101 @@
+<!--<ion-content>-->
+<!--<ion-row>-->
+<!--  <ion-col>-->
+<!--    <div class="ion-float-left">-->
+<!--      <img src="assets/logo/logo.png">-->
+<!--    </div>-->
+<!--  </ion-col>-->
+<!--  <ion-col>-->
+<!--    <div class="center">-->
+<!--      &lt;!&ndash;      <img src="assets/logo/logo.png">&ndash;&gt;-->
+<!--      <h1>Log in</h1>-->
+<!--    </div>-->
+<!--    <form #LogInForm="ngForm" (ngSubmit)="onLogIn(LogInForm)" >-->
+<!--      <ion-grid>-->
+<!--        <ion-row>-->
+<!--          <ion-col size-sm="4" offset-sm="4">-->
+<!--            <ion-list>-->
+
+<!--              <ion-item>-->
+<!--                <ion-label position="floating" >Email</ion-label>-->
+<!--                <ion-input type="email" ngModel name="email" required email #email="ngModel" [(ngModel)]="email1"></ion-input>-->
+<!--              </ion-item>-->
+<!--              <ion-item lines="none" *ngIf="email.invalid && email.touched">-->
+<!--                <ion-label color="danger">Email must be valid!</ion-label>-->
+<!--              </ion-item>-->
+
+<!--              <ion-item>-->
+<!--                <ion-label position="floating">Password</ion-label>-->
+<!--                <ion-input type="password" ngModel name="password" required minlength="8" #password="ngModel" [(ngModel)]="password1"></ion-input>-->
+<!--              </ion-item>-->
+<!--              <ion-item lines="none" *ngIf="password.invalid && password.touched">-->
+<!--                <ion-label color="danger">Password length is minimum 8 characters!</ion-label>-->
+<!--              </ion-item>-->
+<!--            </ion-list>-->
+<!--          </ion-col>-->
+<!--        </ion-row>-->
+<!--        <ion-row class="ion-justify-content-center">-->
+<!--          <ion-col size-sm="4" >-->
+<!--            It's your first time here? <a routerLink="/register" >Register</a>-->
+<!--          </ion-col>-->
+<!--        </ion-row>-->
+<!--        <ion-row class="ion-justify-content-center">-->
+<!--          &lt;!&ndash;    centrira se po x osi, pogledaj dokumentaciju css-utilities&ndash;&gt;-->
+<!--&lt;!&ndash;          <ion-col size-sm="4" >&ndash;&gt;-->
+<!--&lt;!&ndash;            <ion-button type="submit" expand="block" shape="round" [disabled]="LogInForm.invalid" color="filmlo" >Log in</ion-button>&ndash;&gt;-->
+<!--&lt;!&ndash;          </ion-col>&ndash;&gt;-->
+<!--          <ion-col class="center">-->
+<!--            <ydd-progress-button-->
+<!--                    type="submit"-->
+<!--                    expand="block"-->
+<!--                    [progress]="progressData"-->
+<!--                    [design]="designData"-->
+<!--                    [disabled]="LogInForm.invalid">-->
+<!--              Log in-->
+<!--            </ydd-progress-button>-->
+<!--          </ion-col>-->
+<!--        </ion-row>-->
+<!--      </ion-grid>-->
+<!--    </form>-->
+<!--  </ion-col>-->
+<!--</ion-row>-->
+<!--</ion-content>-->
+
+<div class="login-container">
+
+  <header class="login__header">
+    <div class="login__header__left">
+      <img alt="logo" src="assets/logo/logo.png">
+      <h2>A network for all movie lovers.</h2>
+      <h2>How much are you a fan of movies?</h2>
+      <h2>Find out!</h2>
+    </div>
+    <div class="login__header__right">
+      <mat-card class="login__header__right__card">
+        <mat-card-content class="login__header__right__card__content">
+          <form #form="ngForm" (ngSubmit)="onLogIn(form)" class="login-form">
+            <input name="email" ngModel placeholder="Email address" required type="text">
+            <input name="password" type="password"  ngModel placeholder="Password" required >
+            <button [disabled]="form.invalid || form.pending"
+                    class="login-button"
+                    *ngIf="!form.pending"
+                    type="submit">Log In
+            </button>
+          </form>
+<!--          <hr>-->
+          <p class="pOr"> OR </p>
+          <button class="create-account" (click)="openRegister()">Create New Account</button>
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+
+  </header>
+
+  <ng-snotify class="{{ style }}"></ng-snotify>
+<!--  <footer class="login__footer">-->
+<!--    <img alt="footer" src="assets/logo/logo.png">-->
+<!--  </footer>-->
+</div>

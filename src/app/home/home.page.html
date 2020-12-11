@@ -1,20 +1,224 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--<ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
+<div class="home-container">
+  <div class="home__header">
+    <div class="home__header__left">
+      <img mat-card-avatar src="assets/logo/logo.png"/>
+      <div class="input">
+        <mat-icon class="search-icon">search_outline</mat-icon>
+        <form>
+          <input placeholder="Search FilmLo" type="text">
+        </form>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div class="home__header__middle">
+      <div class="active" (click)="openHome()">
+        <mat-icon>home</mat-icon>
+      </div>
+      <div (click)="openSearchApi()">
+        <mat-icon>ondemand_video</mat-icon>
+      </div>
+      <div (click)="openSavedMoviesPage()">
+        <mat-icon>watch_later</mat-icon>
+      </div>
+<!--      <div>-->
+<!--        <mat-icon>group</mat-icon>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <mat-icon>flag</mat-icon>-->
+<!--      </div>-->
+
+    </div>
+    <div class="home__header__right" (click)="openUserProfile()">
+      <div>
+        <img
+                alt=""
+                mat-card-avatar
+                src={{user.picture}}>
+        <span class="name">{{ user.name || 'Indranil'}}</span>
+      </div>
+
+<!--      <div>-->
+<!--        <mat-icon>add</mat-icon>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <mat-icon matBadge="4"-->
+<!--                  matBadgeColor="primary"-->
+<!--                  matBadgeOverlap="false"-->
+<!--                  matBadgePosition="above after"> forum-->
+<!--        </mat-icon>-->
+<!--      </div>-->
+
+      <div *ngIf="notifications > 0">
+        <mat-icon matBadge= {{notifications}}
+                  matBadgeColor="warn"
+                  matBadgeOverlap="false">notifications
+        </mat-icon>
+      </div>
+      <div *ngIf="notifications == 0">
+        <mat-icon>notifications</mat-icon>
+      </div>
+
+
+      <div>
+
+        <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> Logout
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
   </div>
-</ion-content>
+
+  <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
+  <div class="home__body">
+
+    <div class="home__body__sidebarLeft">
+      <div class="inside">
+        <div class="user-avatar" (click)="openUserProfile()">
+          <img
+                  alt=""
+                  mat-card-avatar
+                  src = {{user.picture}}>
+<!--          src = "assets/logo/logo.png">-->
+          <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
+        </div>
+<!--        <div>-->
+<!--          <mat-icon> local_hospital</mat-icon>-->
+<!--          <span class="covid">COVID-19 Information Center</span>-->
+<!--        </div>-->
+
+        <div>
+          <mat-icon>add_to_queue</mat-icon>
+          <span>Add watched movie</span>
+        </div>
+
+        <div (click)="openWatchedMoviesPage()">
+          <mat-icon>theaters</mat-icon>
+          <span>Watched movies</span>
+        </div>
+
+        <div (click)="openFilmLoFriendsPage()">
+          <mat-icon>people_alt</mat-icon>
+          <span>FilmLo friends</span>
+        </div>
+
+        <div>
+          <mat-icon>insights</mat-icon>
+          <span>Statistics</span>
+        </div>
+
+        <div>
+          <mat-icon class="see-more">expand_more</mat-icon>
+          <span>See More</span>
+        </div>
+
+      </div>
+    </div>
+
+<!--    <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
+      <!--OVAJ DIV SE MENJA KAKO KLIKCEMO PO IKONICAMA!!!!!!!! SVE OSTALO NE MRDA-->
+      <!--    <div [style.overflow]="'auto'" [style.height.px]="'800'">-->
+      <div class="home__body__contentMiddle">
+
+        <!--      <button (click)="scrollToElement(target)"></button> ovo je za skrolovanje do nekog odredjenog mesta!!!-->
+        <div class="home__body__contentMiddle__top">
+          <!--IMAGE CARDS-->
+          <mat-card *ngFor="let i of images" class="image-card">
+            <img alt="bg"
+                 class="bg" src="{{ i }}">
+            <mat-card-content>
+              <img
+                      alt="avatar"
+                      class="avatar" src="https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg">
+              <span class="card-name">Neki user</span>
+            </mat-card-content>
+          </mat-card>
+
+        </div>
+
+        <div class="home__body__contentMiddle__center">
+          <mat-card class="post-message">
+            <mat-card-header class="post-message-header"
+                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
+              <img
+                      alt=""
+                      mat-card-avatar
+                      src = "assets/logo/logo.png">
+              <!--                    [src]="user?.picture"-->
+              <!--            >-->
+              <form #form="ngForm" (ngSubmit)="postMessage(form)">
+                <input class="on-your-mind" name="message" ngModel placeholder="What's on your mind?" type="text">
+                <button style="display: none;" type="submit"></button>
+              </form>
+
+            </mat-card-header>
+            <mat-card-content class="card-body">
+              <div>
+                <mat-icon color="accent">videocam</mat-icon>
+                <span>Live Video</span>
+              </div>
+
+              <div>
+                <mat-icon color="primary">photo_album</mat-icon>
+                <span>Photo/Video</span>
+              </div>
+
+              <div>
+                <mat-icon color="warn">mood</mat-icon>
+                <span>Feeling/Activity</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!--Loop Through All friends movies-->
+          <mat-card *ngFor="let p of friendsMovies" class="posts">
+            <mat-card-header class="posts__header">
+              <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src="https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg">
+              <div class="posts__header__right">
+                <!--              <span>{{ p?.time?.seconds * 1000 | date:'shortTime' }}</span>-->
+                <span> {{ p.user.name }} {{ p.user.surname }}</span>
+                <h3> {{p.name}} </h3>
+              </div>
+            </mat-card-header>
+            <mat-card-content class="posts__body">
+              <p>{{ p.comment }}</p>
+            </mat-card-content>
+
+            <!--          <mat-card-actions class="card-body">-->
+            <!--            <div>-->
+            <!--              <mat-icon color="accent">videocam</mat-icon>-->
+            <!--              <span>Live Video</span>-->
+            <!--            </div>-->
+
+            <!--            <div>-->
+            <!--              <mat-icon color="primary">photo_album</mat-icon>-->
+            <!--              <span>Photo/Video</span>-->
+            <!--            </div>-->
+
+            <!--            <div>-->
+            <!--              <mat-icon color="warn">mood</mat-icon>-->
+            <!--              <span>Feeling/Activity</span>-->
+            <!--            </div>-->
+            <!--          </mat-card-actions>-->
+
+          </mat-card>
+        </div>
+
+      </div>
+    <div class="home__body__feedRight">
+      <div class="inside">
+<!--        <img alt="feed" src="assets/feed.jpg">-->
+      </div>
+    </div>
+
+  </div>
+  </ng-scrollbar>
+  <ng-snotify class="{{ style }}"></ng-snotify>
+</div>
+

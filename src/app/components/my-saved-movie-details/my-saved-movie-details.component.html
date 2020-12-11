@@ -1,0 +1,93 @@
+<section class="register">
+  <div class="header">
+  <h3>{{movieDetails.Title}}</h3>
+<!--  <p>{{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}}</p>-->
+    <span id="pomerenspan"> {{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}} </span>
+  </div>
+
+  <div id="#div1">
+    <ion-row>
+
+      <ion-col>
+        <img src="{{movieDetails.Poster}}" class="image-card" >
+      </ion-col>
+      <ion-col>
+        <ion-raw>
+          <span class="uvecanspan"> <p class="pbold"> iMDB rate: </p> {{movieDetails.imdbRating}}</span>
+        </ion-raw>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Actors: </p>{{movieDetails.Actors}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Director: </p> {{movieDetails.Director}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Country: </p>{{movieDetails.Country}}</span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <span class="uvecanspan"> <p class="pbold"> Plot: </p>{{movieDetails.Plot}}</span>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+
+          <div (click)="delete()" >
+            <span id="divDelete" class="material-icons">delete</span>
+            <!--          <mat-icon>delete</mat-icon>-->
+          </div>
+
+
+      </ion-col>
+
+      <ion-col>
+        <div (click)="addToWatchedMovies()">
+          <span id="divAdd" class="material-icons">add_circle</span>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
+
+<!--  <div fxLayout="row" fxLayoutAlign="space-around center" >-->
+<!--    <img src="{{movieDetails.Poster}}" class="image-card" >-->
+
+<!--    <div  fxLayout="column" layout-wrap style="height:100%;" >-->
+<!--      <span>{{movieDetails.imdbRating}}</span>-->
+<!--      <span>{{movieDetails.imdbID}}</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <ng-snotify class="{{ style }}"></ng-snotify>
+</section>
+
+
+<!--za izlistavanje filmova !!! -->
+<!--<mat-form-field class="search-form">-->
+<!--  <input matInput placeholder="Search Picture" type="text">-->
+<!--</mat-form-field>-->
+<!--<button button="submit" mat-raised-button color="primary">Search</button>-->
+<!--<br>-->
+
+<!--<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">-->
+<!--  <mat-card class="card-picture" *ngFor="let picture of pictures">-->
+<!--    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">-->
+<!--      <span fxFlex="80%">{{picture.title}}</span>-->
+<!--      <mat-icon fxFlex="10%">mode_edit</mat-icon>-->
+<!--      <mat-icon fxFlex="10%">delete</mat-icon>-->
+<!--    </mat-card-title>-->
+<!--    <img mat-card-image [src]="picture.img">-->
+<!--  </mat-card>-->
+<!--</div>-->
