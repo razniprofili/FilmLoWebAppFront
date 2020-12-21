@@ -17,16 +17,30 @@ import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatIconModule} from '@angular/material/icon';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import {MatButtonModule} from '@angular/material/button';
+import {AddWatchedMovieComponent} from './components/add-watched-movie/add-watched-movie.component';
+import {FriendMovieDetailsComponent} from './components/friend-movie-details/friend-movie-details.component';
+import {IdeaMovieDetailsComponent} from './components/idea-movie-details/idea-movie-details.component';
+import {MySavedMovieDetailsComponent} from './components/my-saved-movie-details/my-saved-movie-details.component';
+import {WatchedMovieDetailsComponent} from './components/watched-movie-details/watched-movie-details.component';
 
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent],
+  declarations: [
+      AppComponent,
+      RegisterComponent,
+      AddWatchedMovieComponent,
+      FriendMovieDetailsComponent,
+      MySavedMovieDetailsComponent,
+      WatchedMovieDetailsComponent
+
+  ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
-    BrowserAnimationsModule, MatDialogModule, NgScrollbarModule, MatIconModule, SnotifyModule, MatButtonModule],
+    BrowserAnimationsModule, MatDialogModule, NgScrollbarModule, MatIconModule, SnotifyModule, MatButtonModule, ],
   providers: [
     StatusBar,
     SplashScreen,
+
     // UserService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},

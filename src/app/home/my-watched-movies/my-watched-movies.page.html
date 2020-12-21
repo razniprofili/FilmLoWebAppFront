@@ -104,7 +104,7 @@
         <div class="home__body__contentMiddle__center">
           <h2 class="h2savedmovies">My watched movies</h2>
           <!--Loop Through All saved movies-->
-          <mat-card *ngFor="let p of watchedMovies" class="posts">
+          <mat-card *ngFor="let p of watchedMovies" class="posts" (click)="openMovieDetails(p.id)">
             <mat-card-header class="posts__header">
               <img alt="{{ p.name }}" class="shape-poster" [src]=p.poster >
               <div class="movie-name-search">
@@ -127,4 +127,5 @@
 
     </div>
   </ng-scrollbar>
+  <ng-snotify class="{{ style }}"></ng-snotify>
 </div>

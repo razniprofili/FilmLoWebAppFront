@@ -1,11 +1,13 @@
 import {Component, Inject, NgModule, OnInit} from '@angular/core';
 import {MovieAPIdetails} from '../../home/models/movieAPIdetails.model';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AlertController} from '@ionic/angular';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {WatchedMovieDetailsComponent} from '../watched-movie-details/watched-movie-details.component';
+import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 
 @NgModule({
   imports: [MatIconModule, MatButtonModule]
@@ -76,7 +78,8 @@ export class IdeaMovieDetailsComponent implements OnInit {
       public dialogRef: MatDialogRef<IdeaMovieDetailsComponent>,
       private alertController: AlertController,
       private savedMoviesService: SavedMoviesService,
-      private snotifyService: SnotifyService
+      private snotifyService: SnotifyService,
+      private matDialog: MatDialog
   ) { }
 
 
@@ -159,7 +162,19 @@ export class IdeaMovieDetailsComponent implements OnInit {
         }));
   }
 
-  addToWatchedMovies(){
+  addToWatchedMovies( ){
+
+    console.log(this.movieDetails)
+    this.dialogRef.close();
+    const dialogRef = this.matDialog.open(AddWatchedMovieComponent, {
+      role: 'dialog',
+      height: '430px',
+      width: '500px',
+      data: {
+        dataKey: this.movieDetails,
+
+      }
+    });
 
   }
 

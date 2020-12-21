@@ -1,0 +1,30 @@
+<section class="register">
+  <div class="header">
+    <h3>Add comment, rate and watching date</h3>
+  </div>
+
+  <div class="body">
+    <form #form="ngForm">
+      <div class="user_name">
+        <input type="text" placeholder="Watching date" name="date" #date="ngModel" ngModel required="This field is required">
+      </div>
+      <div style="margin-top: 5px; margin-bottom: 5px">
+        <span *ngIf="date.invalid && date.touched" class="required">This field is required</span>
+      </div>
+      <div class="user_name">
+        <input type="text" placeholder="Your rate" name="rate" #rate="ngModel" ngModel required="This field is required">
+      </div>
+      <div style="margin-top: 5px; margin-bottom: 5px">
+        <span *ngIf="rate.invalid && rate.touched" class="required">This field is required</span>
+      </div>
+      <div class="email_password">
+        <input type="text" placeholder="Your comment" name="comment" #comment="ngModel" ngModel required="This field is required">
+      </div>
+      <div style="margin-top: 5px; margin-bottom: 5px">
+        <span *ngIf="comment.invalid && comment.touched" class="required">This field is required</span>
+      </div>
+      <button type="submit" class="submit-button" [disabled]="form.invalid" (click)="addMovie()" >Add movie</button>
+    </form>
+  </div>
+
+</section>

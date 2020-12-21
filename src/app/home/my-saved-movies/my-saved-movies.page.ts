@@ -73,9 +73,6 @@ export class MySavedMoviesPage implements OnInit {
                private snotifyService: SnotifyService) {}
 
   ngOnInit() {
-
-   // this.snotifyService.error('hi');
-
     this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
       this.savedMovies = savedMovies;
     });
@@ -92,6 +89,7 @@ export class MySavedMoviesPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    console.log('izvrsen ion will enter saved movies')
     this.savedMoviesService.getSavedMovies().subscribe(savedMovies =>{
       console.log(savedMovies);
     });

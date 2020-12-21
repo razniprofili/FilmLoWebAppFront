@@ -13,6 +13,7 @@ export class Movie {
         public rate: any,
         public comment: string,
         public dateTimeWatched: string,
+        public dateTimeAdded: Date,
         public poster: string,
         public user: UserGet
       //  public userId: string

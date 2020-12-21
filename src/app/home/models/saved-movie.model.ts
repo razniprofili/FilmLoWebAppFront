@@ -4,6 +4,7 @@ export class SavedMovieModel {
       public id: string,
       public name: string,
       public poster: string,
+      public dateTimeSaved: Date,
       public userId: any)
 
   {}

@@ -12,6 +12,9 @@ import {MovieAPI} from './models/movieAPI.model';
 import {SavedMovieModel} from './models/saved-movie.model';
 import {SavedMoviesService} from './services/saved-movies.service';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {WatchedMovieDetailsComponent} from '../components/watched-movie-details/watched-movie-details.component';
+import {FriendMovieDetailsComponent} from '../components/friend-movie-details/friend-movie-details.component';
+import {MatDialog} from '@angular/material/dialog';
 
 
 
@@ -85,7 +88,8 @@ export class HomePage {
                private savedMoviesService: SavedMoviesService,
                public alert: AlertController,
                private loadingCtrl: LoadingController,
-               private snotifyService: SnotifyService) {}
+               private snotifyService: SnotifyService,
+               private matDialog: MatDialog) {}
 
 
 
@@ -95,9 +99,9 @@ export class HomePage {
       this.friendsMovies = allFiendsMovies;
     });
 
-    this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
-      this.savedMovies = savedMovies;
-    });
+    // this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
+    //   this.savedMovies = savedMovies;
+    // });
 
     this.authService.currentUser.subscribe(user => {
         this.currentUser = user;
@@ -118,9 +122,9 @@ export class HomePage {
       console.log(friendsMovies);
     });
 
-    this.savedMoviesService.getSavedMovies().subscribe(savedMovies =>{
-      console.log(savedMovies);
-    });
+    // this.savedMoviesService.getSavedMovies().subscribe(savedMovies =>{
+    //   console.log(savedMovies);
+    // });
 
   }
 
@@ -205,15 +209,6 @@ export class HomePage {
 
   }
 
-  async presentAlert(title: string, content: string) {
-    const alert = await this.alert.create({
-      header: title,
-      message: content,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
 
   postMessage(form: NgForm): void {
     console.log("kliknuto")
@@ -264,6 +259,19 @@ export class HomePage {
 
   // open div/page
 
+  openMovieDetails(movie: Movie){
+
+    console.log(movie)
+    const dialogRef = this.matDialog.open(FriendMovieDetailsComponent, {
+      role: 'dialog',
+      height: '750px',
+      width: '500px',
+      data: {
+        dataKey: movie,
+      }
+    });
+  }
+
   openHome() {
     this.homeVisibility = true
 
@@ -272,13 +280,7 @@ export class HomePage {
   }
 
   openSearchApi(){
-  //  this.searchApiVisibility = true;
-
     this.router.navigateByUrl("/home/movie-ideas")
-
-    // and all others to false:
-    //this.homeVisibility = false
-
   }
 
   openSavedMoviesPage(){

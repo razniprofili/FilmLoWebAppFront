@@ -7,11 +7,13 @@ import {map, switchMap, take, tap} from 'rxjs/operators';
 import {UserGet} from '../../auth/user-get.model';
 import {SavedMovieModel} from '../models/saved-movie.model';
 import {SavedMovieAddModel} from '../models/saved-movie-add.model';
+import {IonDatetime} from '@ionic/angular';
 
 interface MovieData {
   id: string,
   name: string,
   poster: string,
+  dateTimeSaved: Date,
   userId: any
 }
 
@@ -36,12 +38,10 @@ export interface addedMovie {
 }
 
 
-
 export interface JsonResponse {
     addedMovie: addedMovie
 
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +57,7 @@ export class SavedMoviesService {
     return this._savedMovies.asObservable();
   }
 
-    addSavedMovie ( idMovie: string, name: string, poster: string, year: any, genre: string, actors: string,
+  addSavedMovie ( idMovie: string, name: string, poster: string, year: any, genre: string, actors: string,
               country: string, director: string, duration: any) {
         let noviId;
         let noviFilm: SavedMovieAddModel;
@@ -83,7 +83,7 @@ export class SavedMoviesService {
                     duration,
                     fetchedUserId
                 );
-console.log(noviFilm)
+              console.log(noviFilm)
                 return this.http
                     .post<{ JsonResponse }>(
                         `https://localhost:44397/api/SavedMovies/add`,
@@ -95,12 +95,22 @@ console.log(noviFilm)
                     );
             }),
             switchMap((resData) => {
+
+
                 return this.allSavedMovies;
             }),
             take(1),
             tap((movies) => {
+                let newMovie = new SavedMovieModel(
+                    noviFilm.id,
+                    noviFilm.name,
+                    noviFilm.poster,
+                    new Date(),
+                    noviFilm.userId
+                );
+
                 this._savedMovies.next(
-                    movies.concat(noviFilm)
+                    movies.concat(newMovie)
                 );
             })
         )
@@ -128,10 +138,15 @@ console.log(noviFilm)
                       movieData[key].id,
                       movieData[key].name,
                       movieData[key].poster,
-                      movieData[key].userId,
+                      movieData[key].dateTimeSaved,
+                      movieData[key].userId
                   ));
+
+
             }
           }
+
+
           const savedMovies: SavedMovieModel[] = [];
           for(let movie of movies) {
             savedMovies.push(movie)

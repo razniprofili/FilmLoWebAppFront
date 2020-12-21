@@ -25,6 +25,8 @@ import {SnotifyModule} from 'ng-snotify';
         MatCardModule,
         SnotifyModule
     ],
-  declarations: [MovieIdeasPage]
+    exports: [FormsModule],
+  declarations: [MovieIdeasPage],
+
 })
 export class MovieIdeasPageModule {}

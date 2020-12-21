@@ -2,6 +2,51 @@
   width: 100%;
   margin-bottom: 18%;
 }
+
+.kolonaslika {
+  margin-top: 20px !important;
+}
+
+.kolonaInfo {
+  margin-top: 20px !important;
+  margin-left: 50px !important;
+}
+.imgUser {
+  width: 8%;
+  border-radius: 50%;
+  margin-top: 20px !important;
+  margin-left: 20px !important;
+}
+
+.h2User {
+    margin-left: 110px !important;
+   // margin-bottom: 200px !important;
+    font-size: 20px !important;
+   // font-family: "Arial Black" !important;
+}
+
+#headerDiv {
+  //.img {
+  //  margin-top: 20px !important;
+  //  margin-left: 20px !important;
+  //}
+  //.h2 {
+  //  margin-left: 100px !important;
+  //  margin-bottom: 50px !important;
+  //  font-size: 20px !important;
+  //  font-family: "Arial Black" !important;
+  //}
+}
+
+.task-header {
+  background-color: transparent;
+  padding: 0 5px;
+  height: 20px;
+}
+.fx-spacer {
+  flex: 1 1 auto;
+}
+
 .card-picture {
   width: 23%;
   margin-bottom: 2%;
@@ -18,20 +63,22 @@
   margin-top: 20px;
 }
 
-#divDelete {
+#divSave {
   margin-left: 50px;
-  margin-top: 30px;
-  font-size: 20px;
+  //margin-top: 30px;
+ // margin-left: 300px;
+  font-size: 40px;
+  color: #e5881f;
   cursor: pointer;
 }
 
 #divAdd {
   //margin-right: 20px;
-  //margin-left: 130px;
-  margin-top: 30px;
-  font-size: 20px;
- // color: black;
-  //background-color: black;
+  //margin-left: 10px;
+  //margin-top: 30px;
+  //margin-right: 10px;
+  font-size: 40px;
+  color: black;
   cursor: pointer;
 }
 
@@ -61,7 +108,18 @@
 .data {
   margin-top: 20px;
 }
-.header {
+.headerUser {
+ // border-bottom: 1px solid lightgray;
+  background-color: #e78c30;
+ // width:300%;
+
+  h3 {
+    font-weight: bold;
+    font-size: 32px;
+  }
+}
+
+.headerMovie {
   border-bottom: 1px solid lightgray;
   width:100%;
 

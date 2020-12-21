@@ -1,0 +1,80 @@
+
+
+<section class="register">
+  <div class="headerMovie">
+        <h3>{{movie.name}} ({{movie.year}})</h3>
+    <span id="pomerenspan">{{movie.user.name}} {{movie.user.surname}}, {{dateMovie}}</span>
+  </div>
+
+  <div id="#div1">
+    <ion-row>
+
+
+      <ion-col class="kolonaslika">
+        <img src="{{movie.poster}}" class="image-card" >
+      </ion-col>
+      <ion-col class="kolonaInfo">
+        <ion-raw>
+          <span class="uvecanspan"> <p class="pbold"> Genre: </p> {{movie.genre}}</span>
+        </ion-raw>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Duration: </p>{{movie.duration}} min</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Actors: </p>{{movie.actors}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Director: </p> {{movie.director}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Country: </p>{{movie.country}}</span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <span class="uvecanspan"> <p class="pbold"> Comment: </p>{{movie.comment}}</span>
+    </ion-row>
+
+    <ion-row class="kolonaslika">
+      <ion-col>
+        <span class="uvecanspan"> <p class="pbold"> Watching date: </p>{{movie.dateTimeWatched}}</span>
+      </ion-col>
+
+      <ion-col>
+        <span class="uvecanspan"> <p class="pbold"> Rate: </p>{{movie.rate}}</span>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+      </ion-col>
+
+      <ion-col class="kolonaslika">
+
+        <div (click)="addToSavedMovies()" >
+          <span id="divSave" class="material-icons">favorite</span>
+        </div>
+
+
+      </ion-col>
+
+      <ion-col class="kolonaslika">
+        <div (click)="addToWatchedMovies()">
+          <span id="divAdd" class="material-icons">add_circle</span>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
+  <ng-snotify class="material"></ng-snotify>
+</section>

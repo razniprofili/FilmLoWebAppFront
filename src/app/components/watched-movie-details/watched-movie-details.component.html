@@ -1,0 +1,68 @@
+<section class="register">
+  <div class="header">
+    <h3>{{movie.name}}</h3>
+    <span id="pomerenspan"> {{movie.year}}, {{movie.genre}}, {{movie.duration}} min </span>
+  </div>
+
+  <div id="#div1">
+    <ion-row>
+
+      <ion-col>
+        <img src="{{movie.poster}}" class="image-card" >
+      </ion-col>
+      <ion-col>
+        <ion-raw>
+          <span class="uvecanspan"> <p class="pbold"> My rate: </p> {{movie.rate}}</span>
+        </ion-raw>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Actors: </p>{{movie.actors}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Director: </p> {{movie.director}}</span>
+        </ion-row>
+
+        <ion-row>
+          <span class="uvecanspan"> <p class="pbold"> Country: </p>{{movie.country}}</span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <span class="uvecanspan"> <p class="pbold"> My comment: </p>{{movie.comment}}</span>
+    </ion-row>
+
+    <ion-row>
+      <span class="uvecanspan"> <p class="pbold"> Watching date: </p>{{movie.dateTimeWatched}}</span>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+
+        <div (click)="delete()" >
+          <span id="divDelete" class="material-icons">delete</span>
+        </div>
+
+
+      </ion-col>
+
+      <ion-col>
+        <div (click)="editMovie()">
+          <span id="divAdd" class="material-icons">edit</span>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
+  <ng-snotify class="{{ style }}"></ng-snotify>
+</section>
+

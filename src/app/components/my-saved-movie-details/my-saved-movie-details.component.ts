@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MovieAPIdetails} from '../../home/models/movieAPIdetails.model';
 import {AlertController} from '@ionic/angular';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 
 @Component({
   selector: 'app-my-saved-movie-details',
@@ -70,7 +71,8 @@ export class MySavedMovieDetailsComponent implements OnInit {
       public dialogRef: MatDialogRef<MySavedMovieDetailsComponent>,
       private alertController: AlertController,
       private savedMoviesService: SavedMoviesService,
-      private snotifyService: SnotifyService
+      private snotifyService: SnotifyService,
+      private matDialog: MatDialog
   ) { }
 
 
@@ -154,6 +156,18 @@ console.log(this.data)
   }
 
   addToWatchedMovies(){
+
+    console.log(this.movieDetails)
+    this.dialogRef.close();
+    const dialogRef = this.matDialog.open(AddWatchedMovieComponent, {
+      role: 'dialog',
+      height: '430px',
+      width: '500px',
+      data: {
+        dataKey: this.movieDetails,
+
+      }
+    });
 
   }
 

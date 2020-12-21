@@ -22,12 +22,6 @@
       <div (click)="openSavedMoviesPage()">
         <mat-icon>watch_later</mat-icon>
       </div>
-<!--      <div>-->
-<!--        <mat-icon>group</mat-icon>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <mat-icon>flag</mat-icon>-->
-<!--      </div>-->
 
     </div>
     <div class="home__header__right" (click)="openUserProfile()">
@@ -39,17 +33,6 @@
         <span class="name">{{ user.name || 'Indranil'}}</span>
       </div>
 
-<!--      <div>-->
-<!--        <mat-icon>add</mat-icon>-->
-<!--      </div>-->
-
-<!--      <div>-->
-<!--        <mat-icon matBadge="4"-->
-<!--                  matBadgeColor="primary"-->
-<!--                  matBadgeOverlap="false"-->
-<!--                  matBadgePosition="above after"> forum-->
-<!--        </mat-icon>-->
-<!--      </div>-->
 
       <div *ngIf="notifications > 0">
         <mat-icon matBadge= {{notifications}}
@@ -88,10 +71,6 @@
 <!--          src = "assets/logo/logo.png">-->
           <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
         </div>
-<!--        <div>-->
-<!--          <mat-icon> local_hospital</mat-icon>-->
-<!--          <span class="covid">COVID-19 Information Center</span>-->
-<!--        </div>-->
 
         <div>
           <mat-icon>add_to_queue</mat-icon>
@@ -177,35 +156,18 @@
           </mat-card>
 
           <!--Loop Through All friends movies-->
-          <mat-card *ngFor="let p of friendsMovies" class="posts">
+          <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)">
             <mat-card-header class="posts__header">
               <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src="https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg">
               <div class="posts__header__right">
-                <!--              <span>{{ p?.time?.seconds * 1000 | date:'shortTime' }}</span>-->
                 <span> {{ p.user.name }} {{ p.user.surname }}</span>
+                <span>{{ p.dateTimeAdded| date:'short' }}</span>
                 <h3> {{p.name}} </h3>
               </div>
             </mat-card-header>
             <mat-card-content class="posts__body">
               <p>{{ p.comment }}</p>
             </mat-card-content>
-
-            <!--          <mat-card-actions class="card-body">-->
-            <!--            <div>-->
-            <!--              <mat-icon color="accent">videocam</mat-icon>-->
-            <!--              <span>Live Video</span>-->
-            <!--            </div>-->
-
-            <!--            <div>-->
-            <!--              <mat-icon color="primary">photo_album</mat-icon>-->
-            <!--              <span>Photo/Video</span>-->
-            <!--            </div>-->
-
-            <!--            <div>-->
-            <!--              <mat-icon color="warn">mood</mat-icon>-->
-            <!--              <span>Feeling/Activity</span>-->
-            <!--            </div>-->
-            <!--          </mat-card-actions>-->
 
           </mat-card>
         </div>
