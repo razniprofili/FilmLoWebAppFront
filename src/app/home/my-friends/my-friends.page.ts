@@ -10,6 +10,9 @@ import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
 import {FriendshipService} from '../services/friendship.service';
 import {UserModel} from '../models/user.model';
+import {WatchedMovieDetailsComponent} from '../../components/watched-movie-details/watched-movie-details.component';
+import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-friends',
@@ -48,7 +51,8 @@ export class MyFriendsPage implements OnInit {
                private savedMoviesService: SavedMoviesService,
                public alert: AlertController,
                private loadingCtrl: LoadingController,
-               private friendshipService: FriendshipService) {}
+               private friendshipService: FriendshipService,
+               private matDialog: MatDialog) {}
 
   ngOnInit() {
     this.friendsSub = this.friendshipService.getMyFriends().subscribe((myFriends) => {
@@ -72,31 +76,24 @@ export class MyFriendsPage implements OnInit {
     });
   }
 
-  logout(): void {
-    this.alertController.create({
-      header: 'Log out',
-      message: 'Are you sure zou want to log out?',
-      buttons: [
-        {
-          text: 'Log out',
-          handler: () => {
-            console.log('Logged out');
-            this.authService.logout();
-            this.router.navigateByUrl("/log-in")
+  logout() {
+    console.log('Logged out');
+    this.authService.logout();
+    this.router.navigateByUrl("/log-in")
+  }
 
-          }
-        },
-        {
-          text: 'Dismiss',
-          role: 'cancel',
-          handler: () => {
-            console.log('log out dismissed');
-          }
-        }
-      ]
-    }).then((alert)=>{
-      alert.present();
+  openFriendDetails (friend: UserModel){
+    const dialogRef = this.matDialog.open(FriendInfoComponent, {
+      role: 'dialog',
+      height: '400px',
+      width: '500px',
+      data: {
+        dataKey: friend,
+      }
     });
+  }
+  openUserProfile() {
+    this.router.navigateByUrl("/home/my-profile")
   }
 
   openHome() {

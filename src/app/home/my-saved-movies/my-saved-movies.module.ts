@@ -13,6 +13,7 @@ import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {SnotifyModule} from 'ng-snotify';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {SnotifyModule} from 'ng-snotify';
         NgScrollbarModule,
         MatCardModule,
         MatTableModule,
-        SnotifyModule
+        SnotifyModule,
+        MatButtonModule
     ],
   declarations: [MySavedMoviesPage]
 })

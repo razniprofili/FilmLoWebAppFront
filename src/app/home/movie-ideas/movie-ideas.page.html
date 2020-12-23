@@ -24,8 +24,8 @@
       </div>
 
     </div>
-    <div class="home__header__right" (click)="openUserProfile()">
-      <div>
+    <div class="home__header__right" >
+      <div (click)="openUserProfile()">
         <img
                 alt=""
                 mat-card-avatar
@@ -70,10 +70,10 @@
                     src = {{user.picture}}>
             <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
-          <div>
-            <mat-icon>add_to_queue</mat-icon>
-            <span>Add watched movie</span>
-          </div>
+<!--          <div>-->
+<!--            <mat-icon>add_to_queue</mat-icon>-->
+<!--            <span>Add watched movie</span>-->
+<!--          </div>-->
 
           <div (click)="openWatchedMoviesPage()">
             <mat-icon>theaters</mat-icon>
@@ -90,10 +90,10 @@
             <span>Statistics</span>
           </div>
 
-          <div>
-            <mat-icon class="see-more">expand_more</mat-icon>
-            <span>See More</span>
-          </div>
+<!--          <div>-->
+<!--            <mat-icon class="see-more">expand_more</mat-icon>-->
+<!--            <span>See More</span>-->
+<!--          </div>-->
 
         </div>
       </div>
@@ -102,7 +102,7 @@
       <div class="home__body__contentMiddle">
 
         <div class="home__body__contentMiddle__center">
-          <h2 class="h2savedmovies">Movie ideas</h2>
+          <h2 class="h2savedmovies">Find movies</h2>
           <mat-card class="post-message">
             <mat-card-header class="post-message-header"
                              style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">

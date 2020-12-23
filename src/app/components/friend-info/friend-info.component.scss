@@ -1,64 +1,13 @@
 @import "src/styles";
 
-
-///////////////// test
-//.material {
-//  @import "~ng-snotify/styles/material";
-//}
-//.simple {
-//  @import "~ng-snotify/styles/simple";
-//}
-//.dark {
-//  @import "~ng-snotify/styles/dark";
-//}
-.h1watched {
-  font-size: 25px !important;
-  margin-top: 100px;
-}
-.div-add {
-  margin-top: 50px;
-  //color: #FF9A45 !important;
+mat-card-avatar {
   size: 50px;
 }
 
-.add-button {
-  font-size: 20px;
-  width: 200px !important;
-  //height: 200px !important;
-  //color: #00A400 !important;
-  background-color: #FF9A45 !important;
-  margin-left: 200px !important;
+.seebtn {
+background-color: #FF9A45 !important;
+  color: white!important;
 }
-.snotify-icon {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  object-position: center;
-}
-
-.card {
-  min-width: 80%;
-}
-
-.example-container {
-  display: flex;
-  flex-direction: column;
-  max-height: 500px;
-  min-width: 100%;
-}
-
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
-}
-
-a {
-  cursor: pointer;
-}
-
-//////////////////////
-
-
 .home-container {
   display: flex;
   flex-direction: column;
@@ -316,7 +265,31 @@ ng-scrollbar {
         border-radius: 15px;
       }
     }
+    ///////////////////////// ovo sam dodala
+    div.active {
+      position: relative;
+      // background-color: #FF9A45 !important;
+      // border-top: 4px solid #FF9A45;  //ovo je ona donja linija
+      border-left: 4px solid #FF9A45;  //ovo je ona donja linija
+      border-right: 4px solid #FF9A45;  //ovo je ona donja linija
+      &::before {
+        content: '';
+        // border-bottom: 4px solid #1877F2;
 
+        //border-bottom: 4px solid #FF9A45;  //ovo je ona donja linija
+
+        position: absolute;
+        bottom: -15px;
+        height: 2px;
+        width: 100%;
+      }
+
+      mat-icon {
+        //color: #1877F2;
+        color: #FF9A45;
+        // color: white !important;
+      }
+    }
 
   }
 
@@ -325,7 +298,7 @@ ng-scrollbar {
 
   &__contentMiddle {
     padding: 10px;
-    margin-left: 420px;
+    margin-left: 520px;
     flex: 0.4;
     width: 40%;
     display: flex;
@@ -468,7 +441,8 @@ ng-scrollbar {
           display:flex;
 
           img {
-
+            width: 20%;
+            height: 20%;
           }
 
           .posts__header__right {
@@ -488,11 +462,11 @@ ng-scrollbar {
             flex-direction: column-reverse;
 
             h3 {
-              font-weight: 600;
-              font-size: 40px;
+              font-weight: 400;
+              font-size: 30px;
               // text-transform: capitalize;
-              margin-bottom: 50px;
-              margin-left: 150px;
+              margin-bottom: 75px;
+              margin-left: 20px;
               text-space: 20px;
             }
           }

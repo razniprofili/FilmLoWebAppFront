@@ -22,6 +22,12 @@ import {FriendMovieDetailsComponent} from './components/friend-movie-details/fri
 import {IdeaMovieDetailsComponent} from './components/idea-movie-details/idea-movie-details.component';
 import {MySavedMovieDetailsComponent} from './components/my-saved-movie-details/my-saved-movie-details.component';
 import {WatchedMovieDetailsComponent} from './components/watched-movie-details/watched-movie-details.component';
+import {UpdateMovieComponent} from './components/update-movie/update-movie.component';
+import {FriendMoviesComponent} from './components/friend-movies/friend-movies.component';
+import {FriendInfoComponent} from './components/friend-info/friend-info.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -31,15 +37,19 @@ import {WatchedMovieDetailsComponent} from './components/watched-movie-details/w
       AddWatchedMovieComponent,
       FriendMovieDetailsComponent,
       MySavedMovieDetailsComponent,
-      WatchedMovieDetailsComponent
+      WatchedMovieDetailsComponent,
+      UpdateMovieComponent,
+      FriendMoviesComponent,
+      FriendInfoComponent
 
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
-    BrowserAnimationsModule, MatDialogModule, NgScrollbarModule, MatIconModule, SnotifyModule, MatButtonModule, ],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
+        BrowserAnimationsModule, MatDialogModule, NgScrollbarModule, MatIconModule, SnotifyModule, MatButtonModule, MatCardModule, MatTableModule],
   providers: [
     StatusBar,
     SplashScreen,
+      DatePipe,
 
     // UserService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

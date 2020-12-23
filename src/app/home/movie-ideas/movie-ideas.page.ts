@@ -214,31 +214,13 @@ export class MovieIdeasPage implements OnInit {
   }
 
 
-  logout(): void {
-    this.alertController.create({
-      header: 'Log out',
-      message: 'Are you sure zou want to log out?',
-      buttons: [
-        {
-          text: 'Log out',
-          handler: () => {
+  logout() {
+
+
             console.log('Logged out');
             this.authService.logout();
             this.router.navigateByUrl("/log-in")
 
-          }
-        },
-        {
-          text: 'Dismiss',
-          role: 'cancel',
-          handler: () => {
-            console.log('log out dismissed');
-          }
-        }
-      ]
-    }).then((alert)=>{
-      alert.present();
-    });
   }
 
 

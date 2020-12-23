@@ -1,0 +1,71 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+.tableHeader {
+  font-size: 20px!important;
+  color: black !important;
+  font-family: Courgette!important;
+  font-weight: bold;
+}
+
+.tableElements {
+  font-size: 18px!important;
+}
+
+.tableElementsDetails {
+  font-size: 18px!important;
+  margin-top: 20px !important;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.image-card {
+  width: 160px;
+  height: 250px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}

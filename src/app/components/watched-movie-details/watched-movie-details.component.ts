@@ -1,12 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MovieAPIdetails} from '../../home/models/movieAPIdetails.model';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AlertController} from '@ionic/angular';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {Movie} from '../../home/models/movie.model';
 import {WatchedMoviesService} from '../../home/services/watched-movies.service';
 import {UserGet} from '../../auth/user-get.model';
+import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
+import {UpdateMovieComponent} from '../update-movie/update-movie.component';
 
 @Component({
   selector: 'app-watched-movie-details',
@@ -59,7 +61,8 @@ export class WatchedMovieDetailsComponent implements OnInit {
       public dialogRef: MatDialogRef<WatchedMovieDetailsComponent>,
       private alertController: AlertController,
       private watchedMoviesService: WatchedMoviesService,
-      private snotifyService: SnotifyService
+      private snotifyService: SnotifyService,
+      private matDialog: MatDialog
   ) { }
 
 
@@ -143,6 +146,19 @@ export class WatchedMovieDetailsComponent implements OnInit {
 
   editMovie(){
 
+    this.dialogRef.close();
+    const dialogRef = this.matDialog.open(UpdateMovieComponent, {
+      role: 'dialog',
+      height: '430px',
+      width: '500px',
+      data: {
+        dataKey: this.data.dataKey // its movie id
+      }
+    });
+    let instance= dialogRef.componentInstance;
+    instance.myRate = this.movie.rate;
+    instance.myComment = this.movie.comment;
+    instance.dateTimeWatched = this.movie.dateTimeWatched
   }
 
 }

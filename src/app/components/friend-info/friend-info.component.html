@@ -1,0 +1,20 @@
+<div class="home__body__contentMiddle__center">
+  <h2 class="h2savedmovies">My friends</h2>
+  <!--Loop Through All saved movies-->
+  <mat-card  class="posts" >
+    <mat-card-header class="posts__header">
+      <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture >
+      <div class="movie-name-search">
+        <h3> {{friend.name}} {{friend.surname}}</h3>
+      </div>
+    </mat-card-header>
+    <div>
+      <span> Total watched movies: {{countMovies}} </span>
+    </div>
+    <div>
+      <button mat-flat-button class="seebtn" (click)="seeFriendMovies()" *ngIf="countMovies != 0">See watched movies</button>
+
+    </div>
+
+  </mat-card>
+</div>

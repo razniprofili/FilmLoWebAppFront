@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Movie} from '../models/movie.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -8,6 +8,8 @@ import {UserGet} from '../../auth/user-get.model';
 import {SavedMovieAddModel} from '../models/saved-movie-add.model';
 import {SavedMovieModel} from '../models/saved-movie.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
+import {DatePipe} from '@angular/common';
+import {animate, state, transition, trigger} from '@angular/animations';
 
 interface MovieData {
   id: string,
@@ -69,20 +71,27 @@ interface Link {
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class WatchedMoviesService {
 
   private _allFiendsMovies = new BehaviorSubject<Movie[]>([]);
   private _myWatchedMovies = new BehaviorSubject<Movie[]>([]);
-
+ // private _friendMovies = new BehaviorSubject<Movie[]>([]);
   movieData: Movie;
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private datePipe: DatePipe) { }
 
   // geters
 
   get allFiendsMovies(){
     return this._allFiendsMovies.asObservable();
   }
+
+    // get myFriendMovies(){
+    //     return this._friendMovies.asObservable();
+    // }
 
   get myWatchedMovies(){
     return this._myWatchedMovies.asObservable();
@@ -138,6 +147,55 @@ export class WatchedMoviesService {
         })
     );
 
+  }
+
+  getMoviesFriend(friendId: number) {
+
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http
+                  .get<{ [key: string]: MovieData }>(
+                      `https://localhost:44397/api/WatchedMovies/friendMovies/${friendId}` , {headers: new HttpHeaders({
+                              'Authorization': token
+                          })}
+                  );
+          }),
+          map((movieData) => {
+                  console.log(movieData);
+                  const movies : Movie[] = [];
+                  for (const key in movieData) {
+                      if (movieData.hasOwnProperty(key)) {
+                          movies.push(
+                              new Movie(
+                                  movieData[key].id,
+                                  movieData[key].actors,
+                                  movieData[key].year,
+                                  movieData[key].name,
+                                  movieData[key].director,
+                                  movieData[key].duration,
+                                  movieData[key].genre,
+                                  movieData[key].country,
+                                  movieData[key].rate,
+                                  movieData[key].comment,
+                                  movieData[key].dateTimeWatched,
+                                  movieData[key].dateTimeAdded,
+                                  movieData[key].poster,
+                                  movieData[key].user
+                              ));
+                      }
+                  }
+                  const firendMovies : Movie[] = [];
+                  for (let movie of movies) {
+                      firendMovies.push(movie)
+                  }
+                  console.log(firendMovies)
+                  return firendMovies;
+              }) // }),
+          // tap(firendMovies => {
+          //     this._friendMovies.next(firendMovies);
+          // })
+      );
   }
 
   getMyWatchedMovies(){
@@ -293,5 +351,35 @@ export class WatchedMoviesService {
             })
         )
     }
+
+  updateMovie( movieID: string, rate?: number, dateTimeWatched?: string, comment?: string) {
+
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http
+                  .put(`https://localhost:44397/api/WatchedMovies/updateWatchedMovie/${movieID}`, {
+                      rate,
+                      dateTimeWatched,
+                      comment
+                  }, {headers: new HttpHeaders({
+                          'Content-Type': "application/json",
+                          'Authorization': token
+                      })});
+          }),
+          switchMap(() => this.myWatchedMovies),
+          take(1),
+          tap((movies) => {
+              const updatedMovieIndex = movies.findIndex((m) => m.id === movieID);
+              const updatedMovies = [...movies];
+              updatedMovies[updatedMovieIndex].rate = rate;
+              updatedMovies[updatedMovieIndex].comment = comment;
+              updatedMovies[updatedMovieIndex].dateTimeWatched = dateTimeWatched;
+
+              this._myWatchedMovies.next(updatedMovies);
+          })
+      );
+  }
+
 
 }

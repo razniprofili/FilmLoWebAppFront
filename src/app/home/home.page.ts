@@ -224,31 +224,13 @@ export class HomePage {
     // form.resetForm();
   }
 
-  logout(): void {
-    this.alertController.create({
-      header: 'Log out',
-      message: 'Are you sure zou want to log out?',
-      buttons: [
-        {
-          text: 'Log out',
-          handler: () => {
-            console.log('Logged out');
-            this.authService.logout();
-            this.router.navigateByUrl("/log-in")
+  logout() {
 
-          }
-        },
-        {
-          text: 'Dismiss',
-          role: 'cancel',
-          handler: () => {
-            console.log('log out dismissed');
-          }
-        }
-      ]
-    }).then((alert)=>{
-      alert.present();
-    });
+
+    console.log('Logged out');
+    this.authService.logout();
+    this.router.navigateByUrl("/log-in")
+
   }
 
   scrollToElement($element): void {
