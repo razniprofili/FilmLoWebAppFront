@@ -102,9 +102,12 @@
       <div class="home__body__contentMiddle">
 
         <div class="home__body__contentMiddle__center">
-          <h2 class="h2savedmovies">My profile</h2>
+          <h3 class="h2savedmovies">My profile</h3>
 
-          <div class="center">
+          <div class="center" style=" border-bottom: 1px solid whitesmoke !important;
+                                      border-top: 1px solid whitesmoke !important;
+                                      border-left: 1px solid whitesmoke !important;
+                                      border-right: 1px solid whitesmoke !important;">
             <h3 class="bigh2">{{user.name}} {{user.surname}}</h3>
             <img
                     alt=""
@@ -113,6 +116,16 @@
                     class="bigavatar"
             >
             <h4>{{currentUser.email}}</h4>
+            <button mat-flat-button (click)="openUpdateDialog()" style="background-color: #ff9a45;
+                                                                  margin-bottom: 20px!important;
+                                                                  color: white">
+              Update my profile</button>
+<div>
+  <button mat-flat-button (click)="deleteAccount()" style="background-color:#fa4747 ;
+                                                                  margin-bottom: 20px!important;
+                                                                  color: white">
+    Delete account</button>
+</div>
           </div>
 
         </div>
@@ -128,4 +141,5 @@
 
     </div>
   </ng-scrollbar>
+  <ng-snotify class="material"></ng-snotify>
 </div>

@@ -11,6 +11,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {SnotifyModule} from 'ng-snotify';
 
 @NgModule({
     imports: [
@@ -21,7 +23,9 @@ import {MatCardModule} from '@angular/material/card';
         MatIconModule,
         NgScrollbarModule,
         MatMenuModule,
-        MatCardModule
+        MatCardModule,
+        MatButtonModule,
+        SnotifyModule
     ],
   declarations: [MyProfilePage]
 })

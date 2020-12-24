@@ -1,0 +1,33 @@
+<section class="register">
+  <div class="header">
+    <h3>Update your name, surname or picture</h3>
+  </div>
+
+  <div class="body">
+    <form #form="ngForm">
+      <div class="center">
+        <img
+                alt=""
+                mat-card-avatar
+                src = {{myPicture}}
+                class="bigavatar"
+                name="picture"
+        >
+      </div>
+      <div class="user_name">
+        <input type="text" placeholder="Your name" name="name" #name="ngModel" [ngModel]="myName" >
+      </div>
+      <!--      <div style="margin-top: 5px; margin-bottom: 5px">-->
+      <!--        <span *ngIf="date.invalid && date.touched" class="required">This field must have value</span>-->
+      <!--      </div>-->
+      <div class="user_name">
+        <input type="text" placeholder="Your surname" name="surname" #surname="ngModel" [ngModel]="mySurname" >
+      </div>
+      <div style="margin-top: 5px; margin-bottom: 5px">
+<!--        <span *ngIf="rate.invalid" class="required">Rate must be 1-5.</span>-->
+      </div>
+      <button type="submit" class="submit-button"  (click)="updateUser()" >Update and save</button>
+    </form>
+  </div>
+
+</section>

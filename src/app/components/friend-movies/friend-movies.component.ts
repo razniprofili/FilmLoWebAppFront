@@ -34,7 +34,10 @@ export class FriendMoviesComponent implements OnInit {
       private savedMoviesService: SavedMoviesService
   ) { }
 
-  friendMovies = this.data.dataKey
+  friendMovies = this.data.dataKey.friendMovies
+  friendName = this.data.dataKey.userName
+    friendSurname = this.data.dataKey.userSurname
+
    // friendMovies: Movie[] = new Array();
 
   columnsToDisplay = ['name', 'rate', 'comment', 'dateTimeAdded'];

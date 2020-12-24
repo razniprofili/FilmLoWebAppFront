@@ -50,7 +50,10 @@ export interface ResponseUserData {
 export class AuthService {
 
   private ulogovan = false;
+
   private _user = new BehaviorSubject<User>(null);
+  private _userGet = new BehaviorSubject<UserGet>(null);
+
   tokenUser: string;
   userLocalID: number;
   //gde god se pretplatimo na User-a imacemo na uvid svaku promenu!
@@ -88,6 +91,21 @@ export class AuthService {
           })
       );
   }
+
+  get currentUserInfo (){
+        return this._userGet.asObservable().pipe(
+            map((user) => {
+                console.log("uslo cur user")
+                console.log(user)
+                if (user) {
+                    return user;
+                } else {
+                    return null;
+                }
+            })
+        );
+    }
+
   get userId() {
     return this._user.asObservable().pipe(
         map((user) => {
@@ -114,7 +132,7 @@ export class AuthService {
 
   getUser(userId: number) {
 
-return this.token.pipe(
+      return this.token.pipe(
     take(1),
     switchMap ((token)=> {
         console.log(token)
@@ -126,7 +144,9 @@ return this.token.pipe(
         const user: UserGet= new UserGet(userData.name, userData.surname, userData.picture)
         console.log(user)
         return user;
-    }))
+    }), tap(userGet => {
+        this._userGet.next(userGet);
+    }));
   }
 
   login(user: UserData) {
@@ -156,10 +176,16 @@ return this.token.pipe(
     console.log("usao delete")
     console.log(this.tokenUser)
 
-      this._user.next(null);  // brisemo current usera
-    return this.http.put<AuthResponseData>(`https://localhost:44397/api/User/delete`, this.header);
+      // brisemo current usera
+     // this._user.next(null);
+      return this.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http.put<AuthResponseData>(`https://localhost:44397/api/User/delete`, "" ,{headers: new HttpHeaders({
+                      'Authorization': token
+                  })});
+          }));
   }
-
 
   register(user: UserData) {
     this.ulogovan = true;
@@ -178,6 +204,31 @@ return this.token.pipe(
         }));
   }
 
+  updateUser( name: string, picture: string, surname: string) {
+
+        return this.token.pipe(
+            take(1),
+            switchMap((token) => {
+                return this.http
+                    .put(`https://localhost:44397/api/User`, {
+                        name,
+                        surname,
+                        picture
+                    }, {headers: new HttpHeaders({
+                            'Content-Type': "application/json",
+                            'Authorization': token
+                        })});
+            }),
+            switchMap(() => this.currentUserInfo),
+            take(1),
+            tap((user) => {
+                user.name = name;
+                user.surname = surname;
+                user.picture = picture;
+                this._userGet.next(user);
+            })
+        );
+    }
 
   private handleError(errorResponse: HttpErrorResponse){
     if(errorResponse.error instanceof ErrorEvent){

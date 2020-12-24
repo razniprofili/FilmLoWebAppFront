@@ -9,6 +9,10 @@ import {Router} from '@angular/router';
 import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
 import {FriendshipService} from '../services/friendship.service';
+import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
+import {UpdateUserComponent} from '../../components/update-user/update-user.component';
+import {MatDialog} from '@angular/material/dialog';
+import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 
 @Component({
   selector: 'app-my-profile',
@@ -39,7 +43,23 @@ export class MyProfilePage implements OnInit {
   friends: UserModel[];
   friendsSub: Subscription;
 
+  // for notifications:
 
+  style = 'material';
+  title = 'Snotify title!';
+  body = 'Lorem ipsum dolor sit amet!';
+  timeout = 3000;
+  position: SnotifyPosition = SnotifyPosition.rightBottom;
+  progressBar = true;
+  closeClick = true;
+  newTop = true;
+  filterDuplicates = false;
+  backdrop = -1;
+  dockMax = 8;
+  blockMax = 6;
+  pauseHover = true;
+  titleMaxLength = 15;
+  bodyMaxLength = 80;
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -48,7 +68,9 @@ export class MyProfilePage implements OnInit {
                private savedMoviesService: SavedMoviesService,
                public alert: AlertController,
                private loadingCtrl: LoadingController,
-               private friendshipService: FriendshipService) {}
+               private friendshipService: FriendshipService,
+               private matDialog: MatDialog,
+               private snotifyService: SnotifyService) {}
 
   ngOnInit() {
 
@@ -68,7 +90,53 @@ export class MyProfilePage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.authService.currentUserInfo.subscribe(curruser => {
+      this.user = curruser;
+    })
+  }
 
+  getConfig(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: this.timeout,
+      showProgressBar: this.progressBar,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
+
+  getConfigError(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: 0,
+      showProgressBar: false,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
   }
   logout() {
 
@@ -77,6 +145,32 @@ export class MyProfilePage implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl("/log-in")
 
+  }
+
+  deleteAccount() {
+    this.authService.deleteAccount().subscribe(() => {
+      // uspesno = true
+      this.router.navigateByUrl('/log-in');
+    }, (error => {
+      // uspesno = false;
+      console.log(error)
+      this.snotifyService.error("Error while deleting account. Account is not deleted.", "Error", this.getConfigError());
+    }))
+  }
+
+  openUpdateDialog(){
+    const dialogRef = this.matDialog.open(UpdateUserComponent, {
+      role: 'dialog',
+      height: '600px',
+      width: '700px',
+      data: {
+        dataKey: this.currentUser.id,
+      }
+    });
+    let instance= dialogRef.componentInstance;
+    instance.myName = this.user.name;
+    instance.mySurname = this.user.surname;
+    instance.myPicture = this.user.picture
   }
 
   openHome() {

@@ -28,6 +28,7 @@ import {FriendInfoComponent} from './components/friend-info/friend-info.componen
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {DatePipe} from '@angular/common';
+import {UpdateUserComponent} from './components/update-user/update-user.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {DatePipe} from '@angular/common';
       WatchedMovieDetailsComponent,
       UpdateMovieComponent,
       FriendMoviesComponent,
-      FriendInfoComponent
+      FriendInfoComponent,
+      UpdateUserComponent
 
   ],
   entryComponents: [],

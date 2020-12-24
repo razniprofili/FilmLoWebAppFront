@@ -32,13 +32,19 @@ export class FriendInfoComponent implements OnInit {
 
 
   seeFriendMovies() {
+
+    const sendingData = {
+      'userName' : this.friend.name,
+      'userSurname': this.friend.surname,
+      'friendMovies': this.friendMovies
+    }
     this.dialogRef.close();
     const dialogRef = this.matDialog.open(FriendMoviesComponent, {
       role: 'dialog',
       height: '900px',
       width: '1400px',
       data: {
-        dataKey: this.friendMovies
+        dataKey: sendingData
       }
     });
   }
