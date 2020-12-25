@@ -87,6 +87,11 @@
           <span>FilmLo friends</span>
         </div>
 
+        <div (click)="openFilmLoUsersPage()">
+          <mat-icon>person_search</mat-icon>
+          <span>Search FilmLo users</span>
+        </div>
+
         <div>
           <mat-icon>insights</mat-icon>
           <span>Statistics</span>
@@ -108,57 +113,57 @@
         <!--      <button (click)="scrollToElement(target)"></button> ovo je za skrolovanje do nekog odredjenog mesta!!!-->
         <div class="home__body__contentMiddle__top">
           <!--IMAGE CARDS-->
-          <mat-card *ngFor="let i of images" class="image-card">
+
+          <mat-card *ngFor="let i of friendsMovies.slice(0, 6)" class="image-card" (click)="openMovieDetails(i)">
             <img alt="bg"
-                 class="bg" src="{{ i }}">
+                 class="bg" src="{{ i.poster }}">
             <mat-card-content>
               <img
                       alt="avatar"
-                      class="avatar" src="https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg">
-              <span class="card-name">Neki user</span>
+                      class="avatar" src={{i.user.picture}}>
+              <span class="card-name">{{i.user.name}}</span>
             </mat-card-content>
           </mat-card>
-
         </div>
 
         <div class="home__body__contentMiddle__center">
-          <mat-card class="post-message">
-            <mat-card-header class="post-message-header"
-                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
-              <img
-                      alt=""
-                      mat-card-avatar
-                      src = "assets/logo/logo.png">
-              <!--                    [src]="user?.picture"-->
-              <!--            >-->
-              <form #form="ngForm" (ngSubmit)="postMessage(form)">
-                <input class="on-your-mind" name="message" ngModel placeholder="What's on your mind?" type="text">
-                <button style="display: none;" type="submit"></button>
-              </form>
+<!--          <mat-card class="post-message">-->
+<!--            <mat-card-header class="post-message-header"-->
+<!--                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">-->
+<!--              <img-->
+<!--                      alt=""-->
+<!--                      mat-card-avatar-->
+<!--                      src = "assets/logo/logo.png">-->
+<!--              &lt;!&ndash;                    [src]="user?.picture"&ndash;&gt;-->
+<!--              &lt;!&ndash;            >&ndash;&gt;-->
+<!--              <form #form="ngForm" (ngSubmit)="postMessage(form)">-->
+<!--                <input class="on-your-mind" name="message" ngModel placeholder="What's on your mind?" type="text">-->
+<!--                <button style="display: none;" type="submit"></button>-->
+<!--              </form>-->
 
-            </mat-card-header>
-            <mat-card-content class="card-body">
-              <div>
-                <mat-icon color="accent">videocam</mat-icon>
-                <span>Live Video</span>
-              </div>
+<!--            </mat-card-header>-->
+<!--            <mat-card-content class="card-body">-->
+<!--              <div>-->
+<!--                <mat-icon color="accent">videocam</mat-icon>-->
+<!--                <span>Live Video</span>-->
+<!--              </div>-->
 
-              <div>
-                <mat-icon color="primary">photo_album</mat-icon>
-                <span>Photo/Video</span>
-              </div>
+<!--              <div>-->
+<!--                <mat-icon color="primary">photo_album</mat-icon>-->
+<!--                <span>Photo/Video</span>-->
+<!--              </div>-->
 
-              <div>
-                <mat-icon color="warn">mood</mat-icon>
-                <span>Feeling/Activity</span>
-              </div>
-            </mat-card-content>
-          </mat-card>
+<!--              <div>-->
+<!--                <mat-icon color="warn">mood</mat-icon>-->
+<!--                <span>Feeling/Activity</span>-->
+<!--              </div>-->
+<!--            </mat-card-content>-->
+<!--          </mat-card>-->
 
           <!--Loop Through All friends movies-->
           <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)">
             <mat-card-header class="posts__header">
-              <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src="https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg">
+              <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src={{p.user.picture}}>
               <div class="posts__header__right">
                 <span> {{ p.user.name }} {{ p.user.surname }}</span>
                 <span>{{ p.dateTimeAdded| date:'short' }}</span>

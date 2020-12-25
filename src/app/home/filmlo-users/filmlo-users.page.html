@@ -1,0 +1,146 @@
+
+<div class="home-container">
+  <div class="home__header">
+    <div class="home__header__left">
+      <img mat-card-avatar src="assets/logo/logo.png"/>
+      <div class="input">
+        <mat-icon class="search-icon">search_outline</mat-icon>
+        <form>
+          <input placeholder="Search FilmLo" type="text">
+        </form>
+      </div>
+
+    </div>
+
+    <div class="home__header__middle">
+      <div  (click)="openHome()">
+        <mat-icon>home</mat-icon>
+      </div>
+      <div class="active">
+        <mat-icon>ondemand_video</mat-icon>
+      </div>
+      <div (click)="openSavedMoviesPage()">
+        <mat-icon>watch_later</mat-icon>
+      </div>
+
+    </div>
+    <div class="home__header__right" >
+      <div (click)="openUserProfile()">
+        <img
+                alt=""
+                mat-card-avatar
+                src={{user.picture}}>
+        <span class="name">{{ user.name || 'Indranil'}}</span>
+      </div>
+
+
+      <div *ngIf="notifications > 0">
+        <mat-icon matBadge= {{notifications}}
+                  matBadgeColor="warn"
+                  matBadgeOverlap="false">notifications
+        </mat-icon>
+      </div>
+      <div *ngIf="notifications == 0">
+        <mat-icon>notifications</mat-icon>
+      </div>
+
+
+      <div>
+
+        <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> Logout
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
+    <div class="home__body">
+
+      <div class="home__body__sidebarLeft">
+        <div class="inside">
+          <div class="user-avatar" (click)="openUserProfile()">
+            <img
+                    alt=""
+                    mat-card-avatar
+                    src = {{user.picture}}>
+            <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
+          </div>
+          <!--          <div>-->
+          <!--            <mat-icon>add_to_queue</mat-icon>-->
+          <!--            <span>Add watched movie</span>-->
+          <!--          </div>-->
+
+          <div (click)="openWatchedMoviesPage()">
+            <mat-icon>theaters</mat-icon>
+            <span>Watched movies</span>
+          </div>
+
+          <div (click)="openFilmLoFriendsPage()">
+            <mat-icon>people_alt</mat-icon>
+            <span>FilmLo friends</span>
+          </div>
+
+          <div>
+            <mat-icon>insights</mat-icon>
+            <span>Statistics</span>
+          </div>
+
+          <!--          <div>-->
+          <!--            <mat-icon class="see-more">expand_more</mat-icon>-->
+          <!--            <span>See More</span>-->
+          <!--          </div>-->
+
+        </div>
+      </div>
+
+      <!--    search Api div-->
+      <div class="home__body__contentMiddle">
+
+        <div class="home__body__contentMiddle__center">
+          <h2 class="h2savedmovies">Find FilmLo users</h2>
+          <mat-card class="post-message">
+            <mat-card-header class="post-message-header"
+                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
+              <img
+                      alt=""
+                      mat-card-avatar
+
+                      src = "assets/icon/imdb.jpg">
+              <form #form="ngForm" (ngSubmit)="searchFilmloUsers(form)">
+                <input class="on-your-mind" name="message" ngModel placeholder="Search FilmLo Users" type="text" [(ngModel)]="userSearchName">
+                <button style="display: none;" type="submit"></button>
+              </form>
+
+            </mat-card-header>
+          </mat-card>
+
+          <!--Loop Through All movies-->
+          <mat-card *ngFor="let p of resultusers" class="posts" (click)="operUserDetails(p)">
+            <mat-card-header class="posts__header">
+              <img alt="{{ p.name }}" mat-card-avatar [src]=p.picture >
+              <div class="movie-name-search">
+                <h3> {{p.name}} {{p.surname}}</h3>
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </div>
+
+      </div>
+
+
+      <div class="home__body__feedRight">
+        <div class="inside">
+          <!--        <img alt="feed" src="assets/feed.jpg">-->
+        </div>
+      </div>
+
+    </div>
+  </ng-scrollbar>
+  <ng-snotify class="{{ style }}"></ng-snotify>
+</div>
+

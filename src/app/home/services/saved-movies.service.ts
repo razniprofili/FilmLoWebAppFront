@@ -48,7 +48,7 @@ export interface JsonResponse {
 })
 export class SavedMoviesService {
 
-  private _savedMovies = new BehaviorSubject<SavedMovieModel[]>([]);
+   _savedMovies = new BehaviorSubject<SavedMovieModel[]>([]);
  // movieData: Movie;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
@@ -178,5 +178,11 @@ export class SavedMoviesService {
               this._savedMovies.next(movies.filter((film) => film.id !== movieId));
           })
       );
+  }
+
+  removeMovie(movieId :string) {
+      this.allSavedMovies.subscribe(movies => {
+          this._savedMovies.next(movies.filter((film) => film.id !== movieId));
+      })
   }
 }

@@ -39,6 +39,7 @@ export class HomePage {
   savedMovies: SavedMovieModel[];
   moviesSearchApi: MovieAPI[];
   movieSearchName: string;
+  moviesSlides: Movie[]
 
   // user
 
@@ -80,6 +81,33 @@ export class HomePage {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  // for slider
+
+  customOptions: any = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
+
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -113,7 +141,23 @@ export class HomePage {
       this.user = user;
     });
 
+    // in slider i wan only first fix friends movies
+    this.getMovie()
+
+
     console.log(this.user)
+   }
+
+   getMovie() {
+     if(this.friendsMovies != undefined) {
+       if(this.friendsMovies.length <= 6) {
+         this.moviesSlides = this.friendsMovies
+       } else {
+         for(var i=0; i<= 6; i++){
+           this.moviesSlides.push( this.friendsMovies[i])
+         }
+       }
+     }
    }
 
   ionViewWillEnter(){
@@ -277,6 +321,9 @@ export class HomePage {
     this.router.navigateByUrl("/home/my-friends")
   }
 
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
+  }
   openUserProfile() {
     this.router.navigateByUrl("/home/my-profile")
   }

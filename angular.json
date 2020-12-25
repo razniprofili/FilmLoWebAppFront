@@ -40,6 +40,12 @@
               },
               {
                 "input": "node_modules/ng-snotify/styles/material.scss"
+              },
+              {
+                "input": "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css"
+              },
+              {
+                "input": "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css"
               }
             ],
             "scripts": []

@@ -29,36 +29,50 @@ import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {DatePipe} from '@angular/common';
 import {UpdateUserComponent} from './components/update-user/update-user.component';
+import {CarouselModule} from 'ngx-owl-carousel-o';
+import {UserInfoComponent} from './components/user-info/user-info.component';
 
 
 @NgModule({
-  declarations: [
-      AppComponent,
-      RegisterComponent,
-      AddWatchedMovieComponent,
-      FriendMovieDetailsComponent,
-      MySavedMovieDetailsComponent,
-      WatchedMovieDetailsComponent,
-      UpdateMovieComponent,
-      FriendMoviesComponent,
-      FriendInfoComponent,
-      UpdateUserComponent
+    declarations: [
+        AppComponent,
+        RegisterComponent,
+        AddWatchedMovieComponent,
+        FriendMovieDetailsComponent,
+        MySavedMovieDetailsComponent,
+        WatchedMovieDetailsComponent,
+        UpdateMovieComponent,
+        FriendMoviesComponent,
+        FriendInfoComponent,
+        UpdateUserComponent,
+        UserInfoComponent
 
-  ],
-  entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
-        BrowserAnimationsModule, MatDialogModule, NgScrollbarModule, MatIconModule, SnotifyModule, MatButtonModule, MatCardModule, MatTableModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-      DatePipe,
+    ],
+    entryComponents: [],
+    imports: [BrowserModule,
+              IonicModule.forRoot(),
+              AppRoutingModule,
+              HttpClientModule,
+              BrowserAnimationsModule,
+              MatDialogModule,
+              NgScrollbarModule,
+              MatIconModule,
+              SnotifyModule,
+              MatButtonModule,
+              MatCardModule,
+              MatTableModule,
+              CarouselModule],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        DatePipe,
 
-    // UserService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
-    SnotifyService
-  ],
-  exports : [FormsModule],
-  bootstrap: [AppComponent]
+        // UserService,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+        SnotifyService
+    ],
+    exports: [FormsModule],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

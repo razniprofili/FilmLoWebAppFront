@@ -10,6 +10,7 @@ import {SavedMovieModel} from '../models/saved-movie.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
 import {DatePipe} from '@angular/common';
 import {animate, state, transition, trigger} from '@angular/animations';
+import {SavedMoviesService} from './saved-movies.service';
 
 interface MovieData {
   id: string,
@@ -81,7 +82,8 @@ export class WatchedMoviesService {
  // private _friendMovies = new BehaviorSubject<Movie[]>([]);
   movieData: Movie;
 
-  constructor(private http: HttpClient, private authService: AuthService, private datePipe: DatePipe) { }
+  constructor(private http: HttpClient, private authService: AuthService, private datePipe: DatePipe,
+              private savedMoviesService: SavedMoviesService) { }
 
   // geters
 
@@ -348,6 +350,7 @@ export class WatchedMoviesService {
                 this._myWatchedMovies.next(
                     movies.concat(movie)
                 );
+                //this.savedMoviesService.removeMovie(movie.id)
             })
         )
     }

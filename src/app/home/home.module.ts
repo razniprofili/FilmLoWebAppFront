@@ -12,6 +12,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {SnotifyModule} from 'ng-snotify';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 // import {NgScrollbarModule} from 'ngx-scrollbar';
 // import {MaterialModule} from '@angular/material;
 
@@ -29,6 +30,7 @@ import {SnotifyModule} from 'ng-snotify';
     MatIconModule,
     NgScrollbarModule,
     SnotifyModule,
+    CarouselModule,
     // NgScrollbarModule
   ],
   declarations: [HomePage]
