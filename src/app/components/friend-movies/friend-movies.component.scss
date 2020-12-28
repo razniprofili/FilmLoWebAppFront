@@ -5,20 +5,35 @@ table {
 tr.example-detail-row {
   height: 0;
 }
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
 
 tr.example-element-row:not(.example-expanded-row):hover {
   background: whitesmoke;
 }
+//td:hover {
+//  background-color: #ee972a!important;
+//}
+
 
 .tableHeader {
   font-size: 20px!important;
-  color: black !important;
+ // color: black !important;
   font-family: Courgette!important;
   font-weight: bold;
+  color: white!important;
+  border-bottom: 1px solid whitesmoke !important;
 }
 
 .tableElements {
   font-size: 18px!important;
+  color: white !important;
 }
 
 .tableElementsDetails {
@@ -27,8 +42,14 @@ tr.example-element-row:not(.example-expanded-row):hover {
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
+ // background: #efefef;
+  background-color: #ee972a!important;
 }
+tr.example-element-row:not(.example-expanded-row):hover {
+  // background: #efefef;
+  background-color: #ee972a!important;
+}
+
 
 .example-element-row td {
   border-bottom-width: 0;
@@ -45,11 +66,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
   overflow: hidden;
   display: flex;
+  color: white;
 }
 
 .example-element-diagram {
   min-width: 80px;
-  border: 2px solid black;
+  border: 2px solid #db5656;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;

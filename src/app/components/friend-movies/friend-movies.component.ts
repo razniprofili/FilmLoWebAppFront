@@ -8,6 +8,7 @@ import {formatDate} from '@angular/common';
 import { DatePipe } from '@angular/common';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
+import {UserGet} from '../../auth/user-get.model';
 
 @Component({
   selector: 'app-friend-movies',
@@ -34,9 +35,26 @@ export class FriendMoviesComponent implements OnInit {
       private savedMoviesService: SavedMoviesService
   ) { }
 
-  friendMovies = this.data.dataKey.friendMovies
+  //friendMovies = this.data.dataKey.friendMovies
+    friendMovies: Movie [] = [{
+        id: "string",
+        actors: "string",
+        year: 5,
+        name: "string",
+        director: "string",
+        duration: 5,
+        genre: "string",
+        country: "string",
+        rate: 5,
+        comment: "string",
+        dateTimeWatched: "string",
+        dateTimeAdded:new Date(),
+        poster: "string",
+        user:new UserGet("name", "surname", "picture")
+    }]
   friendName = this.data.dataKey.userName
     friendSurname = this.data.dataKey.userSurname
+    friendId = this.data.dataKey.userId
 
    // friendMovies: Movie[] = new Array();
 
@@ -62,6 +80,13 @@ export class FriendMoviesComponent implements OnInit {
   ngOnInit() {
       console.log( this.datePipe.transform(new Date("2020-12-24 18:19"), 'dd-MM-yyyy HH:mm', 'CET' ))
      // this.changeDate()
+
+      this.moviesService.getMoviesFriend(this.friendId).subscribe(movies => {
+          console.log(movies)
+          this.friendMovies = movies;
+      }, (error => {
+          console.log(error)
+      }));
   }
 
     getConfig(): SnotifyToastConfig {

@@ -1,28 +1,25 @@
-<div class="home__body__contentMiddle__center">
-<!--  <h3 class="h2savedmovies">My profile</h3>-->
-
-  <div class="center" style=" border-bottom: 1px solid whitesmoke !important;
-                                      border-top: 1px solid whitesmoke !important;
-                                      border-left: 1px solid whitesmoke !important;
-                                      border-right: 1px solid whitesmoke !important;">
+<div>
+  <div class="center">
     <h3 class="bigh2">{{user.name}} {{user.surname}}</h3>
     <img
             alt=""
             mat-card-avatar
             src = {{user.picture}}
-            class="bigavatar"
-    >
+            class="bigavatar">
 <div>
   <button mat-flat-button *ngIf="!myFriend && !sentRequest && !myRequest" (click)="sendFirendRequest()" style="background-color: #ff9a45;
+                                                                  margin-top: 10px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Add as friend</button>
   <button mat-flat-button *ngIf="myFriend" (click)="viewFriendWatchMovies()" style="background-color: #ff9a45;
+                                                                  margin-top: 10px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Watched movies list</button>
 
   <button mat-flat-button *ngIf="myRequest" (click)="respond()" style="background-color: #00bf74;
+                                                                  margin-top: 10px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Respond to request</button>
@@ -30,11 +27,12 @@
 </div>
     <div>
       <button mat-flat-button [disabled]="true" *ngIf="!myFriend && sentRequest"   style="background-color:#526eff ;
+                                                                  margin-top: 10px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
         Waiting response</button>
       <button mat-flat-button *ngIf="myFriend" (click)="deleteFriend()" style="background-color: #ff4545;
-                                                                  margin-top: 20px !important;
+                                                                  margin-top: 10px !important;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
         Delete friend</button>

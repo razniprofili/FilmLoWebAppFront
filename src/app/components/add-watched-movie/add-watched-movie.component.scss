@@ -5,7 +5,16 @@
 
 .required {
   font-size: 15px !important;
-  color: firebrick;
+  color: #ffa62b;
+}
+
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
 }
 
 .header {
@@ -15,6 +24,7 @@
   h3 {
     font-weight: bold;
     font-size: 32px;
+    color: white;
   }
 }
 

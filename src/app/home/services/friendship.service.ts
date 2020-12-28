@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AuthResponseData, AuthService} from '../../auth/auth.service';
+import {AuthResponseData, AuthService, ResponseUserData} from '../../auth/auth.service';
 import {BehaviorSubject} from 'rxjs';
 import {UserModel} from '../models/user.model';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
+import {UserGet} from '../../auth/user-get.model';
 
 
 interface UserData {
@@ -57,6 +58,34 @@ export class FriendshipService {
         return this._myRequests.asObservable();
     }
 
+  getFriendInfo(friendId: number){
+
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http
+                  .get<FriendRequestModelRes>(
+                      `https://localhost:44397/api/User/friendInfo/${friendId}`, {
+                          headers: new HttpHeaders({
+                              'Authorization': token
+                          })
+                      }
+                  );
+          }),
+          map((friend) => {
+              console.log(friend);
+              var myFriend = new FriendRequestModel(
+                  friend.userSenderId,
+                  friend.userSender,
+                  friend.userRecipientId,
+                  friend.userRecipient,
+                  friend.friendshipDate,
+                  friend.statusCodeID
+              )
+              return myFriend;
+          })
+      );
+  }
 
   sentFriendRequest(friendId: number){
 

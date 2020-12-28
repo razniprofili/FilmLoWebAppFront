@@ -2,6 +2,17 @@
   width: 100%;
   margin-bottom: 18%;
 }
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
+//mat-dialog-container {
+//  background-color: #2a2a2a!important;
+//}
 .card-picture {
   width: 23%;
   margin-bottom: 2%;
@@ -16,14 +27,17 @@
 
 #div1 {
   margin-top: 20px;
+
 }
 
 #divDelete {
   margin-left: 50px;
   margin-top: 30px;
   font-size: 40px;
-  color: red;
+
   cursor: pointer;
+  color: white;
+  background-color: red;
 }
 
 #divAdd {
@@ -31,25 +45,30 @@
   //margin-left: 130px;
   margin-top: 30px;
   font-size: 40px;
-  color: black;
+  color: white;
   cursor: pointer;
+  background-color: #ffa62b ;
 }
 
 #pomerenspan {
   margin-bottom: 20px;
   font-size: 20px;
   font-family: "Tw Cen MT Condensed Extra Bold" !important;
+  color: white!important;
 }
 
 .uvecanspan {
   font-size: 20px;
   font-family: "Tw Cen MT Condensed Extra Bold" !important;
   margin-top: 25px;
+  color: white!important;
 
 }
 
 .pbold {
   font-weight: bold;
+ // color: white;
+  color: #f7900a;
 }
 
 
@@ -68,6 +87,7 @@
   h3 {
     font-weight: bold;
     font-size: 32px;
+    color: white!important;
   }
 }
 
@@ -124,7 +144,7 @@
   p {
     font-size: 30px;
     margin-top: 20px;
-    color: black;
+    color: white!important;
   }
 
   .submit-button {

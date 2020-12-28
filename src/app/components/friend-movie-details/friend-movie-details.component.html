@@ -60,17 +60,25 @@
 
       <ion-col class="kolonaslika">
 
-        <div (click)="addToSavedMovies()" >
-          <span id="divSave" class="material-icons">favorite</span>
-        </div>
-
+<!--        <div (click)="addToSavedMovies()" >-->
+<!--          <span id="divSave" class="material-icons">favorite</span>-->
+<!--        </div>-->
+<button mat-fab (click)="addToSavedMovies()" style="background-color: #ff9438; color: white; margin-left: 30px!important;">
+  <mat-icon>favorite</mat-icon>
+</button>
 
       </ion-col>
 
       <ion-col class="kolonaslika">
-        <div (click)="addToWatchedMovies()">
-          <span id="divAdd" class="material-icons">add_circle</span>
-        </div>
+
+<!--        <div (click)="addToWatchedMovies()">-->
+<!--          <span id="divAdd" class="material-icons">add_circle</span>-->
+<!--        </div>-->
+        <button mat-fab (click)="addToWatchedMovies()" style="background-color: white; color:black">
+          <mat-icon>add</mat-icon>
+        </button>
+
+
       </ion-col>
 
     </ion-row>

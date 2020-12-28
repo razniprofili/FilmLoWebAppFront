@@ -1,20 +1,27 @@
-<div class="home__body__contentMiddle__center">
-  <h2 class="h2savedmovies">My friends</h2>
-  <!--Loop Through All saved movies-->
-  <mat-card  class="posts" >
-    <mat-card-header class="posts__header">
-      <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture >
-      <div class="movie-name-search">
-        <h3> {{friend.name}} {{friend.surname}}</h3>
+<div>
+  <div>
+    <h3 class= "center"style="color: white; font-size: 30px;">{{friend.name}} {{friend.surname}}</h3>
+  </div>
+<div>
+  <h2 class="center" style="margin-top: 5px!important; font-size: 15px !important; color: white">Friends since: {{myFriendInfo.friendshipDate| date: "dd.MM.yyyy."}}</h2>
+</div>
+
+  <div class="center">
+    <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture  style="height: 120px; width: 120px; margin-top: 20px!important;">
+  </div>
+
+      <div class="center" style="margin-top: 20px!important;">
+        <span style="color: white; font-size: 18px; "> Total watched movies: {{countMovies}} </span>
       </div>
-    </mat-card-header>
-    <div>
-      <span> Total watched movies: {{countMovies}} </span>
-    </div>
-    <div>
-      <button mat-flat-button class="seebtn" (click)="seeFriendMovies()" *ngIf="countMovies != 0">See watched movies</button>
+      <div class="center" style="margin-top: 20px!important;">
+        <button mat-flat-button class="seebtn" (click)="seeFriendMovies()" *ngIf="countMovies != 0">See watched movies</button>
 
-    </div>
-
-  </mat-card>
+      </div>
+  <div class="center">
+    <button mat-flat-button  (click)="deleteFriend()" style="background-color: #ff4545;
+                                                                  margin-top: 20px !important;
+                                                                  margin-bottom: 20px!important;
+                                                                  color: white">
+      Delete friend</button>
+  </div>
 </div>

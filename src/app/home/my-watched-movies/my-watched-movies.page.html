@@ -111,16 +111,40 @@
 
           </div>
           <!--Loop Through All saved movies-->
-          <mat-card *ngFor="let p of watchedMovies" class="posts" (click)="openMovieDetails(p.id)">
-            <mat-card-header class="posts__header">
-              <img alt="{{ p.name }}" class="shape-poster" [src]=p.poster >
-              <div class="movie-name-search">
-                <span> {{ p.genre }}</span>
-                <span> {{ p.dateTimeWatched }}</span>
-                <h3> {{p.name}} </h3>
-              </div>
-            </mat-card-header>
-          </mat-card>
+<!--          <mat-card *ngFor="let p of watchedMovies" class="posts" (click)="openMovieDetails(p.id)">-->
+<!--            <mat-card-header class="posts__header">-->
+<!--              <img alt="{{ p.name }}" class="shape-poster" [src]=p.poster >-->
+<!--              <div class="movie-name-search">-->
+<!--                <span> {{ p.genre }}</span>-->
+<!--                <span> {{ p.dateTimeWatched }}</span>-->
+<!--                <h3> {{p.name}} </h3>-->
+<!--              </div>-->
+<!--            </mat-card-header>-->
+<!--          </mat-card>-->
+
+          <div class="center" *ngFor="let p of watchedMovies" (click)="openMovieDetails(p.id)" style=" border-bottom: 1px solid whitesmoke !important;
+                                      border-top: 1px solid whitesmoke !important;
+                                      border-left: 1px solid whitesmoke !important;
+                                      border-right: 1px solid whitesmoke !important;
+width: 600px">
+
+            <mat-grid-list cols="2" rowHeight="65px">
+              <mat-grid-tile [colspan]="1" [rowspan]="2">
+                <img alt="{{ p.name }}" class="shape-poster" float-left [src]=p.poster >
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <span style="font-size: 25px!important; margin-top: 20px !important; float: left!important; line-height: 1">
+                    {{p.name}}
+                  </span>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1" style="text-align: left!important;">
+                <div style="size: 20px!important; margin-top: 40px!important; float: right!important; ">
+                  Adding date: {{p.dateTimeAdded | date:'dd.MM.yyyy HH:mm'}}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+          </div>
         </div>
 
       </div>

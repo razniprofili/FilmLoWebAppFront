@@ -3,6 +3,9 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {WatchedMoviesService} from '../../home/services/watched-movies.service';
 import {Movie} from '../../home/models/movie.model';
 import {FriendMoviesComponent} from '../friend-movies/friend-movies.component';
+import {FriendshipService} from '../../home/services/friendship.service';
+import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {FriendRequestModel} from '../../home/models/friend-request.model';
 
 @Component({
   selector: 'app-friend-info',
@@ -17,9 +20,29 @@ export class FriendInfoComponent implements OnInit {
   constructor( @Inject(MAT_DIALOG_DATA) public data: any,
                public dialogRef: MatDialogRef<FriendInfoComponent>,
                private moviesService: WatchedMoviesService,
-               private matDialog: MatDialog) { }
+               private matDialog: MatDialog,
+               private friendshipService: FriendshipService,
+               private snotifyService: SnotifyService) { }
 
   friend = this.data.dataKey // recieved data is friend
+
+  // notification     style = 'material';
+      title = 'Done!';
+      body = 'Movie added to saved movie list!';
+      timeout = 3000;
+      position: SnotifyPosition = SnotifyPosition.rightBottom;
+      progressBar = true;
+      closeClick = true;
+      newTop = true;
+      filterDuplicates = false;
+      backdrop = -1;
+      dockMax = 8;
+      blockMax = 6;
+      pauseHover = true;
+      titleMaxLength = 15;
+      bodyMaxLength = 80;
+
+      myFriendInfo: FriendRequestModel
 
   ngOnInit() {
 
@@ -28,6 +51,67 @@ export class FriendInfoComponent implements OnInit {
       this.friendMovies = movies;
       this.countMovies = this.friendMovies.length;
     });
+
+    this.friendshipService.getFriendInfo(this.friend.id).subscribe((friend)=> {
+      this.myFriendInfo = friend;
+    })
+  }
+
+  getConfig(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: this.timeout,
+      showProgressBar: this.progressBar,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
+
+  getConfigError(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: 0,
+      showProgressBar: false,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
+
+  deleteFriend(){
+
+    this.friendshipService.deleteFriend(this.friend.id).subscribe(() => {
+          this.dialogRef.close();
+          this.snotifyService.success("User deleted from friends list!", "Done", this.getConfig());
+        },
+        (error => {
+          // uspesno = false;
+          console.log(error)
+          this.snotifyService.error("Error while deleting friend. Friend is not deleted!", "Error", this.getConfigError());
+        }))
   }
 
 
@@ -36,7 +120,8 @@ export class FriendInfoComponent implements OnInit {
     const sendingData = {
       'userName' : this.friend.name,
       'userSurname': this.friend.surname,
-      'friendMovies': this.friendMovies
+      //'friendMovies': this.friendMovies
+      'userId': this.friend.id
     }
     this.dialogRef.close();
     const dialogRef = this.matDialog.open(FriendMoviesComponent, {

@@ -8,6 +8,7 @@ import {FriendRequestModel} from '../../home/models/friend-request.model';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendMoviesComponent} from '../friend-movies/friend-movies.component';
 import {Movie} from '../../home/models/movie.model';
+import {UserGet} from '../../auth/user-get.model';
 
 @Component({
   selector: 'app-user-info',
@@ -60,7 +61,24 @@ export class UserInfoComponent implements OnInit {
   mySentRequests: FriendRequestModel[]
   myRequests: FriendRequestModel[]
 
-  friendMovies: Movie []
+  //friendMovies: Movie []
+
+   friendMovies: Movie [] = [{
+    id: "string",
+    actors: "string",
+    year: 5,
+    name: "string",
+    director: "string",
+    duration: 5,
+    genre: "string",
+    country: "string",
+    rate: 5,
+    comment: "string",
+    dateTimeWatched: "string",
+    dateTimeAdded:new Date(),
+    poster: "string",
+    user:new UserGet("name", "surname", "picture")
+  }]
 
   ngOnInit() {
 
@@ -94,12 +112,9 @@ export class UserInfoComponent implements OnInit {
       }
     });
 
-    if( this.myFriend) {
-      this.moviesService.getMoviesFriend(this.user.id).subscribe(movies => {
-        console.log(movies)
-        this.friendMovies = movies;
-      });
-    }
+
+
+
 
 
   }
@@ -142,10 +157,14 @@ export class UserInfoComponent implements OnInit {
 
   viewFriendWatchMovies() {
 
+
+
+    console.log(this.friendMovies)
     const sendingData = {
       'userName' : this.user.name,
       'userSurname': this.user.surname,
-      'friendMovies': this.friendMovies
+      'userId': this.user.id
+     // 'friendMovies': this.friendMovies
     }
     this.dialogRef.close();
     const dialogRef = this.matDialog.open(FriendMoviesComponent, {

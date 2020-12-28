@@ -9,12 +9,13 @@ mat-card-avatar {
   position: relative;
   //background-color: $body-color;
   background-color: black;
+  height: 100vh;
 }
 
 .h2savedmovies {
   color: white;
   font-size: 40px;
-  font-family: "Sofia" !important;
+  //font-family: "Sofia" !important;
 }
 
 ng-scrollbar {
@@ -463,6 +464,7 @@ ng-scrollbar {
               margin-bottom: 75px;
               margin-left: 20px;
               text-space: 20px;
+              color: white;
             }
           }
         }

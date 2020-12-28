@@ -161,12 +161,16 @@
 <!--          </mat-card>-->
 
           <!--Loop Through All friends movies-->
-          <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)">
+          <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)" style="border-bottom: 1px solid whitesmoke !important;
+                                    border-top: 1px solid whitesmoke !important;
+                                     border-left: 1px solid whitesmoke !important;
+                                   border-right: 1px solid whitesmoke !important;
+                                   background-color: #0d0d0d;">
             <mat-card-header class="posts__header">
               <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src={{p.user.picture}}>
               <div class="posts__header__right">
                 <span> {{ p.user.name }} {{ p.user.surname }}</span>
-                <span>{{ p.dateTimeAdded| date:'short' }}</span>
+                <span>{{ p.dateTimeAdded| date:'dd.MM.yyyy HH:mm' }}</span>
                 <h3> {{p.name}} </h3>
               </div>
             </mat-card-header>

@@ -3,6 +3,14 @@
 mat-card-avatar {
   size: 50px;
 }
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
 
 .seebtn {
 background-color: #FF9A45 !important;
@@ -454,6 +462,7 @@ ng-scrollbar {
               font-size: 15px;
               text-transform: capitalize;
               margin-bottom: 0;
+              color: white;
             }
           }
 
@@ -468,6 +477,7 @@ ng-scrollbar {
               margin-bottom: 75px;
               margin-left: 20px;
               text-space: 20px;
+              color: white;
             }
           }
         }

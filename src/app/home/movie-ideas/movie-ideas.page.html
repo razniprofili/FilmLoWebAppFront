@@ -103,9 +103,10 @@
 
         <div class="home__body__contentMiddle__center">
           <h2 class="h2savedmovies">Find movies</h2>
-          <mat-card class="post-message">
+
+          <mat-card class="post-message" style="background-color: black !important;">
             <mat-card-header class="post-message-header"
-                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
+                             style="">
               <img
                       alt=""
                       mat-card-avatar
@@ -120,15 +121,38 @@
           </mat-card>
 
           <!--Loop Through All movies-->
-          <mat-card *ngFor="let p of moviesSearchApi" class="posts" (click)="openMovieDetails( p.imdbID )">
-            <mat-card-header class="posts__header">
-              <img alt="{{ p.Title }}" class="shape-poster" [src]=p.Poster >
-              <div class="movie-name-search">
-                <span> {{ p.Year }}</span>
-                <h3> {{p.Title}} </h3>
-              </div>
-            </mat-card-header>
-          </mat-card>
+          <div class="center" *ngFor="let p of moviesSearchApi" (click)="openMovieDetails(p.imdbID)" style=" border-bottom: 1px solid whitesmoke !important;
+                                      border-top: 1px solid whitesmoke !important;
+                                      border-left: 1px solid whitesmoke !important;
+                                      border-right: 1px solid whitesmoke !important;
+width: 600px">
+
+            <mat-grid-list cols="2" rowHeight="65px">
+              <mat-grid-tile [colspan]="1" [rowspan]="2">
+                <img alt="{{ p.Title }}" class="shape-poster" float-left [src]=p.Poster >
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                  <span style="font-size: 25px!important; margin-top: 20px !important; float: left!important; line-height: 1">
+                    {{p.Title}}
+                  </span>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1" style="text-align: left!important;">
+                <div style="size: 20px!important; margin-top: 40px!important; float: right!important; ">
+                  Year: {{p.Year}}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+          </div>
+<!--          <mat-card *ngFor="let p of moviesSearchApi" class="posts" (click)="openMovieDetails( p.imdbID )">-->
+<!--            <mat-card-header class="posts__header">-->
+<!--              <img alt="{{ p.Title }}" class="shape-poster" [src]=p.Poster >-->
+<!--              <div class="movie-name-search">-->
+<!--                <span> {{ p.Year }}</span>-->
+<!--                <h3> {{p.Title}} </h3>-->
+<!--              </div>-->
+<!--            </mat-card-header>-->
+<!--          </mat-card>-->
         </div>
 
       </div>

@@ -46,7 +46,7 @@ export class FriendMovieDetailsComponent implements OnInit {
 
   movie: Movie = this.data.dataKey
 
-  dateMovie = this.datepipe.transform(this.movie.dateTimeAdded, 'dd-MM-yyyy hh:mm');
+  dateMovie = this.datepipe.transform(this.movie.dateTimeAdded, 'dd.MM.yyyy HH:mm');
 
   ngOnInit() {}
 

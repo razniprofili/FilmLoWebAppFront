@@ -12,6 +12,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatCardModule} from '@angular/material/card';
 import {SnotifyModule} from 'ng-snotify';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import {SnotifyModule} from 'ng-snotify';
         MatMenuModule,
         NgScrollbarModule,
         MatCardModule,
-        SnotifyModule
+        SnotifyModule,
+        MatGridListModule
     ],
   declarations: [MyFriendsPage]
 })

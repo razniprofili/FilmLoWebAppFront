@@ -290,7 +290,7 @@ export class HomePage {
     console.log(movie)
     const dialogRef = this.matDialog.open(FriendMovieDetailsComponent, {
       role: 'dialog',
-      height: '750px',
+      height: '850px',
       width: '500px',
       data: {
         dataKey: movie,

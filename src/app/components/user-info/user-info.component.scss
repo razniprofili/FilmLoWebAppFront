@@ -8,12 +8,22 @@ mat-card-avatar {
   width: 30%;
   height: 30%;
 }
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
+
 
 .bigh2 {
   margin-top: 50px;
   margin-bottom: 30px;
   font-weight: 400;
   font-size: 35px;
+  color: white;
 }
 
 

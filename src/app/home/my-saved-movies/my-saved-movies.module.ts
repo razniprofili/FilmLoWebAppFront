@@ -14,6 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {SnotifyModule} from 'ng-snotify';
 import {MatButtonModule} from '@angular/material/button';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {MatButtonModule} from '@angular/material/button';
         MatCardModule,
         MatTableModule,
         SnotifyModule,
-        MatButtonModule
+        MatButtonModule,
+        MatGridListModule
     ],
   declarations: [MySavedMoviesPage]
 })

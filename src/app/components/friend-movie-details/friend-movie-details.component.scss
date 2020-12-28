@@ -2,6 +2,15 @@
   width: 100%;
   margin-bottom: 18%;
 }
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
+
 
 .kolonaslika {
   margin-top: 20px !important;
@@ -86,17 +95,19 @@
   margin-bottom: 20px;
   font-size: 20px;
   font-family: "Tw Cen MT Condensed Extra Bold" !important;
+  color: white;
 }
 
 .uvecanspan {
   font-size: 20px;
   font-family: "Tw Cen MT Condensed Extra Bold" !important;
   margin-top: 25px;
-
+color: white;
 }
 
 .pbold {
   font-weight: bold;
+  color: #e78c30;
 }
 
 
@@ -126,6 +137,7 @@
   h3 {
     font-weight: bold;
     font-size: 32px;
+    color: white;
   }
 }
 

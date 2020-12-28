@@ -85,7 +85,7 @@ export class MyFriendsPage implements OnInit {
   openFriendDetails (friend: UserModel){
     const dialogRef = this.matDialog.open(FriendInfoComponent, {
       role: 'dialog',
-      height: '400px',
+      height: '500px',
       width: '500px',
       data: {
         dataKey: friend,

@@ -6,6 +6,7 @@
   position: relative;
   //background-color: $body-color;
   background-color: black;
+  height: 100vh;
 }
  .h1watched {
    font-size: 25px !important;
@@ -29,7 +30,7 @@ background-color: #FF9A45 !important;
 .h2savedmovies {
   color: white;
   font-size: 40px;
-  font-family: "Sofia" !important;
+  //font-family: "Sofia" !important;
 }
 
 ng-scrollbar {
@@ -42,11 +43,19 @@ ng-scrollbar {
 }
 
 .shape-poster {
-  width: 120px;
-  height: 200px;
-  border-radius: 20px;
+  //width: 120px;
+  //height: 200px;
+  //border-radius: 20px;
+  //position: relative;
+  //z-index: 0;
+  width: 80px;
+  height: 110px;
+  //border-radius: 20px;
   position: relative;
   z-index: 0;
+  // margin-top: 7px;
+  // margin-left: 10px!important;
+  float: left !important;
 }
 
 

@@ -161,8 +161,8 @@ export class MyProfilePage implements OnInit {
   openUpdateDialog(){
     const dialogRef = this.matDialog.open(UpdateUserComponent, {
       role: 'dialog',
-      height: '600px',
-      width: '700px',
+      height: '450px',
+      width: '600px',
       data: {
         dataKey: this.currentUser.id,
       }

@@ -126,7 +126,7 @@ export class MyWatchedMoviesPage implements OnInit {
     console.log(movieId)
     const dialogRef = this.matDialog.open(WatchedMovieDetailsComponent, {
       role: 'dialog',
-      height: '700px',
+      height: '720px',
       width: '500px',
       data: {
         dataKey: movieId,

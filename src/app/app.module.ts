@@ -31,6 +31,8 @@ import {DatePipe} from '@angular/common';
 import {UpdateUserComponent} from './components/update-user/update-user.component';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {UserInfoComponent} from './components/user-info/user-info.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import {UserInfoComponent} from './components/user-info/user-info.component';
         FriendMoviesComponent,
         FriendInfoComponent,
         UpdateUserComponent,
-        UserInfoComponent
+        UserInfoComponent,
+
 
     ],
     entryComponents: [],
@@ -61,7 +64,9 @@ import {UserInfoComponent} from './components/user-info/user-info.component';
               MatButtonModule,
               MatCardModule,
               MatTableModule,
-              CarouselModule],
+              CarouselModule,
+              MatGridListModule
+    ],
     providers: [
         StatusBar,
         SplashScreen,

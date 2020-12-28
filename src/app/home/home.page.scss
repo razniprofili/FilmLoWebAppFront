@@ -6,6 +6,7 @@
   position: relative;
   //background-color: $body-color;
   background-color: black;
+  height: 100vh;
 }
 
 ng-scrollbar {
@@ -401,11 +402,11 @@ ng-scrollbar {
       }
 
       mat-card.posts {
-        //background-color: #FF9A45;
+        background-color: black;
         //outline-color: white;
 
         .posts__header {
-
+color: white;
           display:flex;
 
           img {
@@ -417,10 +418,12 @@ ng-scrollbar {
             flex-direction: column-reverse;
 
             h3 {
-              font-weight: 600;
-              font-size: 15px;
+              font-weight: 400;
+              font-size: 20px;
               text-transform: capitalize;
               margin-bottom: 0;
+             // color: white;
+               color: #FF9A45;
             }
           }
 
@@ -435,6 +438,8 @@ ng-scrollbar {
               margin-bottom: 50px;
               margin-left: 150px;
               text-space: 20px;
+              //color: white;
+             // color: #FF9A45;
             }
           }
         }
@@ -445,6 +450,7 @@ ng-scrollbar {
 
         .posts__body {
           margin-top: 10px;
+          color: white;
         }
       }
     }

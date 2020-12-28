@@ -103,14 +103,14 @@
 
         <div class="home__body__contentMiddle__center">
           <h2 class="h2savedmovies">Find FilmLo users</h2>
-          <mat-card class="post-message">
+          <mat-card class="post-message" style="background-color: black !important;">
             <mat-card-header class="post-message-header"
-                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
+                             style="">
               <img
                       alt=""
                       mat-card-avatar
 
-                      src = "assets/icon/imdb.jpg">
+                      src = "assets/icon/user.png" style="width: 50px!important; height: 50px!important; ">
               <form #form="ngForm" (ngSubmit)="searchFilmloUsers(form)">
                 <input class="on-your-mind" name="message" ngModel placeholder="Search FilmLo Users" type="text" [(ngModel)]="userSearchName">
                 <button style="display: none;" type="submit"></button>
@@ -120,7 +120,12 @@
           </mat-card>
 
           <!--Loop Through All movies-->
-          <mat-card *ngFor="let p of resultusers" class="posts" (click)="operUserDetails(p)">
+          <mat-card *ngFor="let p of resultusers" class="posts" (click)="operUserDetails(p)" style="border-bottom: 1px solid whitesmoke !important;
+                                    border-top: 1px solid whitesmoke !important;
+                                     border-left: 1px solid whitesmoke !important;
+                                   border-right: 1px solid whitesmoke !important;
+                                   background-color: #0d0d0d;
+width: 600px ">
             <mat-card-header class="posts__header">
               <img alt="{{ p.name }}" mat-card-avatar [src]=p.picture >
               <div class="movie-name-search">

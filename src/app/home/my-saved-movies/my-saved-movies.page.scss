@@ -65,12 +65,13 @@ a {
   position: relative;
   //background-color: $body-color;
   background-color: black;
+  height: 100vh;
 }
 
 .h2savedmovies {
   color: white;
   font-size: 40px;
-  font-family: "Sofia" !important;
+ // font-family: "Sofia" !important;
 }
 
 ng-scrollbar {
@@ -83,13 +84,20 @@ ng-scrollbar {
 }
 
 .shape-poster {
-  width: 120px;
-  height: 200px;
-  border-radius: 20px;
+  width: 80px;
+  height: 110px;
+  //border-radius: 20px;
   position: relative;
   z-index: 0;
+ // margin-top: 7px;
+ // margin-left: 10px!important;
+ float: left !important;
 }
-
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important ;
+  align-items: flex-start !important;
+  width: 180px !important;
+}
 
 /* HEADER SECTION */
 .home__header {
@@ -250,6 +258,7 @@ ng-scrollbar {
   background-color: black;
   width: 100%;
   height: 100vh;
+  // height: 100%;
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
@@ -261,7 +270,7 @@ ng-scrollbar {
     position: relative;
 
     .inside {
-      position: fixed;
+     position: fixed;
       padding: 15px;
 
       margin-top: 5px;
@@ -325,12 +334,14 @@ ng-scrollbar {
 
   &__contentMiddle {
     padding: 10px;
-    margin-left: 420px;
+    margin-left: 500px;
     flex: 0.4;
     width: 40%;
     display: flex;
     flex-direction: column;
-
+    height: 100vh!important;
+    overscroll-behavior-y: contain !important;
+   // overflow: visible!important;
     &__top {
       flex: 0.5;
       display: flex;
@@ -393,6 +404,7 @@ ng-scrollbar {
     }
 
     &__center {
+
       padding: 0 10px;
       min-height: 20px;
       width: 100%;
@@ -401,7 +413,7 @@ ng-scrollbar {
       display: flex;
       flex-direction: column;
       gap:20px;
-
+      //overflow-y: scroll;
       mat-card.post-message {
         border-radius: 10px;
         display: flex;
@@ -522,7 +534,7 @@ ng-scrollbar {
       //flex-direction: column;
       width: 100%;
       height: 100%;
-      position: fixed;
+     // position: fixed;
       overflow-y: scroll;
       overflow-x: hidden;
     }
