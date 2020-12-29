@@ -13,6 +13,7 @@ import {FriendInfoComponent} from '../../components/friend-info/friend-info.comp
 import {UpdateUserComponent} from '../../components/update-user/update-user.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {FriendRequestModel} from '../models/friend-request.model';
 
 @Component({
   selector: 'app-my-profile',
@@ -61,6 +62,9 @@ export class MyProfilePage implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  myRequests: FriendRequestModel[]
+  myRequestsSub: Subscription
+
   constructor( private authService: AuthService,
                private alertController: AlertController,
                private router: Router,
@@ -87,12 +91,22 @@ export class MyProfilePage implements OnInit {
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
     });
+
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
   }
 
   ionViewWillEnter(){
     this.authService.currentUserInfo.subscribe(curruser => {
       this.user = curruser;
     })
+
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
+    });
   }
 
   getConfig(): SnotifyToastConfig {
@@ -158,10 +172,28 @@ export class MyProfilePage implements OnInit {
     }))
   }
 
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
+  }
+
   openUpdateDialog(){
     const dialogRef = this.matDialog.open(UpdateUserComponent, {
       role: 'dialog',
-      height: '450px',
+      height: '480px',
       width: '600px',
       data: {
         dataKey: this.currentUser.id,
@@ -179,6 +211,10 @@ export class MyProfilePage implements OnInit {
   openSearchApi(){
     this.router.navigateByUrl("/home/movie-ideas")
 
+  }
+
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
   }
 
   openSavedMoviesPage(){

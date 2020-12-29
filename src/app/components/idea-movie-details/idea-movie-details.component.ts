@@ -38,7 +38,7 @@ export class IdeaMovieDetailsComponent implements OnInit {
     Language: 'string',
     Country: 'string',
     Awards: 'string',
-    Poster: 'string',
+    Poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png',
     Ratings: null,
     // Ratings: [{Source: string, Value: string}];
 
@@ -194,7 +194,11 @@ export class IdeaMovieDetailsComponent implements OnInit {
             // uspesno = false;
             console.log(error)
             this.dialogRef.close();
-            this.snotifyService.error("Error while saving the movie. Movie is not saved.", "Error", this.getConfigError());
+            if( error.error.erroe == "SavedMovie currently exists!") {
+              this.snotifyService.error("This movie exists in your saved movies list!", "Error", this.getConfigError());
+            } else {
+              this.snotifyService.error("Error while saving the movie. Movie is not saved.", "Error", this.getConfigError());
+            }
           }));
 
   }

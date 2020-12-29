@@ -148,9 +148,6 @@ export class FriendMovieDetailsComponent implements OnInit {
 
   addToSavedMovies(){
 
-
-
-
     this.savedMoviesService.addSavedMovie(this.movie.id, this.movie.name, this.movie.poster,
         Number(this.movie.year), this.movie.genre, this.movie.actors, this.movie.country,
         this.movie.director, this.movie.duration ).subscribe( () => {
@@ -163,7 +160,12 @@ export class FriendMovieDetailsComponent implements OnInit {
           // uspesno = false;
           console.log(error)
           this.dialogRef.close();
-          this.snotifyService.error("Error while saving the movie. Movie is not saved.", "Error", this.getConfigError());
+          if( error.error.erroe == "SavedMovie currently exists!") {
+            this.snotifyService.error("This movie exists in your saved movies list!", "Error", this.getConfigError());
+          } else {
+            this.snotifyService.error("Error while saving the movie. Movie is not saved.", "Error", this.getConfigError());
+          }
+
         }));
   }
 }

@@ -13,6 +13,8 @@ import {UserModel} from '../models/user.model';
 import {WatchedMovieDetailsComponent} from '../../components/watched-movie-details/watched-movie-details.component';
 import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
 import {MatDialog} from '@angular/material/dialog';
+import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {FriendRequestModel} from '../models/friend-request.model';
 
 @Component({
   selector: 'app-my-friends',
@@ -43,6 +45,26 @@ export class MyFriendsPage implements OnInit {
   friends: UserModel[];
   friendsSub: Subscription;
 
+  // for notifications:
+
+  style = 'material';
+  title = 'Success!';
+  body = 'Movie removed from the list!';
+  timeout = 3000;
+  position: SnotifyPosition = SnotifyPosition.rightBottom;
+  progressBar = true;
+  closeClick = true;
+  newTop = true;
+  filterDuplicates = false;
+  backdrop = -1;
+  dockMax = 8;
+  blockMax = 6;
+  pauseHover = true;
+  titleMaxLength = 15;
+  bodyMaxLength = 80;
+
+  myRequestsSub: Subscription
+  myRequests: FriendRequestModel[]
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -52,10 +74,11 @@ export class MyFriendsPage implements OnInit {
                public alert: AlertController,
                private loadingCtrl: LoadingController,
                private friendshipService: FriendshipService,
-               private matDialog: MatDialog) {}
+               private matDialog: MatDialog,
+               private snotifyService: SnotifyService) {}
 
   ngOnInit() {
-    this.friendsSub = this.friendshipService.getMyFriends().subscribe((myFriends) => {
+    this.friendsSub = this.friendshipService.allMyFriends.subscribe((myFriends) => {
       this.friends = myFriends;
     });
 
@@ -68,11 +91,84 @@ export class MyFriendsPage implements OnInit {
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
     });
+
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
   }
 
   ionViewWillEnter(){
     this.friendshipService.getMyFriends().subscribe(myFriends =>{
       console.log(myFriends);
+    });
+
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
+    });
+
+  }
+
+  getConfig(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: this.timeout,
+      showProgressBar: this.progressBar,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
+
+  getConfigError(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: 0,
+      showProgressBar: false,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
+
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
     });
   }
 
@@ -92,6 +188,10 @@ export class MyFriendsPage implements OnInit {
       }
     });
   }
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
+  }
+
   openUserProfile() {
     this.router.navigateByUrl("/home/my-profile")
   }

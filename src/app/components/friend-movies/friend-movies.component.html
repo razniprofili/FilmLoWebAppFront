@@ -7,7 +7,7 @@
 </div>
 
 <table mat-table
-       [dataSource]="friendMovies" multiTemplateDataRows
+       [dataSource]="friendsMoviesString" multiTemplateDataRows
        class="mat-elevation-z8" style="background-color: #1d1d1d;">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay" style="color: white!important;">
     <th mat-header-cell *matHeaderCellDef class="tableHeader"> {{column}} </th>

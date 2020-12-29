@@ -12,6 +12,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     imports: [
@@ -23,7 +25,9 @@ import {MatMenuModule} from '@angular/material/menu';
         MatCardModule,
         MatIconModule,
         NgScrollbarModule,
-        MatMenuModule
+        MatMenuModule,
+        MatBadgeModule,
+        MatButtonModule
     ],
   declarations: [FilmloUsersPage]
 })

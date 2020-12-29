@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService, UserData} from '../auth/auth.service';
 import {Subscription} from 'rxjs';
@@ -15,6 +15,8 @@ import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {WatchedMovieDetailsComponent} from '../components/watched-movie-details/watched-movie-details.component';
 import {FriendMovieDetailsComponent} from '../components/friend-movie-details/friend-movie-details.component';
 import {MatDialog} from '@angular/material/dialog';
+import {FriendshipService} from './services/friendship.service';
+import {FriendRequestModel} from './models/friend-request.model';
 
 
 
@@ -40,7 +42,7 @@ export class HomePage {
   moviesSearchApi: MovieAPI[];
   movieSearchName: string;
   moviesSlides: Movie[]
-
+  countFriendMovies
   // user
 
   currentUser: User;
@@ -61,7 +63,7 @@ export class HomePage {
     'https://upload.wikimedia.org/wikipedia/commons/9/9a/Swepac_FB_465%2C_RV70%2C_with_passing_lorry.jpg'
   ];
   empty = true
-  notifications = 0
+  notifications
 
   // for notifications:
 
@@ -108,6 +110,8 @@ export class HomePage {
     nav: true
   }
 
+  myRequestsSub: Subscription
+  myRequests: FriendRequestModel[]
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -117,39 +121,46 @@ export class HomePage {
                public alert: AlertController,
                private loadingCtrl: LoadingController,
                private snotifyService: SnotifyService,
-               private matDialog: MatDialog) {}
+               private matDialog: MatDialog,
+               private friendshipService: FriendshipService) {}
 
 
 
   ngOnInit() {
 
-    this.moviesSub = this.watchedMoviesService.allFiendsMovies.subscribe((allFiendsMovies) => {
-      this.friendsMovies = allFiendsMovies;
-    });
-
-    // this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
-    //   this.savedMovies = savedMovies;
-    // });
-
     this.authService.currentUser.subscribe(user => {
-        this.currentUser = user;
-        console.log(user);
-      });
+      this.currentUser = user;
+      console.log(user);
+    });
 
 
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
+    });
+    // this.authService.currentUserInfo.subscribe(user => {
+    //   this.user = user;
+    // });
+
+    this.moviesSub = this.watchedMoviesService.allFiendsMovies.subscribe((allFiendsMovies) => {
+      this.friendsMovies = allFiendsMovies;
+      this.countFriendMovies = allFiendsMovies.length
     });
 
     // in slider i wan only first fix friends movies
     this.getMovie()
 
 
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
+
     console.log(this.user)
    }
 
    getMovie() {
-     if(this.friendsMovies != undefined) {
+     if(this.friendsMovies != undefined || this.friendsMovies.length != 0) {
        if(this.friendsMovies.length <= 6) {
          this.moviesSlides = this.friendsMovies
        } else {
@@ -162,14 +173,44 @@ export class HomePage {
 
   ionViewWillEnter(){
     console.log('izvrsen ion will enter')
+
     this.watchedMoviesService.getMoviesForAllFriends().subscribe(friendsMovies =>{
       console.log(friendsMovies);
     });
 
-    // this.savedMoviesService.getSavedMovies().subscribe(savedMovies =>{
-    //   console.log(savedMovies);
-    // });
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
+    });
+  }
 
+  ngOnDestroy(){
+
+    console.log('ngOnDestroy');
+    if(this.moviesSub){
+      this.moviesSub.unsubscribe();
+    }
+
+    if(this.myRequestsSub){
+      this.myRequestsSub.unsubscribe();
+    }
+  }
+
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
   }
 
   getConfig(): SnotifyToastConfig {
@@ -324,6 +365,7 @@ export class HomePage {
   openFilmLoUsersPage(){
     this.router.navigateByUrl("/home/filmlo-users")
   }
+
   openUserProfile() {
     this.router.navigateByUrl("/home/my-profile")
   }

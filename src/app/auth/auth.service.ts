@@ -169,6 +169,7 @@ export class AuthService {
   logout() {
     // this.ulogovan = false;
     this._user.next(null);
+   // this._userGet.next(null);
   }
 
   deleteAccount(){

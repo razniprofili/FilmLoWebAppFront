@@ -13,6 +13,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {SnotifyModule} from 'ng-snotify';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {SnotifyModule} from 'ng-snotify';
         MatMenuModule,
         MatCardModule,
         MatButtonModule,
-        SnotifyModule
+        SnotifyModule,
+        MatBadgeModule
     ],
   declarations: [MyProfilePage]
 })

@@ -309,7 +309,56 @@ export class FriendshipService {
                   {headers: new HttpHeaders({
                       'Authorization': token
                   })});
-          }));
+          }),
+          switchMap(() => {
+              return this.allMyFriends;
+          }),
+          take(1),
+          tap( (allMyfriends) => {
+              this._myFriends.next(allMyfriends.filter((friend) => friend.id !== friendId));
+          })
+      );
+  }
+
+  acceptRequest(friendId: number){
+
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http.post<FriendRequestModelRes>(`https://localhost:44397/api/User/acceptRequest/${friendId}`, "",
+                  {headers: new HttpHeaders({
+                          'Authorization': token
+                      })});
+          }),
+          switchMap(() => {
+              return this.myRequests;
+          }),
+          take(1),
+          tap( (requests) => {
+              this._myRequests.next(requests.filter((request) => request.userSenderId !== friendId));
+          })
+      );
+  }
+
+  declineRequest(friendId: number){
+
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http.post<FriendRequestModelRes>(`https://localhost:44397/api/User/declineRequest/${friendId}`, "",
+                  {headers: new HttpHeaders({
+                          'Authorization': token
+                      })});
+          }),
+          switchMap(() => {
+              return this.myRequests;
+          }),
+          take(1),
+          tap( (requests) => {
+              this._myRequests.next(requests.filter((request) => request.userSenderId !== friendId));
+          })
+      );
+
   }
 
 }

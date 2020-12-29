@@ -10,6 +10,26 @@ import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.c
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {UserGet} from '../../auth/user-get.model';
 
+class MovieStringDate {
+    constructor(
+        public id: string,
+        public actors: string,
+        public year: any,
+        public name: string,
+        public director: string,
+        public duration: any,
+        public genre: string,
+        public country: string,
+        public rate: any,
+        public comment: string,
+        public dateTimeWatched: string,
+        public dateTimeAdded: string,
+        public poster: string,
+        public user: UserGet
+        //  public userId: string
+    ) {}
+}
+
 @Component({
   selector: 'app-friend-movies',
   templateUrl: './friend-movies.component.html',
@@ -23,6 +43,7 @@ import {UserGet} from '../../auth/user-get.model';
   ],
     providers: [DatePipe]
 })
+
 export class FriendMoviesComponent implements OnInit {
 
   constructor(
@@ -36,6 +57,8 @@ export class FriendMoviesComponent implements OnInit {
   ) { }
 
   //friendMovies = this.data.dataKey.friendMovies
+
+
     friendMovies: Movie [] = [{
         id: "string",
         actors: "string",
@@ -49,10 +72,28 @@ export class FriendMoviesComponent implements OnInit {
         comment: "string",
         dateTimeWatched: "string",
         dateTimeAdded:new Date(),
-        poster: "string",
+        poster: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png",
         user:new UserGet("name", "surname", "picture")
     }]
-  friendName = this.data.dataKey.userName
+
+    friendsMoviesString: MovieStringDate [] =[{
+        id: "string",
+        actors: "string",
+        year: 5,
+        name: "string",
+        director: "string",
+        duration: 5,
+        genre: "string",
+        country: "string",
+        rate: 5,
+        comment: "string",
+        dateTimeWatched: "string",
+        dateTimeAdded:'20.12.2020 12:17',
+        poster: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1200px-IMDB_Logo_2016.svg.png",
+        user:new UserGet("name", "surname", "picture")
+    }]
+
+    friendName = this.data.dataKey.userName
     friendSurname = this.data.dataKey.userSurname
     friendId = this.data.dataKey.userId
 
@@ -78,12 +119,35 @@ export class FriendMoviesComponent implements OnInit {
     bodyMaxLength = 80;
 
   ngOnInit() {
-      console.log( this.datePipe.transform(new Date("2020-12-24 18:19"), 'dd-MM-yyyy HH:mm', 'CET' ))
-     // this.changeDate()
 
       this.moviesService.getMoviesFriend(this.friendId).subscribe(movies => {
           console.log(movies)
           this.friendMovies = movies;
+
+          var localMovies = new Array()
+
+          for( var i = 0; i< movies.length; i++) {
+              let movie = new MovieStringDate(
+                  movies[i].id,
+                  movies[i].actors,
+                  movies[i].year,
+                  movies[i].name,
+                  movies[i].director,
+                  movies[i].duration,
+                  movies[i].genre,
+                  movies[i].country,
+                  movies[i].rate,
+                  movies[i].comment,
+                  movies[i].dateTimeWatched,
+                  this.datePipe.transform(movies[i].dateTimeAdded, 'dd.MM.yyyy HH:mm'),
+                  movies[i].poster,
+                  movies[i].user
+              );
+              localMovies.push(movie)
+          }
+          this.friendsMoviesString = localMovies
+          console.log(this.friendsMoviesString)
+
       }, (error => {
           console.log(error)
       }));
@@ -181,10 +245,4 @@ export class FriendMoviesComponent implements OnInit {
       this.dialogRef.close();
     }
 
-    // changeDate() {
-    //   for(let i = 0; i< this.friendMoviesGet.length; i++) {
-    //       this.datePipe.transform(this.friendMoviesGet[i].dateTimeAdded, 'dd-MM-yyyy HH:mm', 'CET' )
-    //       this.friendMovies.concat(this.friendMoviesGet[i])
-    //   }
-    // }
 }

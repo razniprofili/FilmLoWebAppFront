@@ -13,6 +13,8 @@ import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatCardModule} from '@angular/material/card';
 import {SnotifyModule} from 'ng-snotify';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     imports: [
@@ -25,7 +27,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
         NgScrollbarModule,
         MatCardModule,
         SnotifyModule,
-        MatGridListModule
+        MatGridListModule,
+        MatBadgeModule,
+        MatButtonModule
     ],
     exports: [FormsModule],
   declarations: [MovieIdeasPage],

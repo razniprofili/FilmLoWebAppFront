@@ -42,7 +42,15 @@ export class FriendInfoComponent implements OnInit {
       titleMaxLength = 15;
       bodyMaxLength = 80;
 
-      myFriendInfo: FriendRequestModel
+      myFriendInfo: FriendRequestModel = {
+        userSenderId: 1,
+        userRecipientId: 1,
+        userSender: null,
+        userRecipient: null,
+        friendshipDate: String(new Date()),
+        statusCodeID: 'A'
+      }
+
 
   ngOnInit() {
 

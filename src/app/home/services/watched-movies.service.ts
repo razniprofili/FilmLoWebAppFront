@@ -9,7 +9,7 @@ import {SavedMovieAddModel} from '../models/saved-movie-add.model';
 import {SavedMovieModel} from '../models/saved-movie.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
 import {DatePipe} from '@angular/common';
-import {animate, state, transition, trigger} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SavedMoviesService} from './saved-movies.service';
 
 interface MovieData {

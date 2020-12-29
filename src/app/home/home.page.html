@@ -37,11 +37,42 @@
       <div *ngIf="notifications > 0">
         <mat-icon matBadge= {{notifications}}
                   matBadgeColor="warn"
-                  matBadgeOverlap="false">notifications
+                  matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
         </mat-icon>
+        <mat-menu  #menu="matMenu">
+          <!--          <button mat-menu-item>-->
+          <!--            <mat-icon>add</mat-icon> Smtng-->
+          <!--          </button>-->
+          <mat-card *ngFor="let p of myRequests" class="posts">
+            <mat-card-header class="posts__header">
+              <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
+              <div class="posts__header__right">
+                <h3 style="font-size: 20px!important; font-weight: bold!important;"> {{p.userSender.name}} {{p.userSender.surname}} </h3>
+                <span>{{ p.friendshipDate| date:'dd.MM.yyyy HH:mm' }}</span>
+              </div>
+            </mat-card-header>
+            <mat-card-content class="posts__body" style="margin-top: 10px!important;">
+              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
+              <button mat-flat-button color="warn" style="margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
+            </mat-card-content>
+
+          </mat-card>
+        </mat-menu>
       </div>
       <div *ngIf="notifications == 0">
-        <mat-icon>notifications</mat-icon>
+        <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
+        <mat-menu #menu="matMenu">
+<!--          <div class="center">-->
+<!--            <h1 style="color: black!important; font-size: 18px!important;">No notifications</h1>-->
+<!--          </div>-->
+          <mat-card >
+            <mat-card-header >
+              <div >
+                <h1 style="color: black!important; font-size: 18px">No notifications</h1>
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </mat-menu>
       </div>
 
 
@@ -108,7 +139,7 @@
 <!--    <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
       <!--OVAJ DIV SE MENJA KAKO KLIKCEMO PO IKONICAMA!!!!!!!! SVE OSTALO NE MRDA-->
       <!--    <div [style.overflow]="'auto'" [style.height.px]="'800'">-->
-      <div class="home__body__contentMiddle">
+      <div class="home__body__contentMiddle" *ngIf="countFriendMovies != 0">
 
         <!--      <button (click)="scrollToElement(target)"></button> ovo je za skrolovanje do nekog odredjenog mesta!!!-->
         <div class="home__body__contentMiddle__top">
@@ -182,6 +213,11 @@
         </div>
 
       </div>
+    <div class="home__body__contentMiddle" style="margin-left: 500px" *ngIf="countFriendMovies == 0">
+      <h3 style="margin-top: 200px; font-size: 25px">Your home page is empty!</h3>
+      <h3 style="font-size: 20px">You'll have more FilmLo user's watched movies if you add more friends.</h3>
+      <button mat-flat-button style="background-color: #ff9a1c; color: white; width: 200px; height: 50px; margin-left: 150px!important;" (click)="openFilmLoUsersPage()"> Find FilmLo friends </button>
+    </div>
     <div class="home__body__feedRight">
       <div class="inside">
 <!--        <img alt="feed" src="assets/feed.jpg">-->

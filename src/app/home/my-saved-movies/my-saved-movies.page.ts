@@ -12,6 +12,8 @@ import {RegisterComponent} from '../../components/register/register.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MySavedMovieDetailsComponent} from '../../components/my-saved-movie-details/my-saved-movie-details.component';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {FriendRequestModel} from '../models/friend-request.model';
+import {FriendshipService} from '../services/friendship.service';
 
 @Component({
   selector: 'app-my-saved-movies',
@@ -62,6 +64,9 @@ export class MySavedMoviesPage implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  myRequestsSub: Subscription
+  myRequests: FriendRequestModel[]
+
   constructor( private authService: AuthService,
                private alertController: AlertController,
                private router: Router,
@@ -70,7 +75,8 @@ export class MySavedMoviesPage implements OnInit {
                public alert: AlertController,
                private loadingCtrl: LoadingController,
                private matDialog: MatDialog,
-               private snotifyService: SnotifyService) {}
+               private snotifyService: SnotifyService,
+               private friendshipService: FriendshipService) {}
 
   ngOnInit() {
     this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
@@ -86,12 +92,22 @@ export class MySavedMoviesPage implements OnInit {
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
     });
+
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
   }
 
   ionViewWillEnter(){
     console.log('izvrsen ion will enter saved movies')
     this.savedMoviesService.getSavedMovies().subscribe(savedMovies =>{
       console.log(savedMovies);
+    });
+
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
     });
   }
 
@@ -116,7 +132,45 @@ export class MySavedMoviesPage implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+  getConfigError(): SnotifyToastConfig {
+    this.snotifyService.setDefaults({
+      global: {
+        newOnTop: this.newTop,
+        maxAtPosition: this.blockMax,
+        maxOnScreen: this.dockMax,
+        // @ts-ignore
+        filterDuplicates: this.filterDuplicates
+      }
+    });
+    return {
+      bodyMaxLength: this.bodyMaxLength,
+      titleMaxLength: this.titleMaxLength,
+      backdrop: this.backdrop,
+      position: this.position,
+      timeout: 0,
+      showProgressBar: false,
+      closeOnClick: this.closeClick,
+      pauseOnHover: this.pauseHover
+    };
+  }
 
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
+  }
   logout() {
 
 
@@ -124,6 +178,9 @@ export class MySavedMoviesPage implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl("/log-in")
 
+  }
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
   }
 
   openMovieDetails(movieId: string){

@@ -14,6 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import {SnotifyModule} from 'ng-snotify';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatCardModule,
         SnotifyModule,
         MatButtonModule,
-        MatGridListModule
+        MatGridListModule,
+        MatBadgeModule
     ],
   declarations: [MyWatchedMoviesPage]
 })

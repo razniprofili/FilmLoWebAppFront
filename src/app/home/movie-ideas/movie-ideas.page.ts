@@ -15,6 +15,8 @@ import {NgForm} from '@angular/forms';
 import {MySavedMovieDetailsComponent} from '../../components/my-saved-movie-details/my-saved-movie-details.component';
 import {MatDialog} from '@angular/material/dialog';
 import {IdeaMovieDetailsComponent} from '../../components/idea-movie-details/idea-movie-details.component';
+import {FriendshipService} from '../services/friendship.service';
+import {FriendRequestModel} from '../models/friend-request.model';
 
 @Component({
   selector: 'app-movie-ideas',
@@ -77,6 +79,8 @@ export class MovieIdeasPage implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  myRequests: FriendRequestModel[]
+  myRequestsSub: Subscription
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -86,7 +90,8 @@ export class MovieIdeasPage implements OnInit {
                public alert: AlertController,
                private loadingCtrl: LoadingController,
                private snotifyService: SnotifyService,
-               private matDialog: MatDialog) {}
+               private matDialog: MatDialog,
+               private friendshipService: FriendshipService) {}
 
 
 
@@ -108,6 +113,12 @@ export class MovieIdeasPage implements OnInit {
     });
 
     console.log(this.user)
+
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
   }
 
   ionViewWillEnter(){
@@ -120,6 +131,28 @@ export class MovieIdeasPage implements OnInit {
       console.log(savedMovies);
     });
 
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
+    });
+
+  }
+
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
   }
 
   getConfig(): SnotifyToastConfig {
@@ -225,6 +258,10 @@ export class MovieIdeasPage implements OnInit {
 
 
   // open div/page
+
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
+  }
 
   openHome() {
 

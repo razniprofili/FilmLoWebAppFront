@@ -17,6 +17,7 @@ import {FriendshipService} from '../services/friendship.service';
 import {UserModel} from '../models/user.model';
 import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
 import {UserInfoComponent} from '../../components/user-info/user-info.component';
+import {FriendRequestModel} from '../models/friend-request.model';
 
 @Component({
   selector: 'app-filmlo-users',
@@ -59,7 +60,7 @@ export class FilmloUsersPage implements OnInit {
     'https://upload.wikimedia.org/wikipedia/commons/9/9a/Swepac_FB_465%2C_RV70%2C_with_passing_lorry.jpg'
   ];
   empty = true
-  notifications = 0
+  notifications
 
   // for notifications:
 
@@ -83,6 +84,8 @@ export class FilmloUsersPage implements OnInit {
   allUsers: UserModel[]
   resultusers: UserModel[] = new Array()
   filmLoUsersSub: Subscription;
+  myRequestsSub: Subscription
+  myRequests: FriendRequestModel[]
 
   constructor(private authService: AuthService,
               private alertController: AlertController,
@@ -112,6 +115,20 @@ export class FilmloUsersPage implements OnInit {
       console.log(this.allUsers)
     });
 
+    // Other FilmLo users send me request:
+    this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
+      this.myRequests = myRequests;
+      this.notifications = myRequests.length
+    });
+
+  }
+
+  ionViewWillEnter(){
+    console.log('izvrsen ion will enter')
+
+    this.friendshipService.getMyRequests().subscribe((requests) => {
+      console.log(requests)
+    });
   }
 
   getConfig(): SnotifyToastConfig {
@@ -204,6 +221,10 @@ console.log(this.userSearchName)
   }
   // open div/page
 
+  openFilmLoUsersPage(){
+    this.router.navigateByUrl("/home/filmlo-users")
+  }
+
   openHome() {
 
     this.router.navigateByUrl("/home")
@@ -214,7 +235,7 @@ console.log(this.userSearchName)
 
     // and all others to false:
     this.homeVisibility = false
-
+    this.router.navigateByUrl("/home/movie-ideas")
   }
 
   openSavedMoviesPage(){
@@ -231,6 +252,24 @@ console.log(this.userSearchName)
 
   openUserProfile() {
     this.router.navigateByUrl("/home/my-profile")
+  }
+
+  acceptRequest(userId: number){
+    this.friendshipService.acceptRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+
+  declineRequest(userId: number){
+    this.friendshipService.declineRequest(userId).subscribe(()=> {
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
   }
 
 }
