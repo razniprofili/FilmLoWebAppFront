@@ -125,8 +125,23 @@ export class UserInfoComponent implements OnInit {
     });
   }
 
-  respond() {
-
+  acceptRequest(){
+    this.friendshipService.acceptRequest(this.user.id).subscribe(()=> {
+      this.dialogRef.close()
+      this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+    });
+  }
+  declineRequest() {
+    this.friendshipService.declineRequest(this.user.id).subscribe(()=> {
+      this.dialogRef.close()
+      this.snotifyService.success('Friend request declined!', 'Done', this.getConfig());
+    }, (error)=> {
+      console.log(error)
+      this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
+    });
   }
 
   deleteFriend(){

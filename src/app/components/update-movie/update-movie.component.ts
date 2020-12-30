@@ -42,6 +42,8 @@ export class UpdateMovieComponent implements OnInit {
   currentUser: User
   user: UserGet
 
+  rates: Number[] = [1, 2, 3, 4, 5]
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<UpdateMovieComponent>,
               private alertController: AlertController,

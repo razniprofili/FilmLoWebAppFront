@@ -12,7 +12,16 @@
         <span *ngIf="date.invalid && date.touched" class="required">This field is required</span>
       </div>
       <div class="user_name">
-        <input type="text" placeholder="Your rate" name="rate" #rate="ngModel" ngModel required="This field is required">
+<!--        <input type="text" placeholder="Your rate" name="rate" #rate="ngModel" ngModel required="This field is required">-->
+        <mat-form-field appearance="outline" style="background-color: white">
+          <mat-label >Your rate</mat-label>
+          <mat-select  name="rate" #rate="ngModel" ngModel required>
+            <mat-option *ngFor="let num of rates" [value]="num">
+              {{num}}
+            </mat-option>
+          </mat-select>
+<!--          <mat-error *ngIf="rate.invalid && rate.touched" class="required">Please choose a rate</mat-error>-->
+        </mat-form-field>
       </div>
       <div style="margin-top: 5px; margin-bottom: 5px">
         <span *ngIf="rate.invalid && rate.touched" class="required">This field is required</span>

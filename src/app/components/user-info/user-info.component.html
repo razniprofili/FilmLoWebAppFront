@@ -18,11 +18,18 @@
                                                                   color: white">
     Watched movies list</button>
 
-  <button mat-flat-button *ngIf="myRequest" (click)="respond()" style="background-color: #00bf74;
+  <h1 *ngIf="myRequest" style="color: white; margin-top: 10px; font-size: 15px">{{user.name}} sent you friend request</h1>
+  <button mat-flat-button *ngIf="myRequest" (click)="acceptRequest()" style="background-color: #00bf74;
                                                                   margin-top: 10px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
-    Respond to request</button>
+    Accept </button>
+  <button mat-flat-button *ngIf="myRequest" (click)="declineRequest()" style="background-color: #ff3131;
+                                                                  margin-top: 10px;
+                                                                  margin-bottom: 20px!important;
+                                                                  margin-left: 10px !important;
+                                                                  color: white">
+    Decline </button>
 
 </div>
     <div>

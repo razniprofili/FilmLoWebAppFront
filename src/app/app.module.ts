@@ -32,6 +32,8 @@ import {UpdateUserComponent} from './components/update-user/update-user.componen
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {UserInfoComponent} from './components/user-info/user-info.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -63,7 +65,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
               MatCardModule,
               MatTableModule,
               CarouselModule,
-              MatGridListModule
+              MatGridListModule, MatFormFieldModule, MatSelectModule
     ],
     providers: [
         StatusBar,
