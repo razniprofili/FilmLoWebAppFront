@@ -133,10 +133,12 @@ export class HomePage {
       console.log(user);
     });
 
-
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
+      console.log('user info home', user)
     });
+
+
     // this.authService.currentUserInfo.subscribe(user => {
     //   this.user = user;
     // });
@@ -181,6 +183,12 @@ export class HomePage {
     this.friendshipService.getMyRequests().subscribe((requests) => {
       console.log(requests)
     });
+
+    this.authService.getUser(this.currentUser.id).subscribe(user => {
+      this.user = user;
+      console.log('user info home', user)
+    });
+
   }
 
   ngOnDestroy(){

@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../../auth/auth.service';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import axios from 'axios';
 
 @Component({
   selector: 'app-update-user',
@@ -16,6 +17,9 @@ export class UpdateUserComponent implements OnInit {
   @Input() myName: string
   @Input() mySurname: string
   @Input() myPicture: string
+  @ViewChild('fileBtn') fileBtn: {
+    nativeElement: HTMLInputElement
+  }
 
   // for notifications:
 
@@ -96,7 +100,9 @@ export class UpdateUserComponent implements OnInit {
 
   updateUser(){
 
-    this.userService.updateUser(this.form.value['name'], this.myPicture, this.form.value['surname']).subscribe( (res) => {
+    var newImg = document.getElementById('userPic') as HTMLImageElement
+
+    this.userService.updateUser(this.form.value['name'], newImg.src, this.form.value['surname']).subscribe( (res) => {
           console.log(res)
           this.dialogRef.close();
           this.snotifyService.success(this.body, this.title, this.getConfig());
@@ -110,5 +116,53 @@ export class UpdateUserComponent implements OnInit {
 
   }
 
+  uploadPic(event) {
+
+
+    const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/timi11/image/upload';
+    const CLOUDINARY_UPLOAD_PRESET = 'mdrb0x8n';
+
+    const data = new FormData()
+    data.append('file', event.target.files[0])
+    data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    data.append('folder', 'filmlo_users');
+
+    let picUrl = ""
+    var newImg = document.getElementById('userPic') as HTMLImageElement
+
+    axios.post(CLOUDINARY_URL, data).then(function(res) {
+      console.log(res.data)
+      console.log(res.data.secure_url)
+      picUrl = res.data.secure_url
+
+      newImg.src = picUrl
+      console.log(picUrl)
+
+    }).catch(function(err) {
+      console.error(err)
+    });
+
+    // second way:
+// try {
+//   fetch(CLOUDINARY_URL, {
+//     method: 'POST',
+//     mode: 'no-cors',
+//     body: data
+//   }).then(function(res) {
+//     console.log(res)
+//   })
+//       // .then(response => response.json()).then(res => {
+//       //   console.log(res)
+//       //   // if (data.secure_url !== '') {
+//       //   //   const uploadedFileUrl = data.secure_url;
+//       //   //   console.log(data.secure_url)
+//       //   //   localStorage.setItem('passportUrl', uploadedFileUrl);
+//       //   // }
+//       // });
+// } catch(err) {
+//  console.error(err)
+// };
+
+  }
 
 }

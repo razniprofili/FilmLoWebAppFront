@@ -34,7 +34,8 @@ import {UserInfoComponent} from './components/user-info/user-info.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-
+import {CloudinaryModule} from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
 
 
 @NgModule({
@@ -65,7 +66,10 @@ import {MatSelectModule} from '@angular/material/select';
               MatCardModule,
               MatTableModule,
               CarouselModule,
-              MatGridListModule, MatFormFieldModule, MatSelectModule
+              MatGridListModule,
+              MatFormFieldModule,
+              MatSelectModule,
+              CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'timi11'}),
     ],
     providers: [
         StatusBar,

@@ -6,13 +6,19 @@
   <div class="body">
     <form #form="ngForm">
       <div class="center">
-        <img
-                alt=""
-                mat-card-avatar
-                src = {{myPicture}}
-                class="bigavatar"
-                name="picture"
-        >
+        <label for="fileUpload" class="file-upload-container">
+          <input type="file" #fileBtn (change)="uploadPic($event)" id="fileUpload" style="display:none;"/>
+          Select an image
+        </label>
+        <div>
+          <img
+                  alt=""
+                  mat-card-avatar
+                  src = {{myPicture}}
+                  class="bigavatar"
+                  name="picture"
+                  id="userPic">
+        </div>
       </div>
       <div class="user_name">
         <input type="text" placeholder="Your name" name="name" #name="ngModel" [ngModel]="myName" >
