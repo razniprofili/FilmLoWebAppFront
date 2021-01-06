@@ -1,0 +1,193 @@
+
+<div class="home-container">
+  <div class="home__header">
+    <div class="home__header__left">
+      <img mat-card-avatar src="assets/logo/logo.png"/>
+    </div>
+
+    <div class="home__header__middle">
+      <div (click)="openHome()">
+        <mat-icon>home</mat-icon>
+      </div>
+      <div (click)="openSearchApi()">
+        <mat-icon>ondemand_video</mat-icon>
+      </div>
+      <div (click)="openSavedMoviesPage()">
+        <mat-icon>watch_later</mat-icon>
+      </div>
+
+    </div>
+    <div class="home__header__right" >
+      <div (click)="openUserProfile()">
+        <img
+                alt=""
+                mat-card-avatar
+                src={{user.picture}}>
+        <span class="name">{{ user.name || 'Indranil'}}</span>
+      </div>
+
+
+      <div *ngIf="notifications > 0">
+        <mat-icon matBadge= {{notifications}}
+                  matBadgeColor="warn"
+                  matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
+        </mat-icon>
+        <mat-menu  #menu="matMenu">
+          <mat-card *ngFor="let p of myRequests" class="posts">
+            <mat-card-header class="posts__header">
+              <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
+              <div class="posts__header__right">
+                <h3 style="font-size: 20px!important; font-weight: bold!important;"> {{p.userSender.name}} {{p.userSender.surname}} </h3>
+                <span>{{ p.friendshipDate| date:'dd.MM.yyyy HH:mm' }}</span>
+              </div>
+            </mat-card-header>
+            <mat-card-content class="posts__body" style="margin-top: 10px!important;">
+              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
+              <button mat-flat-button color="warn" style="margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
+            </mat-card-content>
+
+          </mat-card>
+        </mat-menu>
+      </div>
+      <div *ngIf="notifications == 0">
+        <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
+        <mat-menu #menu="matMenu">
+          <mat-card >
+            <mat-card-header >
+              <div >
+                <h1 style="color: black!important; font-size: 18px">No notifications</h1>
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </mat-menu>
+      </div>
+
+
+      <div>
+
+        <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> Logout
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
+    <div class="home__body">
+
+      <div class="home__body__sidebarLeft">
+        <div class="inside">
+          <div class="user-avatar" (click)="openUserProfile()" style="margin-left: 10px!important;">
+            <img
+                    alt=""
+                    mat-card-avatar
+                    src = {{user.picture}}>
+
+            <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
+          </div>
+
+          <div (click)="openWatchedMoviesPage()">
+            <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
+            <span>Watched movies</span>
+          </div>
+
+          <div (click)="openFilmLoFriendsPage()">
+            <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
+            <span>FilmLo friends</span>
+          </div>
+
+          <div (click)="openFilmLoUsersPage()">
+            <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
+            <span>Search FilmLo users</span>
+          </div>
+
+          <div class="active">
+            <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
+            <span>Statistics</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="home__body__contentMiddle">
+
+
+        <div class="home__body__contentMiddle__center" style="width: 1000px!important;">
+          <h2 class="h2savedmovies">My statistics</h2>
+
+          <div *ngIf="yearData.length != 0">
+            <div id="chartContainer" style="height: 370px; width: 80%;"></div>
+          </div>
+
+          <div>
+
+            <h2>
+              <mat-icon style="color: #FF9A45; font-size:30px"> functions</mat-icon>
+              Total number of watched movies: {{statistic.totalCount}}</h2>
+          </div>
+
+          <div>
+            <h2>
+              <mat-icon style="color: #FF9A45"> rate_review</mat-icon>
+              Average rate given: {{statistic.averageRate}}</h2>
+          </div>
+
+          <div style="width: 100%!important;">
+            <h2>
+              <mat-icon style="color: #FF9A45"> watch</mat-icon>
+              Total time spent on watched movies: {{timeConvert()}}</h2>
+          </div>
+
+          <div>
+            <h1>Best rated movies</h1>
+          </div>
+
+          <div  *ngIf="popularMovies.length == 0">
+            <p>No watched movies with rate 5.</p>
+          </div>
+
+
+          <table mat-table *ngIf="popularMovies.length != 0" [dataSource]="popularMovies"  style="width: 80%!important; background-color: #1a1a1a;">
+
+
+            <ng-container matColumnDef="position" >
+              <th mat-header-cell *matHeaderCellDef style="width: 20% !important; font-size: 20px!important; color: white!important;"> No. </th>
+              <td mat-cell *matCellDef="let element; let i = index" style="color: white!important;"> {{i + 1}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="movieName">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 20px!important; color: white!important; width: 70%!important;"> Name </th>
+              <td mat-cell *matCellDef="let element" style="color: white!important;"> {{element.movieName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="button">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 20px!important; color: white!important;"></th>
+              <td mat-cell *matCellDef="let element" style="color: white!important;">
+                <button mat-flat-button style="background-color: #ff9b1f; color: white" (click)="openMovieDetails(element.movieId)">Details</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+      </div>
+
+      <div class="home__body__feedRight">
+        <div class="inside">
+
+        </div>
+      </div>
+
+    </div>
+  </ng-scrollbar>
+  <ng-snotify class="{{ style }}"></ng-snotify>
+</div>
+

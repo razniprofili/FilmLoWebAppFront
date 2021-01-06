@@ -36,7 +36,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {CloudinaryModule} from '@cloudinary/angular-5.x';
 import * as  Cloudinary from 'cloudinary-core';
-
+import {PopularMovieDetailsComponent} from './components/popular-movie-details/popular-movie-details.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +50,8 @@ import * as  Cloudinary from 'cloudinary-core';
         FriendMoviesComponent,
         FriendInfoComponent,
         UpdateUserComponent,
-        UserInfoComponent
+        UserInfoComponent,
+        PopularMovieDetailsComponent
     ],
     entryComponents: [],
     imports: [BrowserModule,

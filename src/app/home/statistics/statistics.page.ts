@@ -1,47 +1,47 @@
-import { Component, OnDestroy } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {AuthService, UserData} from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
-import {User} from '../auth/user.model';
-import {UserGet} from '../auth/user-get.model';
+import {Movie} from '../models/movie.model';
+import {SavedMovieModel} from '../models/saved-movie.model';
+import {MovieAPI} from '../models/movieAPI.model';
+import {User} from '../../auth/user.model';
+import {UserGet} from '../../auth/user-get.model';
+import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {FriendRequestModel} from '../models/friend-request.model';
+import {AuthService} from '../../auth/auth.service';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {Movie} from './models/movie.model';
-import {WatchedMoviesService} from './services/watched-movies.service';
-import {MovieAPI} from './models/movieAPI.model';
-import {SavedMovieModel} from './models/saved-movie.model';
-import {SavedMoviesService} from './services/saved-movies.service';
-import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
-import {WatchedMovieDetailsComponent} from '../components/watched-movie-details/watched-movie-details.component';
-import {FriendMovieDetailsComponent} from '../components/friend-movie-details/friend-movie-details.component';
+import {WatchedMoviesService} from '../services/watched-movies.service';
+import {SavedMoviesService} from '../services/saved-movies.service';
 import {MatDialog} from '@angular/material/dialog';
-import {FriendshipService} from './services/friendship.service';
-import {FriendRequestModel} from './models/friend-request.model';
-
-
+import {FriendshipService} from '../services/friendship.service';
+import {NgForm} from '@angular/forms';
+import {FriendMovieDetailsComponent} from '../../components/friend-movie-details/friend-movie-details.component';
+import {StatisticModel} from '../models/statistic.model';
+import {StatisticService} from '../services/statistic.service';
+import {PopularMovieModel} from '../models/popular-movie.model';
+import {WatchedMovieDetailsComponent} from '../../components/watched-movie-details/watched-movie-details.component';
+import * as CanvasJS from './canvasjs.min';
+import {PopularMovieDetailsComponent} from '../../components/popular-movie-details/popular-movie-details.component';
+import {YearStatisticModel} from '../models/year-statistic.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-statistics',
+  templateUrl: './statistics.page.html',
+  styleUrls: ['./statistics.page.scss'],
 })
+export class StatisticsPage implements OnInit {
 
-export class HomePage {
-
-  // div visibility
+// div visibility
   disabled = false;
   homeVisibility = true // init
   searchApiVisibility = false
 
   // movies
 
-  moviesSub: Subscription;
-  savedMoviesSub: Subscription;
-  friendsMovies: Movie[];
+
   savedMovies: SavedMovieModel[];
   moviesSearchApi: MovieAPI[];
   movieSearchName: string;
-  moviesSlides: Movie[]
   countFriendMovies
   // user
 
@@ -54,14 +54,6 @@ export class HomePage {
 
   // other
 
-  images: any[] = [
-    'https://images-na.ssl-images-amazon.com/images/I/51DR2KzeGBL._AC_.jpg',
-    'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg',
-    'https://torange.biz/photofx/93/8/light-vivid-colors-fragment-love-background-rain-fall-cover-93412.jpg',
-    'https://cdn.pixabay.com/photo/2017/07/18/18/24/dove-2516641_960_720.jpg',
-    'https://c0.wallpaperflare.com/preview/956/761/225/5be97da101a3f.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/9/9a/Swepac_FB_465%2C_RV70%2C_with_passing_lorry.jpg'
-  ];
   empty = true
   notifications
 
@@ -113,6 +105,41 @@ export class HomePage {
   myRequestsSub: Subscription
   myRequests: FriendRequestModel[]
 
+  // statistic data:
+
+  statistic: StatisticModel = {
+    userId: 1,
+    totalCount: 0,
+    totalTime: 0,
+    averageRate: 0
+  }
+
+  timeWatched: string
+ // statistic: StatisticModel
+
+  statSub: Subscription
+
+  popularMovies: PopularMovieModel [] = [
+    {
+      userId: 1,
+      movieName: "movieName",
+      movieId: "id"
+    }
+  ]
+
+  yearData: YearStatisticModel [] = [
+    {
+      userId: 1,
+      year: "2020.",
+      count: 1
+    }
+  ]
+
+  i = 0
+
+  displayedColumns: string[] = ['position', 'movieName', 'button'];
+  data: {y: number, label: string}[]=[]
+
   constructor( private authService: AuthService,
                private alertController: AlertController,
                private router: Router,
@@ -122,11 +149,50 @@ export class HomePage {
                private loadingCtrl: LoadingController,
                private snotifyService: SnotifyService,
                private matDialog: MatDialog,
-               private friendshipService: FriendshipService) {}
+               private friendshipService: FriendshipService,
+               private statisticService: StatisticService,
+               ) {}
 
 
 
   ngOnInit() {
+
+    this.statisticService.getStatistic().subscribe((stat )=> {
+      this.statistic = stat
+      console.log('stat page data:')
+      console.log(stat)
+    })
+
+    this.statisticService.getPopularMovies().subscribe((movies )=> {
+      this.popularMovies = movies
+      console.log(movies)
+    })
+
+    this.statisticService.getYearStatistic().subscribe((stats )=> {
+      this.yearData = stats
+      this.dataFormation(stats)
+
+      // bar chart
+
+      CanvasJS.addColorSet('customColorSet1', [ "#FF9A45"]);
+
+      let chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        exportEnabled: true,
+        dataPointWidth: 50,
+        colorSet: "customColorSet1",
+        theme: 'dark2',
+        title: {
+          text: "Watched movies per year"
+        },
+        data: [{
+          type: "column",
+          dataPoints: this.data
+        }]
+      });
+
+      chart.render();
+    });
 
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -139,46 +205,17 @@ export class HomePage {
     });
 
 
-    // this.authService.currentUserInfo.subscribe(user => {
-    //   this.user = user;
-    // });
-
-    this.moviesSub = this.watchedMoviesService.allFiendsMovies.subscribe((allFiendsMovies) => {
-      this.friendsMovies = allFiendsMovies;
-      this.countFriendMovies = allFiendsMovies.length
-    });
-
-    // in slider i wan only first fix friends movies
-    this.getMovie()
-
-
     // Other FilmLo users send me request:
     this.myRequestsSub = this.friendshipService.myRequests.subscribe( (myRequests) => {
       this.myRequests = myRequests;
       this.notifications = myRequests.length
     });
 
-    console.log(this.user)
-   }
+  }
 
-   getMovie() {
-     if(this.friendsMovies != undefined || this.friendsMovies.length != 0) {
-       if(this.friendsMovies.length <= 6) {
-         this.moviesSlides = this.friendsMovies
-       } else {
-         for(var i=0; i<= 6; i++){
-           this.moviesSlides.push( this.friendsMovies[i])
-         }
-       }
-     }
-   }
 
   ionViewWillEnter(){
-    console.log('izvrsen ion will enter')
-
-    this.watchedMoviesService.getMoviesForAllFriends().subscribe(friendsMovies =>{
-      console.log(friendsMovies);
-    });
+    console.log('ion will enter done')
 
     this.friendshipService.getMyRequests().subscribe((requests) => {
       console.log(requests)
@@ -189,18 +226,56 @@ export class HomePage {
       console.log('user info home', user)
     });
 
+    this.statisticService.getStatistic().subscribe((stat )=> {
+      console.log(stat)
+    })
+
   }
 
   ngOnDestroy(){
 
-    console.log('ngOnDestroy');
-    if(this.moviesSub){
-      this.moviesSub.unsubscribe();
+  }
+
+  dataFormation(stats: YearStatisticModel[]){
+    for(var i=0; i< stats.length; i++){
+        this.data.push({ y: stats[i].count, label: stats[i].year})
+    }
+  }
+
+  openMovieDetails(movieId: string){
+    const dialogRef = this.matDialog.open(PopularMovieDetailsComponent, {
+      role: 'dialog',
+      height: '720px',
+      width: '500px',
+      data: {
+        dataKey: movieId,
+      }
+    });
+  }
+
+  timeConvert() {
+    var num = this.statistic.totalTime;
+    // var num = 1500
+    var days = Math.floor(num/24/60)
+    var hours = Math.floor(num/60%24)
+    var minutes = Math.floor(num%60)
+
+    if(days == 0) {
+      if(minutes == 0){
+        return  hours + ' hour(s)';
+      } else {
+        return  hours + ' hour(s)' + " " + minutes+ " minute(s)";
+      }
+
+    } else {
+      if(minutes == 0){
+        return days + " day(s)"+ " " + hours + ' hour(s)';
+      } else {
+        return days + " day(s)"+ " " + hours + ' hour(s)'+ ' ' + minutes+ " minute(s)";
+      }
+
     }
 
-    if(this.myRequestsSub){
-      this.myRequestsSub.unsubscribe();
-    }
   }
 
   acceptRequest(userId: number){
@@ -270,35 +345,35 @@ export class HomePage {
     const {searchName} = form.value;
 
 
-      //ovde ide nasa fja:
-      // tslint:disable-next-line:triple-equals
-      if (this.movieSearchName != null && this.movieSearchName != ' ') {
+    //ovde ide nasa fja:
+    // tslint:disable-next-line:triple-equals
+    if (this.movieSearchName != null && this.movieSearchName != ' ') {
 
-        try {
-          fetch('http://www.omdbapi.com/?s=' + this.movieSearchName.trim().toLowerCase() + '&type=movie&apikey=4a249f8d')
-              .then(response => response.json())
-              .then(res => {
-                    this.moviesSearchApi = res.Search;
-                    console.log(res);
-                    if (res.Error === 'Movie not found!') {
-                      //this.presentAlert('', 'Nema rezultata pretrage za ' + this.movieSearchName);
-                      this.snotifyService.warning("No matches for " + this.movieSearchName, "Warning", this.getConfigError());
-                    }
-                    if (res.Error === 'Too many results.') {
-                     // this.presentAlert('', 'Previše poklapanja, poboljšaj kriterijum pretrage!');
-                      this.snotifyService.warning("Too many matches, improve your search criteria!", "Warning", this.getConfigError());
-                    }
+      try {
+        fetch('http://www.omdbapi.com/?s=' + this.movieSearchName.trim().toLowerCase() + '&type=movie&apikey=4a249f8d')
+            .then(response => response.json())
+            .then(res => {
+                  this.moviesSearchApi = res.Search;
+                  console.log(res);
+                  if (res.Error === 'Movie not found!') {
+                    //this.presentAlert('', 'Nema rezultata pretrage za ' + this.movieSearchName);
+                    this.snotifyService.warning("No matches for " + this.movieSearchName, "Warning", this.getConfigError());
                   }
+                  if (res.Error === 'Too many results.') {
+                    // this.presentAlert('', 'Previše poklapanja, poboljšaj kriterijum pretrage!');
+                    this.snotifyService.warning("Too many matches, improve your search criteria!", "Warning", this.getConfigError());
+                  }
+                }
 
-              );
-        } catch (e) {
-          console.log(e);
-        }
-      } else {
-
-        //this.presentAlert('Greška', 'Moraš uneti naziv filma za pretragu!');
-        this.snotifyService.error("You must enter movie name!", "Error", this.getConfigError());
+            );
+      } catch (e) {
+        console.log(e);
       }
+    } else {
+
+      //this.presentAlert('Greška', 'Moraš uneti naziv filma za pretragu!');
+      this.snotifyService.error("You must enter movie name!", "Error", this.getConfigError());
+    }
 
   }
 
@@ -334,24 +409,8 @@ export class HomePage {
 
   // open div/page
 
-  openMovieDetails(movie: Movie){
-
-    console.log(movie)
-    const dialogRef = this.matDialog.open(FriendMovieDetailsComponent, {
-      role: 'dialog',
-      height: '850px',
-      width: '500px',
-      data: {
-        dataKey: movie,
-      }
-    });
-  }
-
   openHome() {
-    this.homeVisibility = true
-
-    // and all others to false:
-    this.searchApiVisibility = false;
+    this.router.navigateByUrl("/home")
   }
 
   openSearchApi(){
@@ -378,7 +437,5 @@ export class HomePage {
     this.router.navigateByUrl("/home/my-profile")
   }
 
-  openStatistics() {
-    this.router.navigateByUrl("/home/statistics")
-  }
+
 }

@@ -4,14 +4,19 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  //background-color: $body-color;
   background-color: black;
   height: 100vh;
 }
 
+.h2savedmovies {
+  color: white;
+  font-size: 40px;
+
+}
+
 ng-scrollbar {
   --scrollbar-size: 8px;
- // --scrollbar-thumb-color: rgba(94, 175, 255, 0.5);
+  // --scrollbar-thumb-color: rgba(94, 175, 255, 0.5);
   --scrollbar-thumb-color: #FF9A45;
   --scrollbar-thumb-hover-color: #FF9A45;
   --scrollbar-border-radius: 4px;
@@ -26,11 +31,6 @@ ng-scrollbar {
   z-index: 0;
 }
 
-.h2savedmovies {
-  color: white;
-  font-size: 40px;
-  font-family: "Sofia" !important;
-}
 
 
 /* HEADER SECTION */
@@ -39,14 +39,7 @@ ng-scrollbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
- // background-color: $header-color;
-   background-color: #1c1c1c;
-  //background-image: linear-gradient(to bottom right, #ffffcc 0%, #cc3300 100%);
-  //background: #262B25;
-  //background: -webkit-linear-gradient(top left, #262B25, #FF9D4A);
-  //background: -moz-linear-gradient(top left, #262B25, #FF9D4A);
-  //background: linear-gradient(to bottom right, #262B25, #FF9D4A);
- // padding: 5px;
+  background-color: #1c1c1c;
   position: fixed;
   top: 0;
   width: 100%;
@@ -97,7 +90,7 @@ ng-scrollbar {
   // Left Ends Here
 
   &__middle {
-   // background-image: linear-gradient(to bottom right, #ffffcc 0%, #cc3300 100%);
+    // background-image: linear-gradient(to bottom right, #ffffcc 0%, #cc3300 100%);
     padding: 10px;
     height: 100%;
     display: flex;
@@ -121,8 +114,8 @@ ng-scrollbar {
     }
 
     div:hover {
-    //  background-color: #F2F2F2;
-     // background-color: #FF9A45;
+      //  background-color: #F2F2F2;
+      // background-color: #FF9A45;
       background-color: #FFD7B5;
       cursor: pointer;
       border-radius: 15px;
@@ -133,7 +126,7 @@ ng-scrollbar {
 
       &::before {
         content: '';
-       // border-bottom: 4px solid #1877F2;
+        // border-bottom: 4px solid #1877F2;
         border-bottom: 4px solid #FF9A45;
         position: absolute;
         bottom: -15px;
@@ -182,7 +175,7 @@ ng-scrollbar {
     div:not(:first-of-type) {
       padding: 10px;
       border-radius: 50%;
-     // background-color: #E4E6EB;
+      // background-color: #E4E6EB;
       background-color: #FF9A45;
     }
 
@@ -194,7 +187,7 @@ ng-scrollbar {
 
 .home__body {
   margin-top: 100px;
- // background-color: $body-color;
+  // background-color: $body-color;
   background-color: black;
   width: 100%;
   height: 100vh;
@@ -265,6 +258,32 @@ ng-scrollbar {
       }
     }
 
+    ///////////////////////// ovo sam dodala
+    div.active {
+      position: relative;
+      // background-color: #FF9A45 !important;
+      // border-top: 4px solid #FF9A45;  //ovo je ona donja linija
+      border-left: 4px solid #FF9A45;  //ovo je ona donja linija
+      border-right: 4px solid #FF9A45;  //ovo je ona donja linija
+      &::before {
+        content: '';
+        // border-bottom: 4px solid #1877F2;
+
+        //border-bottom: 4px solid #FF9A45;  //ovo je ona donja linija
+
+        position: absolute;
+        bottom: -15px;
+        height: 2px;
+        width: 100%;
+      }
+
+      mat-icon {
+        //color: #1877F2;
+        color: #FF9A45;
+        // color: white !important;
+      }
+    }
+
 
   }
 
@@ -329,7 +348,7 @@ ng-scrollbar {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-         // color: white;
+          // color: white;
           color: black;
           z-index: 99;
           position: absolute;
@@ -354,14 +373,14 @@ ng-scrollbar {
         border-radius: 10px;
         display: flex;
         flex-direction: column;
-      //  color: #FF9A45;
+        //  color: #FF9A45;
 
 
         .post-message-header {
           width:100%;
           display: flex;
           align-items: center;
-        //  color: #FF9A45;
+          //  color: #FF9A45;
           form {
             flex:1;
           }
@@ -388,14 +407,14 @@ ng-scrollbar {
           width: 90%;
           margin-top: 10px;
           align-items: center;
-         // color: #FF9A45;
+          // color: #FF9A45;
           div {
             display: flex;
             align-items: center;
             height: 100%;
             width: 100%;
             gap: 15px;
-          //  color: #FF9A45;
+            //  color: #FF9A45;
             mat-icon {
               //font-size: xx-large;
             }
@@ -412,7 +431,7 @@ ng-scrollbar {
         //outline-color: white;
 
         .posts__header {
-color: white;
+          color: white;
           display:flex;
 
           img {
@@ -428,8 +447,8 @@ color: white;
               font-size: 20px;
               text-transform: capitalize;
               margin-bottom: 0;
-             // color: white;
-               color: #FF9A45;
+              // color: white;
+              color: #FF9A45;
             }
           }
 
@@ -440,12 +459,12 @@ color: white;
             h3 {
               font-weight: 600;
               font-size: 40px;
-             // text-transform: capitalize;
+              // text-transform: capitalize;
               margin-bottom: 50px;
               margin-left: 150px;
               text-space: 20px;
               //color: white;
-             // color: #FF9A45;
+              // color: #FF9A45;
             }
           }
         }

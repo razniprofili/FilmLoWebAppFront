@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'filmlo-users',
     loadChildren: () => import('./filmlo-users/filmlo-users.module').then( m => m.FilmloUsersPageModule)
+  },
+  {
+    path: 'statistics',
+    loadChildren: () => import('./statistics/statistics.module').then( m => m.StatisticsPageModule)
   }
 ];
 

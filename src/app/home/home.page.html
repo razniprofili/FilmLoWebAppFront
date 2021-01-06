@@ -3,12 +3,12 @@
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-      <div class="input">
-        <mat-icon class="search-icon">search_outline</mat-icon>
-        <form>
-          <input placeholder="Search FilmLo" type="text">
-        </form>
-      </div>
+<!--      <div class="input">-->
+<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
+<!--        <form>-->
+<!--          <input placeholder="Search FilmLo" type="text">-->
+<!--        </form>-->
+<!--      </div>-->
 
     </div>
 
@@ -123,7 +123,7 @@
           <span>Search FilmLo users</span>
         </div>
 
-        <div>
+        <div (click)="openStatistics()">
           <mat-icon>insights</mat-icon>
           <span>Statistics</span>
         </div>
