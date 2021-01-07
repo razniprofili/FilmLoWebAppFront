@@ -39,6 +39,7 @@ import * as  Cloudinary from 'cloudinary-core';
 import {PopularMovieDetailsComponent} from './components/popular-movie-details/popular-movie-details.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.component';
+import {WelcomeComponent} from './components/welcome/welcome.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.com
         UpdateUserComponent,
         UserInfoComponent,
         PopularMovieDetailsComponent,
-        ScrollToTopComponent
+        ScrollToTopComponent,
+        WelcomeComponent
     ],
     entryComponents: [ScrollToTopComponent],
     imports: [BrowserModule,

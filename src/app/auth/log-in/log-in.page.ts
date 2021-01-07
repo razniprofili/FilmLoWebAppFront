@@ -10,6 +10,8 @@ import {NotificationComponent} from '../../components/notification/notification.
 import {MatDialog} from '@angular/material/dialog';
 import {RegisterComponent} from '../../components/register/register.component';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
+import {AddWatchedMovieComponent} from '../../components/add-watched-movie/add-watched-movie.component';
+import {WelcomeComponent} from '../../components/welcome/welcome.component';
 
 @Component({
   selector: 'app-log-in',
@@ -95,45 +97,32 @@ export class LogInPage implements OnInit {
             width: '480px'
         });
 
-        //ovde dodati deo za registraciju
-
-
         dialogRef.afterClosed().subscribe(result => {
             const {name, surname, email, password} = result;
 
             if (result !== undefined) {
-                this.loadingCtrl.create({message: 'Registracija...'}).then(el=>{
-                    el.present();
+
                     console.log(result);
                     this.authService.register(result).subscribe(resData => {
-                            //console.log('Registracija uspesna');
                             console.log(resData);
-                           // this.greska = false;
-                           // this.user.setUser({ mejl, sifra, userID: resData.localId});
-                            el.dismiss();
-                            this.presentAlert('', 'Uspešna registracija!');
                             this.router.navigateByUrl('/home');
+                            const dialogRef = this.matDialog.open(WelcomeComponent, {
+                                role: 'dialog',
+                                height: '380px',
+                                width: '480px',
+                                data: {
+                                    dataKey: result,
+                                }
+                            });
                         },
-                        errRes=>{
-                           // this.greska = true;
-                            const textGreske= errRes.error.error.message;
-                            console.log(errRes)
-                            console.log(textGreske)
-                            el.dismiss();
-                            // if(textGreske === 'INVALID_EMAIL') {
-                            //     this.tekstGreske ='E-mail adresa nije u odgovarajućem formatu!'
-                            // } else {
-                            //     if(textGreske === 'EMAIL_EXISTS') {
-                            //         this.vecPostoji = true;
-                            //         this.tekstGreske ='Nalog sa ovim e-mailom već postoji!'
-                            //     } else {
-                            //         this.tekstGreske ='Desila se greška, pokušaj kasnije!'
-                            //     }
-                            // }
+                        (error)=>{
+                            console.log(error)
+                            const errorMessage = error.error.erroe;
+                            console.log(errorMessage)
+                            this.snotifyService.error(errorMessage, "Error", this.getConfigError());
                         });
-                })
-            }
 
+            }
             return;
         });
     }

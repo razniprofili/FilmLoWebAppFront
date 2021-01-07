@@ -1,0 +1,26 @@
+::ng-deep.mat-dialog-container {
+  background-color: #0c0c0c !important;
+  border-bottom: 1px solid whitesmoke !important;
+  border-top: 1px solid whitesmoke !important;
+  border-left: 1px solid whitesmoke !important;
+  border-right: 1px solid whitesmoke !important;
+  overflow: hidden;
+}
+
+h1 {
+  color: #ff8c17;
+  font-size: 40px;
+
+}
+
+h3 {
+  color: white;
+  font-size: 18px;
+  margin-top: 40px;
+}
+
+button {
+  background-color: #ff8c17;
+  color: white;
+  margin-top: 90px;
+}
