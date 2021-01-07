@@ -13,26 +13,30 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {SnotifyModule} from 'ng-snotify';
 import {CarouselModule} from 'ngx-owl-carousel-o';
+import {AppModule} from '../app.module';
+import {ScrollToTopComponent} from '../components/scroll-to-top/scroll-to-top.component';
 // import {NgScrollbarModule} from 'ngx-scrollbar';
 // import {MaterialModule} from '@angular/material;
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-    // MaterialModule,
-    MatBadgeModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    NgScrollbarModule,
-    SnotifyModule,
-    CarouselModule,
-    // NgScrollbarModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        // MaterialModule,
+        MatBadgeModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        NgScrollbarModule,
+        SnotifyModule,
+        CarouselModule,
+      //  AppModule,
+        //   AppModule,
+        // NgScrollbarModule
+    ],
   declarations: [HomePage]
 })
 export class HomePageModule {}

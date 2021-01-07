@@ -192,11 +192,10 @@
 <!--          </mat-card>-->
 
           <!--Loop Through All friends movies-->
-          <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)" style="border-bottom: 1px solid whitesmoke !important;
-                                    border-top: 1px solid whitesmoke !important;
-                                     border-left: 1px solid whitesmoke !important;
-                                   border-right: 1px solid whitesmoke !important;
-                                   background-color: #0d0d0d;">
+
+
+          <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)" style="
+                                   background-color: #212121">
             <mat-card-header class="posts__header">
               <img alt="{{ p.user.name }} {{ p.user.surname }}" mat-card-avatar src={{p.user.picture}}>
               <div class="posts__header__right">
@@ -219,13 +218,23 @@
       <button mat-flat-button style="background-color: #ff9a1c; color: white; width: 200px; height: 50px; margin-left: 150px!important;" (click)="openFilmLoUsersPage()"> Find FilmLo friends </button>
     </div>
     <div class="home__body__feedRight">
+
       <div class="inside">
 <!--        <img alt="feed" src="assets/feed.jpg">-->
+
       </div>
     </div>
 
+
   </div>
+    <div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
+      <button mat-fab style="background-color: #f58d0b!important; color: white!important;" type="button" (click)="scrollToTop()">
+        <mat-icon>north</mat-icon>
+      </button>
+    </div>
   </ng-scrollbar>
   <ng-snotify class="{{ style }}"></ng-snotify>
+
+
 </div>
 

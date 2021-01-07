@@ -190,6 +190,10 @@ export class MyProfilePage implements OnInit {
     });
   }
 
+  openStatistics() {
+    this.router.navigateByUrl("/home/statistics")
+  }
+
   openUpdateDialog(){
     const dialogRef = this.matDialog.open(UpdateUserComponent, {
       role: 'dialog',

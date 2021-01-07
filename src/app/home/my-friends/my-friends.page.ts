@@ -178,6 +178,10 @@ export class MyFriendsPage implements OnInit {
     this.router.navigateByUrl("/log-in")
   }
 
+  openStatistics() {
+    this.router.navigateByUrl("/home/statistics")
+  }
+
   openFriendDetails (friend: UserModel){
     const dialogRef = this.matDialog.open(FriendInfoComponent, {
       role: 'dialog',

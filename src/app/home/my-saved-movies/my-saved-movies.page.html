@@ -3,12 +3,12 @@
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-      <div class="input">
-        <mat-icon class="search-icon">search_outline</mat-icon>
-        <form>
-          <input placeholder="Search FilmLo" type="text">
-        </form>
-      </div>
+<!--      <div class="input">-->
+<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
+<!--        <form>-->
+<!--          <input placeholder="Search FilmLo" type="text">-->
+<!--        </form>-->
+<!--      </div>-->
 
     </div>
 
@@ -119,7 +119,7 @@
             <span>Search FilmLo users</span>
           </div>
 
-          <div>
+          <div (click)="openStatistics()">
             <mat-icon>insights</mat-icon>
             <span>Statistics</span>
           </div>
@@ -154,11 +154,12 @@
 <!--              </div>-->
 <!--            </mat-card-header>-->
 <!--          </mat-card>-->
-          <div class="center" *ngFor="let p of savedMovies" (click)="openMovieDetails(p.id)" style=" border-bottom: 1px solid whitesmoke !important;
-                                      border-top: 1px solid whitesmoke !important;
-                                      border-left: 1px solid whitesmoke !important;
-                                      border-right: 1px solid whitesmoke !important;
-width: 600px">
+          <div class="center" *ngFor="let p of savedMovies" (click)="openMovieDetails(p.id)" style="
+          /*border-bottom: 1px solid whitesmoke !important;*/
+          /*                            border-top: 1px solid whitesmoke !important;*/
+          /*                            border-left: 1px solid whitesmoke !important;*/
+          /*                            border-right: 1px solid whitesmoke !important;*/
+width: 600px; background-color: #212121;">
 
             <mat-grid-list cols="2" rowHeight="65px">
               <mat-grid-tile [colspan]="1" [rowspan]="2">

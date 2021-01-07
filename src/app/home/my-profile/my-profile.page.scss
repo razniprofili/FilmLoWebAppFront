@@ -59,17 +59,17 @@ ng-scrollbar {
   align-items: center;
   justify-content: space-between;
   // background-color: $header-color;
-  background-color: black;
+  background-color: #1c1c1c;
   //background-image: linear-gradient(to bottom right, #ffffcc 0%, #cc3300 100%);
   //background: #262B25;
   //background: -webkit-linear-gradient(top left, #262B25, #FF9D4A);
   //background: -moz-linear-gradient(top left, #262B25, #FF9D4A);
   //background: linear-gradient(to bottom right, #262B25, #FF9D4A);
-  padding: 5px;
+ // padding: 5px;
   position: fixed;
   top: 0;
   width: 100%;
-  border-bottom: 2px solid #FF9A45;  //ovo je ona donja linija
+ // border-bottom: 2px solid #FF9A45;  //ovo je ona donja linija
 
   &__left {
     display: flex;
@@ -78,6 +78,12 @@ ng-scrollbar {
     gap: 10px;
     flex: .50;
     height: 100%;
+
+    img {
+      height: 80px;
+      width: 80px;
+      margin-left: 50px;
+    }
 
     div.input {
       position: relative;

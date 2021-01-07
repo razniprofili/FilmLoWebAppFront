@@ -189,6 +189,10 @@ export class MyWatchedMoviesPage implements OnInit {
     });
   }
 
+  openStatistics() {
+    this.router.navigateByUrl("/home/statistics")
+  }
+
   openHome() {
     this.router.navigateByUrl("/home");
   }

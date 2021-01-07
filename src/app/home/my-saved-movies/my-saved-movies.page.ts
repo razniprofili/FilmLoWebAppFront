@@ -179,6 +179,11 @@ export class MySavedMoviesPage implements OnInit {
     this.router.navigateByUrl("/log-in")
 
   }
+
+  openStatistics() {
+    this.router.navigateByUrl("/home/statistics")
+  }
+
   openFilmLoUsersPage(){
     this.router.navigateByUrl("/home/filmlo-users")
   }
@@ -188,7 +193,7 @@ export class MySavedMoviesPage implements OnInit {
     console.log(movieId)
     const dialogRef = this.matDialog.open(MySavedMovieDetailsComponent, {
       role: 'dialog',
-      height: '700px',
+      height: '730px',
       width: '500px',
       data: {
         dataKey: movieId,

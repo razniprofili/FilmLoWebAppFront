@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService, UserData} from '../auth/auth.service';
 import {Subscription} from 'rxjs';
@@ -17,6 +17,7 @@ import {FriendMovieDetailsComponent} from '../components/friend-movie-details/fr
 import {MatDialog} from '@angular/material/dialog';
 import {FriendshipService} from './services/friendship.service';
 import {FriendRequestModel} from './models/friend-request.model';
+import {DOCUMENT} from '@angular/common';
 
 
 
@@ -27,6 +28,8 @@ import {FriendRequestModel} from './models/friend-request.model';
 })
 
 export class HomePage {
+
+
 
   // div visibility
   disabled = false;
@@ -122,9 +125,36 @@ export class HomePage {
                private loadingCtrl: LoadingController,
                private snotifyService: SnotifyService,
                private matDialog: MatDialog,
-               private friendshipService: FriendshipService) {}
+               private friendshipService: FriendshipService,
+               @Inject(DOCUMENT) private document: Document) {}
+
+  windowScrolled: boolean;
+
+  @HostListener("window:scroll", [])
 
 
+  onWindowScroll() {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    }
+    else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
+  scrollToTop() {
+    (function smoothscroll() {
+      var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      if (currentScroll > 0) {
+        window.requestAnimationFrame(smoothscroll);
+        window.scrollTo(0, currentScroll - (currentScroll / 8));
+      }
+    })();
+  }
+
+  scrolledDiv(){
+    this.windowScrolled = true;
+    console.log('scrolled')
+  }
 
   ngOnInit() {
 

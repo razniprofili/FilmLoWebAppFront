@@ -3,12 +3,12 @@
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-      <div class="input">
-        <mat-icon class="search-icon">search_outline</mat-icon>
-        <form>
-          <input placeholder="Search FilmLo" type="text">
-        </form>
-      </div>
+<!--      <div class="input">-->
+<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
+<!--        <form>-->
+<!--          <input placeholder="Search FilmLo" type="text">-->
+<!--        </form>-->
+<!--      </div>-->
 
     </div>
 
@@ -119,7 +119,7 @@
             <span>Search FilmLo users</span>
           </div>
 
-          <div>
+          <div (click)="openStatistics()">
             <mat-icon>insights</mat-icon>
             <span>Statistics</span>
           </div>
@@ -138,11 +138,12 @@
         <div class="home__body__contentMiddle__center">
           <h2 class="h2savedmovies">My friends</h2>
           <!--Loop Through All saved movies-->
-          <mat-card *ngFor="let p of friends" class="posts" (click)="openFriendDetails(p)" style="border-bottom: 1px solid whitesmoke !important;
-                                    border-top: 1px solid whitesmoke !important;
-                                     border-left: 1px solid whitesmoke !important;
-                                   border-right: 1px solid whitesmoke !important;
-                                   background-color: #0d0d0d;
+          <mat-card *ngFor="let p of friends" class="posts" (click)="openFriendDetails(p)" style="
+          /*border-bottom: 1px solid whitesmoke !important;*/
+          /*                          border-top: 1px solid whitesmoke !important;*/
+          /*                           border-left: 1px solid whitesmoke !important;*/
+          /*                         border-right: 1px solid whitesmoke !important;*/
+                                   background-color: #212121;
 width: 600px ">
             <mat-card-header class="posts__header">
               <img alt="{{ p.name }}" mat-card-avatar [src]=p.picture style="height: 120px; width: 120px">

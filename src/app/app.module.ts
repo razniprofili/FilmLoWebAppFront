@@ -37,6 +37,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {CloudinaryModule} from '@cloudinary/angular-5.x';
 import * as  Cloudinary from 'cloudinary-core';
 import {PopularMovieDetailsComponent} from './components/popular-movie-details/popular-movie-details.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.component';
+
 
 @NgModule({
     declarations: [
@@ -51,9 +54,10 @@ import {PopularMovieDetailsComponent} from './components/popular-movie-details/p
         FriendInfoComponent,
         UpdateUserComponent,
         UserInfoComponent,
-        PopularMovieDetailsComponent
+        PopularMovieDetailsComponent,
+        ScrollToTopComponent
     ],
-    entryComponents: [],
+    entryComponents: [ScrollToTopComponent],
     imports: [BrowserModule,
               IonicModule.forRoot(),
               AppRoutingModule,
@@ -71,6 +75,7 @@ import {PopularMovieDetailsComponent} from './components/popular-movie-details/p
               MatFormFieldModule,
               MatSelectModule,
               CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'timi11'}),
+              InfiniteScrollModule
     ],
     providers: [
         StatusBar,
@@ -82,7 +87,7 @@ import {PopularMovieDetailsComponent} from './components/popular-movie-details/p
         {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
         SnotifyService
     ],
-    exports: [FormsModule],
+    exports: [FormsModule, ScrollToTopComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

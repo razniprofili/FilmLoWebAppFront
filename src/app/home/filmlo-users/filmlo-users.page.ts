@@ -225,6 +225,10 @@ console.log(this.userSearchName)
     this.router.navigateByUrl("/home/filmlo-users")
   }
 
+  openStatistics() {
+    this.router.navigateByUrl("/home/statistics")
+  }
+
   openHome() {
 
     this.router.navigateByUrl("/home")

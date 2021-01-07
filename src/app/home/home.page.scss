@@ -9,6 +9,19 @@
   height: 100vh;
 }
 
+.scroll-to-top {
+  position: fixed;
+  bottom: 15px;
+  right: 40px;
+  opacity:0;
+  transition: all .2s ease-in-out;
+
+}
+.show-scrollTop {
+  opacity: 1;
+  transition: all .2s ease-in-out;
+}
+
 ng-scrollbar {
   --scrollbar-size: 8px;
  // --scrollbar-thumb-color: rgba(94, 175, 255, 0.5);
@@ -50,6 +63,7 @@ ng-scrollbar {
   position: fixed;
   top: 0;
   width: 100%;
+  ;
   //border-bottom: 2px solid #FF9A45;  //ovo je ona donja linija
 
   &__left {
@@ -104,6 +118,7 @@ ng-scrollbar {
     justify-content: space-between;
     align-items: center;
     flex: .5;
+
 
     div {
       height: 100%;
@@ -202,7 +217,6 @@ ng-scrollbar {
   justify-content: space-between;
   padding-top: 10px;
   align-items: flex-start;
-
   //BODY SIDEBAR
 
   &__sidebarLeft {
@@ -292,6 +306,7 @@ ng-scrollbar {
         border-radius: 20px;
         position: relative;
         z-index: 0;
+
 
 
         &:hover {
