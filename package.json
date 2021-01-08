@@ -28,6 +28,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "@juggle/resize-observer": "^3.2.0",
+    "@microsoft/signalr": "^5.0.1",
     "@types/jquery": "^3.5.5",
     "axios": "^0.21.1",
     "bezier-easing": "^2.1.0",

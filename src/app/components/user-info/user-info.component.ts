@@ -9,6 +9,8 @@ import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendMoviesComponent} from '../friend-movies/friend-movies.component';
 import {Movie} from '../../home/models/movie.model';
 import {UserGet} from '../../auth/user-get.model';
+import {AuthService} from '../../auth/auth.service';
+import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 
 @Component({
   selector: 'app-user-info',
@@ -23,7 +25,8 @@ export class UserInfoComponent implements OnInit {
       private moviesService: WatchedMoviesService,
       private matDialog: MatDialog,
       private friendshipService: FriendshipService,
-      private snotifyService: SnotifyService
+      private snotifyService: SnotifyService,
+      private authService: AuthService
   ) { }
 
   // for notifications:
@@ -80,7 +83,18 @@ export class UserInfoComponent implements OnInit {
     user:new UserGet("name", "surname", "picture")
   }]
 
+  currentUserId: number
+  userSub: Subscription
+  private _hubConnection: HubConnection;
+
   ngOnInit() {
+
+    this.startSignalRConnection();
+
+    this.userSub = this.authService.userId.subscribe((currUserId)=> {
+      this.currentUserId = currUserId
+      console.log('current user id:', this.currentUserId)
+    });
 
     this.friendsSub = this.friendshipService.getMyFriends().subscribe((myFriends) => {
       this.myfriends = myFriends;
@@ -111,18 +125,17 @@ export class UserInfoComponent implements OnInit {
         }
       }
     });
-
-
-
-
-
-
   }
 
   ionViewWillEnter(){
     this.friendshipService.getMyFriends().subscribe(myFriends =>{
       console.log(myFriends);
     });
+  }
+
+  ngOnDestroy(){
+
+    this.userSub.unsubscribe();
   }
 
   acceptRequest(){
@@ -157,16 +170,41 @@ export class UserInfoComponent implements OnInit {
         }))
   }
 
-  sendFirendRequest(){
+  // no SignalR
+  // sendFriendRequest(){
+  //
+  //   this.friendshipService.sentFriendRequest(this.user.id).subscribe( () => {
+  //     this.sentRequest = true;
+  //   },
+  //     (error => {
+  //       // uspesno = false;
+  //       console.log(error)
+  //       this.snotifyService.error("Error while sending request. Request is not sent!", "Error", this.getConfigError());
+  //       }));
+  //
+  // }
 
-    this.friendshipService.sentFriendRequest(this.user.id).subscribe( () => {
-      this.sentRequest = true;
-    },
-      (error => {
-        // uspesno = false;
-        console.log(error)
-        this.snotifyService.error("Error while sending request. Request is not sent!", "Error", this.getConfigError());
-        }));
+
+
+  startSignalRConnection(){
+    this._hubConnection = new HubConnectionBuilder()
+        .withUrl('https://localhost:44397/sendRequest')
+        .build();
+
+    this._hubConnection.on('RequestSent', () => {
+      this.sentRequest = true
+      console.log('Friend request successfully sent!');
+    });
+
+    this._hubConnection.start()
+        .then(() => console.log('Connection started'))
+        .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
+  }
+
+  // with  SignalR
+  sendFriendRequest(){
+
+    this._hubConnection.invoke("AddFriend", this.currentUserId, {"UserRecipientId": this.user.id})
 
   }
 
