@@ -1,7 +1,7 @@
 import {Component, HostListener, Inject, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService, UserData} from '../auth/auth.service';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {User} from '../auth/user.model';
 import {UserGet} from '../auth/user-get.model';
 import {AlertController, LoadingController} from '@ionic/angular';
@@ -116,6 +116,10 @@ export class HomePage {
   myRequestsSub: Subscription
   myRequests: FriendRequestModel[]
 
+  userSub: Subscription
+  userInfoSub: Subscription
+  moviesBarSub: Subscription
+
   private _hubConnection: HubConnection;
 
   constructor( private authService: AuthService,
@@ -160,20 +164,20 @@ export class HomePage {
 
   ngOnInit() {
 
-    this.authService.currentUser.subscribe(user => {
+    this.userSub = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
       console.log(user);
     });
+
+    // this.userInfoSub = this.authService.currentUserInfo.subscribe(user => {
+    //   this.user = user;
+    //   console.log('user info home', user)
+    // });
 
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
       console.log('user info home', user)
     });
-
-
-    // this.authService.currentUserInfo.subscribe(user => {
-    //   this.user = user;
-    // });
 
     this.moviesSub = this.watchedMoviesService.allFiendsMovies.subscribe((allFiendsMovies) => {
       this.friendsMovies = allFiendsMovies;
@@ -181,7 +185,7 @@ export class HomePage {
     });
 
     // in slider i wan only first fix friends movies
-    this.getMovie()
+   // this.moviesBarSub = this.getMovie()
 
     this.startSignalRConnection()
 
@@ -195,6 +199,7 @@ export class HomePage {
    }
 
    getMovie() {
+
      if(this.friendsMovies != undefined || this.friendsMovies.length != 0) {
        if(this.friendsMovies.length <= 6) {
          this.moviesSlides = this.friendsMovies
@@ -211,16 +216,18 @@ export class HomePage {
         .withUrl('https://localhost:44397/sendRequest')
         .build();
 
-    this._hubConnection.on('RequestReceived', () => {
-      console.log('Friend request successfully Received!');
-      // Other FilmLo users send me request:
-      this.friendshipService.getMyRequests().subscribe((requests) => {
-        console.log(requests)
-        this.myRequests = requests;
-        this.notifications = requests.length
-      });
-     // this.snotifyService.info('You received friend request!', '', this.getConfig());
-
+    this._hubConnection.on('RequestReceived', (friendship) => {
+      console.log('userRecipientId: ', friendship)
+      if(this.currentUser.id == friendship.userRecipientId) {
+        console.log('Friend request successfully Received!');
+        // Other FilmLo users send me request:
+        this.friendshipService.getMyRequests().subscribe((requests) => {
+          console.log(requests)
+          this.myRequests = requests;
+          this.notifications = requests.length
+        });
+        this.snotifyService.info('You received friend request from '+ friendship.userSender.name + ' '+ friendship.userSender.surname+'!', '', this.getConfig());
+      }
     });
 
     this._hubConnection.start()
@@ -244,6 +251,8 @@ export class HomePage {
       console.log('user info home', user)
     });
 
+
+
   }
 
   ngOnDestroy(){
@@ -256,6 +265,19 @@ export class HomePage {
     if(this.myRequestsSub){
       this.myRequestsSub.unsubscribe();
     }
+
+    if(this.userSub){
+      this.userSub.unsubscribe();
+    }
+
+    // if(this.userInfoSub){
+    //   this.userInfoSub.unsubscribe();
+    // }
+
+
+    this._hubConnection.stop()
+        .then(() => console.log('Connection STOPPED'))
+        .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
   }
 
   acceptRequest(userId: number){
@@ -389,6 +411,17 @@ export class HomePage {
 
   // open div/page
 
+  openFilmloPage(){
+    window.open("http://localhost:8080/", "_blank");
+  }
+  openPopularMoviesPage(){
+    window.open("http://localhost:8080/movies-popularity", "_blank");
+  }
+
+  openMoviesStatsPage(){
+    window.open("http://localhost:8080/movies-stats", "_blank");
+  }
+
   openMovieDetails(movie: Movie){
 
     console.log(movie)
@@ -410,30 +443,30 @@ export class HomePage {
   }
 
   openSearchApi(){
-    this.router.navigateByUrl("/home/movie-ideas")
+    this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
   }
 
   openSavedMoviesPage(){
-    this.router.navigateByUrl("/home/my-saved-movies")
+    this.router.navigateByUrl("/home/my-saved-movies", { replaceUrl: true })
   }
 
   openWatchedMoviesPage(){
-    this.router.navigateByUrl("/home/my-watched-movies")
+    this.router.navigateByUrl("/home/my-watched-movies", { replaceUrl: true })
   }
 
   openFilmLoFriendsPage(){
-    this.router.navigateByUrl("/home/my-friends")
+    this.router.navigateByUrl("/home/my-friends", { replaceUrl: true })
   }
 
   openFilmLoUsersPage(){
-    this.router.navigateByUrl("/home/filmlo-users")
+    this.router.navigateByUrl("/home/filmlo-users", { replaceUrl: true })
   }
 
   openUserProfile() {
-    this.router.navigateByUrl("/home/my-profile")
+    this.router.navigateByUrl("/home/my-profile", { replaceUrl: true })
   }
 
   openStatistics() {
-    this.router.navigateByUrl("/home/statistics")
+    this.router.navigateByUrl("/home/statistics", { replaceUrl: true })
   }
 }

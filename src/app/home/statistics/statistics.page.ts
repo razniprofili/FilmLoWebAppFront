@@ -23,6 +23,7 @@ import {WatchedMovieDetailsComponent} from '../../components/watched-movie-detai
 import * as CanvasJS from './canvasjs.min';
 import {PopularMovieDetailsComponent} from '../../components/popular-movie-details/popular-movie-details.component';
 import {YearStatisticModel} from '../models/year-statistic.model';
+import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
 
 @Component({
   selector: 'app-statistics',
@@ -140,6 +141,9 @@ export class StatisticsPage implements OnInit {
   displayedColumns: string[] = ['position', 'movieName', 'button'];
   data: {y: number, label: string}[]=[]
 
+  private _hubConnection: HubConnection;
+  userSub: Subscription
+
   constructor( private authService: AuthService,
                private alertController: AlertController,
                private router: Router,
@@ -194,7 +198,7 @@ export class StatisticsPage implements OnInit {
       chart.render();
     });
 
-    this.authService.currentUser.subscribe(user => {
+    this.userSub = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
       console.log(user);
     });
@@ -210,6 +214,8 @@ export class StatisticsPage implements OnInit {
       this.myRequests = myRequests;
       this.notifications = myRequests.length
     });
+
+    this.startSignalRConnection()
 
   }
 
@@ -234,6 +240,36 @@ export class StatisticsPage implements OnInit {
 
   ngOnDestroy(){
 
+    this.userSub.unsubscribe()
+    this.myRequestsSub.unsubscribe()
+
+    this._hubConnection.stop()
+        .then(() => console.log('Connection STOPPED'))
+        .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
+  }
+
+  startSignalRConnection(){
+    this._hubConnection = new HubConnectionBuilder()
+        .withUrl('https://localhost:44397/sendRequest')
+        .build();
+
+    this._hubConnection.on('RequestReceived', (friendship) => {
+      console.log('userRecipientId: ', friendship)
+      if(this.currentUser.id == friendship.userRecipientId) {
+        console.log('Friend request successfully Received!');
+        // Other FilmLo users send me request:
+        this.friendshipService.getMyRequests().subscribe((requests) => {
+          console.log(requests)
+          this.myRequests = requests;
+          this.notifications = requests.length
+        });
+        this.snotifyService.info('You received friend request from '+ friendship.userSender.name + ' '+ friendship.userSender.surname+'!', '', this.getConfig());
+      }
+    });
+
+    this._hubConnection.start()
+        .then(() => console.log('Connection started'))
+        .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
   }
 
   dataFormation(stats: YearStatisticModel[]){
@@ -410,31 +446,31 @@ export class StatisticsPage implements OnInit {
   // open div/page
 
   openHome() {
-    this.router.navigateByUrl("/home")
+    this.router.navigateByUrl("/home", { replaceUrl: true })
   }
 
   openSearchApi(){
-    this.router.navigateByUrl("/home/movie-ideas")
+    this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
   }
 
   openSavedMoviesPage(){
-    this.router.navigateByUrl("/home/my-saved-movies")
+    this.router.navigateByUrl("/home/my-saved-movies", { replaceUrl: true })
   }
 
   openWatchedMoviesPage(){
-    this.router.navigateByUrl("/home/my-watched-movies")
+    this.router.navigateByUrl("/home/my-watched-movies", { replaceUrl: true })
   }
 
   openFilmLoFriendsPage(){
-    this.router.navigateByUrl("/home/my-friends")
+    this.router.navigateByUrl("/home/my-friends", { replaceUrl: true })
   }
 
   openFilmLoUsersPage(){
-    this.router.navigateByUrl("/home/filmlo-users")
+    this.router.navigateByUrl("/home/filmlo-users", { replaceUrl: true })
   }
 
   openUserProfile() {
-    this.router.navigateByUrl("/home/my-profile")
+    this.router.navigateByUrl("/home/my-profile", { replaceUrl: true })
   }
 
 

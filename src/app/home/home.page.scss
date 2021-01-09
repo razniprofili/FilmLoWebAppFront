@@ -250,7 +250,8 @@ ng-scrollbar {
 
         mat-icon {
           //color: #1877F2;
-          color: #FF9A45;
+         // color: #FF9A45;
+          color: #f58d0b;
           font-size: xx-large;
           width: fit-content;
           height: fit-content;
@@ -488,11 +489,20 @@ color: white;
     .inside {
       display: flex;
       //flex-direction: column;
-      width: 100%;
+      width: 350px;
       height: 100%;
       position: fixed;
-      overflow-y: scroll;
+      overflow-y: hidden;
       overflow-x: hidden;
+
     }
+
+    .explore-button{
+      background-color: #f58d0b;
+      color: white;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+
   }
 }

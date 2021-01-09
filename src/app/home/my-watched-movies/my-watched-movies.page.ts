@@ -13,6 +13,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendshipService} from '../services/friendship.service';
 import {FriendRequestModel} from '../models/friend-request.model';
+import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
 
 @Component({
   selector: 'app-my-watched-movies',
@@ -62,6 +63,10 @@ export class MyWatchedMoviesPage implements OnInit {
   myRequests: FriendRequestModel[]
   myRequestsSub: Subscription
 
+  userSub: Subscription
+
+  private _hubConnection: HubConnection;
+
   constructor( private authService: AuthService,
                private alertController: AlertController,
                private router: Router,
@@ -78,7 +83,7 @@ export class MyWatchedMoviesPage implements OnInit {
       this.watchedMovies = myMovies;
     });
 
-    this.authService.currentUser.subscribe(user => {
+    this.userSub = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
       console.log(user);
     });
@@ -94,6 +99,7 @@ export class MyWatchedMoviesPage implements OnInit {
       this.notifications = myRequests.length
     });
 
+    this.startSignalRConnection()
   }
 
   ionViewWillEnter(){
@@ -107,6 +113,41 @@ export class MyWatchedMoviesPage implements OnInit {
     });
 
   }
+  ngOnDestroy(){
+
+    this.userSub.unsubscribe()
+    this.myRequestsSub.unsubscribe()
+    this.watchedMoviesSub.unsubscribe()
+
+    this._hubConnection.stop()
+        .then(() => console.log('Connection STOPPED'))
+        .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
+  }
+
+  startSignalRConnection(){
+    this._hubConnection = new HubConnectionBuilder()
+        .withUrl('https://localhost:44397/sendRequest')
+        .build();
+
+    this._hubConnection.on('RequestReceived', (friendship) => {
+      console.log('userRecipientId: ', friendship)
+      if(this.currentUser.id == friendship.userRecipientId) {
+        console.log('Friend request successfully Received!');
+        // Other FilmLo users send me request:
+        this.friendshipService.getMyRequests().subscribe((requests) => {
+          console.log(requests)
+          this.myRequests = requests;
+          this.notifications = requests.length
+        });
+        this.snotifyService.info('You received friend request from '+ friendship.userSender.name + ' '+ friendship.userSender.surname+'!', '', this.getConfig());
+      }
+    });
+
+    this._hubConnection.start()
+        .then(() => console.log('Connection started'))
+        .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
+  }
+
 
   getConfig(): SnotifyToastConfig {
     this.snotifyService.setDefaults({
@@ -150,6 +191,7 @@ export class MyWatchedMoviesPage implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+
   acceptRequest(userId: number){
     this.friendshipService.acceptRequest(userId).subscribe(()=> {
       this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
@@ -190,30 +232,30 @@ export class MyWatchedMoviesPage implements OnInit {
   }
 
   openStatistics() {
-    this.router.navigateByUrl("/home/statistics")
+    this.router.navigateByUrl("/home/statistics", { replaceUrl: true })
   }
 
   openHome() {
-    this.router.navigateByUrl("/home");
+    this.router.navigateByUrl("/home", { replaceUrl: true });
   }
 
   openSearchApi(){
-    this.router.navigateByUrl("/home/movie-ideas")
+    this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
 
   }
   openFilmLoUsersPage(){
-    this.router.navigateByUrl("/home/filmlo-users")
+    this.router.navigateByUrl("/home/filmlo-users", { replaceUrl: true })
   }
 
   openSavedMoviesPage(){
-    this.router.navigateByUrl("/home/my-saved-movies")
+    this.router.navigateByUrl("/home/my-saved-movies",{ replaceUrl: true })
   }
 
   openMyFriends(){
-    this.router.navigateByUrl("/home/my-friends")
+    this.router.navigateByUrl("/home/my-friends", { replaceUrl: true })
   }
 
   openMyProfile(){
-    this.router.navigateByUrl("/home/my-profile")
+    this.router.navigateByUrl("/home/my-profile",{ replaceUrl: true })
   }
 }
