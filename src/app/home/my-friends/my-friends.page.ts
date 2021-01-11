@@ -84,6 +84,7 @@ export class MyFriendsPage implements OnInit {
 
   ngOnInit() {
     this.friendsSub = this.friendshipService.allMyFriends.subscribe((myFriends) => {
+      myFriends.sort((a, b) => a.name.localeCompare(b.name))
       this.friends = myFriends;
     });
 
@@ -104,6 +105,22 @@ export class MyFriendsPage implements OnInit {
     });
 
     this.startSignalRConnection();
+  }
+
+  friendNameAsc(){
+    this.friends.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  friendNameDesc(){
+    this.friends.sort((a, b) => b.name.localeCompare(a.name))
+  }
+
+  friendSurnameAsc(){
+    this.friends.sort((a, b) => a.surname.localeCompare(b.surname))
+  }
+
+  friendSurnameDesc(){
+    this.friends.sort((a, b) => b.surname.localeCompare(a.surname))
   }
 
   ionViewWillEnter(){

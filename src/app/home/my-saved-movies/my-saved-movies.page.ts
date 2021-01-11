@@ -15,6 +15,7 @@ import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {FriendshipService} from '../services/friendship.service';
 import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
+import {Movie} from '../models/movie.model';
 
 @Component({
   selector: 'app-my-saved-movies',
@@ -86,6 +87,9 @@ export class MySavedMoviesPage implements OnInit {
 
   ngOnInit() {
     this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
+      savedMovies.sort((a: SavedMovieModel, b: SavedMovieModel) => {
+        return  +new Date(b.dateTimeSaved)- +new Date(a.dateTimeSaved);
+      });
       this.savedMovies = savedMovies;
     });
 
@@ -152,6 +156,26 @@ export class MySavedMoviesPage implements OnInit {
     this._hubConnection.start()
         .then(() => console.log('Connection started'))
         .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
+  }
+
+  oldestSaved() {
+    this.savedMovies.sort((a: SavedMovieModel, b: SavedMovieModel) => {
+      return  +new Date(a.dateTimeSaved)- +new Date(b.dateTimeSaved);
+    });
+  }
+
+  newestSaved() {
+    this.savedMovies.sort((a: SavedMovieModel, b: SavedMovieModel) => {
+      return  +new Date(b.dateTimeSaved)- +new Date(a.dateTimeSaved);
+    });
+  }
+
+  movieNameAsc(){
+    this.savedMovies.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  movieNameDesc(){
+    this.savedMovies.sort((a, b) => b.name.localeCompare(a.name))
   }
 
   getConfig(): SnotifyToastConfig {

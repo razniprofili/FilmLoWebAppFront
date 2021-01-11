@@ -1,15 +1,8 @@
-<!--<ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
+
 <div class="home-container">
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-<!--      <div class="input">-->
-<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
-<!--        <form>-->
-<!--          <input placeholder="Search FilmLo" type="text">-->
-<!--        </form>-->
-<!--      </div>-->
-
     </div>
 
     <div class="home__header__middle">
@@ -40,9 +33,6 @@
                   matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
-          <!--          <button mat-menu-item>-->
-          <!--            <mat-icon>add</mat-icon> Smtng-->
-          <!--          </button>-->
           <mat-card *ngFor="let p of myRequests" class="posts">
             <mat-card-header class="posts__header">
               <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
@@ -62,9 +52,6 @@
       <div *ngIf="notifications == 0">
         <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
         <mat-menu #menu="matMenu">
-<!--          <div class="center">-->
-<!--            <h1 style="color: black!important; font-size: 18px!important;">No notifications</h1>-->
-<!--          </div>-->
           <mat-card >
             <mat-card-header >
               <div >
@@ -75,9 +62,7 @@
         </mat-menu>
       </div>
 
-
       <div>
-
         <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
@@ -99,14 +84,8 @@
                   alt=""
                   mat-card-avatar
                   src = {{user.picture}}>
-<!--          src = "assets/logo/logo.png">-->
           <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
         </div>
-
-<!--        <div>-->
-<!--          <mat-icon>add_to_queue</mat-icon>-->
-<!--          <span>Add watched movie</span>-->
-<!--        </div>-->
 
         <div (click)="openWatchedMoviesPage()">
           <mat-icon>theaters</mat-icon>
@@ -128,23 +107,11 @@
           <span>Statistics</span>
         </div>
 
-<!--        <div>-->
-<!--          <mat-icon class="see-more">expand_more</mat-icon>-->
-<!--          <span>See More</span>-->
-<!--        </div>-->
-
       </div>
     </div>
-
-<!--    <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
-      <!--OVAJ DIV SE MENJA KAKO KLIKCEMO PO IKONICAMA!!!!!!!! SVE OSTALO NE MRDA-->
-      <!--    <div [style.overflow]="'auto'" [style.height.px]="'800'">-->
       <div class="home__body__contentMiddle" *ngIf="countFriendMovies != 0">
-
-        <!--      <button (click)="scrollToElement(target)"></button> ovo je za skrolovanje do nekog odredjenog mesta!!!-->
         <div class="home__body__contentMiddle__top">
           <!--IMAGE CARDS-->
-
           <mat-card *ngFor="let i of friendsMovies.slice(0, 6)" class="image-card" (click)="openMovieDetails(i)">
             <img alt="bg"
                  class="bg" src="{{ i.poster }}">
@@ -156,44 +123,27 @@
             </mat-card-content>
           </mat-card>
         </div>
+        <div style="margin-top: 20px; margin-left: 700px">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter posts" style="background-color: #ff9528">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="customize">
+            <button mat-menu-item (click)="oldestPosts()">
+              <span>The oldest posts first</span>
+            </button>
+            <button mat-menu-item (click)="newestPosts()">
+              <span>The newest posts first</span>
+            </button>
+            <button mat-menu-item (click)="movieNameAsc()">
+              <span>Movie name ascending</span>
+            </button>
+            <button mat-menu-item (click)="movieNameDesc()">
+              <span>Movie name descending</span>
+            </button>
+          </mat-menu>
+        </div>
 
         <div class="home__body__contentMiddle__center">
-<!--          <mat-card class="post-message">-->
-<!--            <mat-card-header class="post-message-header"-->
-<!--                             style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">-->
-<!--              <img-->
-<!--                      alt=""-->
-<!--                      mat-card-avatar-->
-<!--                      src = "assets/logo/logo.png">-->
-<!--              &lt;!&ndash;                    [src]="user?.picture"&ndash;&gt;-->
-<!--              &lt;!&ndash;            >&ndash;&gt;-->
-<!--              <form #form="ngForm" (ngSubmit)="postMessage(form)">-->
-<!--                <input class="on-your-mind" name="message" ngModel placeholder="What's on your mind?" type="text">-->
-<!--                <button style="display: none;" type="submit"></button>-->
-<!--              </form>-->
-
-<!--            </mat-card-header>-->
-<!--            <mat-card-content class="card-body">-->
-<!--              <div>-->
-<!--                <mat-icon color="accent">videocam</mat-icon>-->
-<!--                <span>Live Video</span>-->
-<!--              </div>-->
-
-<!--              <div>-->
-<!--                <mat-icon color="primary">photo_album</mat-icon>-->
-<!--                <span>Photo/Video</span>-->
-<!--              </div>-->
-
-<!--              <div>-->
-<!--                <mat-icon color="warn">mood</mat-icon>-->
-<!--                <span>Feeling/Activity</span>-->
-<!--              </div>-->
-<!--            </mat-card-content>-->
-<!--          </mat-card>-->
-
-          <!--Loop Through All friends movies-->
-
-
           <mat-card *ngFor="let p of friendsMovies" class="posts" (click)="openMovieDetails(p)" style="
                                    background-color: #212121">
             <mat-card-header class="posts__header">
@@ -241,22 +191,17 @@
           </div>
 
         </div>
-
-
-
       </div>
     </div>
-
-
   </div>
+
     <div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
       <button mat-fab style="background-color: #f58d0b!important; color: white!important;" type="button" (click)="scrollToTop()">
         <mat-icon>north</mat-icon>
       </button>
     </div>
+
   </ng-scrollbar>
   <ng-snotify class="{{ style }}"></ng-snotify>
-
-
 </div>
 

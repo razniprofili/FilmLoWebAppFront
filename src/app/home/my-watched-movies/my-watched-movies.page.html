@@ -144,18 +144,25 @@
             </div>
 
           </div>
-          <!--Loop Through All saved movies-->
-<!--          <mat-card *ngFor="let p of watchedMovies" class="posts" (click)="openMovieDetails(p.id)">-->
-<!--            <mat-card-header class="posts__header">-->
-<!--              <img alt="{{ p.name }}" class="shape-poster" [src]=p.poster >-->
-<!--              <div class="movie-name-search">-->
-<!--                <span> {{ p.genre }}</span>-->
-<!--                <span> {{ p.dateTimeWatched }}</span>-->
-<!--                <h3> {{p.name}} </h3>-->
-<!--              </div>-->
-<!--            </mat-card-header>-->
-<!--          </mat-card>-->
-
+          <div style="margin-top: 20px; margin-left: 550px" *ngIf="watchedMovies.length != 0">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color: #ff9528">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="customize">
+              <button mat-menu-item (click)="oldestAdded()">
+                <span>The oldest added first</span>
+              </button>
+              <button mat-menu-item (click)="newestAdded()">
+                <span>The newest added first</span>
+              </button>
+              <button mat-menu-item (click)="movieNameAsc()">
+                <span>Movie name ascending</span>
+              </button>
+              <button mat-menu-item (click)="movieNameDesc()">
+                <span>Movie name descending</span>
+              </button>
+            </mat-menu>
+          </div>
           <div class="center" *ngFor="let p of watchedMovies" (click)="openMovieDetails(p.id)" style=" background-color: #212121;
           /*border-bottom: 1px solid whitesmoke !important;*/
           /*                            border-top: 1px solid whitesmoke !important;*/

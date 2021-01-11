@@ -3,13 +3,6 @@
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-<!--      <div class="input">-->
-<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
-<!--        <form>-->
-<!--          <input placeholder="Search FilmLo" type="text">-->
-<!--        </form>-->
-<!--      </div>-->
-
     </div>
 
     <div class="home__header__middle">
@@ -39,9 +32,6 @@
                   matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
-          <!--          <button mat-menu-item>-->
-          <!--            <mat-icon>add</mat-icon> Smtng-->
-          <!--          </button>-->
           <mat-card *ngFor="let p of myRequests" class="posts">
             <mat-card-header class="posts__header">
               <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
@@ -61,7 +51,6 @@
       <div *ngIf="notifications == 0">
         <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
         <mat-menu #menu="matMenu">
-<!--          <h1 style="color: black!important; font-size: 12px!important;">No notifications</h1>-->
           <mat-card >
             <mat-card-header >
               <div >
@@ -99,11 +88,6 @@
             <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
 
-<!--          <div>-->
-<!--            <mat-icon>add_to_queue</mat-icon>-->
-<!--            <span>Add watched movie</span>-->
-<!--          </div>-->
-
           <div (click)="openWatchedMoviesPage()">
             <mat-icon>theaters</mat-icon>
             <span>Watched movies</span>
@@ -124,11 +108,6 @@
             <span>Statistics</span>
           </div>
 
-<!--          <div>-->
-<!--            <mat-icon class="see-more">expand_more</mat-icon>-->
-<!--            <span>See More</span>-->
-<!--          </div>-->
-
         </div>
       </div>
 
@@ -144,16 +123,25 @@
             </div>
 
           </div>
-          <!--Loop Through All saved movies-->
-<!--          <mat-card *ngFor="let p of savedMovies" class="posts" (click)="openMovieDetails(p.id)">-->
-<!--            <mat-card-header class="posts__header">-->
-<!--              <img alt="{{ p.name }}" class="shape-poster" [src]=p.poster >-->
-<!--              <div class="movie-name-search">-->
-<!--&lt;!&ndash;                <span> {{ p.DateTimeSaved }}</span>&ndash;&gt;-->
-<!--                <h3> {{p.name}} </h3>-->
-<!--              </div>-->
-<!--            </mat-card-header>-->
-<!--          </mat-card>-->
+          <div style="margin-top: 20px; margin-left: 550px" *ngIf="savedMovies.length != 0">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color: #ff9528">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="customize">
+              <button mat-menu-item (click)="oldestSaved()">
+                <span>The oldest saved first</span>
+              </button>
+              <button mat-menu-item (click)="newestSaved()">
+                <span>The newest saved first</span>
+              </button>
+              <button mat-menu-item (click)="movieNameAsc()">
+                <span>Movie name ascending</span>
+              </button>
+              <button mat-menu-item (click)="movieNameDesc()">
+                <span>Movie name descending</span>
+              </button>
+            </mat-menu>
+          </div>
           <div class="center" *ngFor="let p of savedMovies" (click)="openMovieDetails(p.id)" style="
           /*border-bottom: 1px solid whitesmoke !important;*/
           /*                            border-top: 1px solid whitesmoke !important;*/
@@ -181,64 +169,6 @@ width: 600px; background-color: #212121;">
         </div>
 
       </div>
-
-<!--      <div class="home__body__contentMiddle">-->
-<!--        <br>-->
-<!--        <div class="container">-->
-<!--          <div class="container">-->
-<!--            <div fxLayout="column" fxLayoutGap="20px" fxLayout.gt-md="row"  fxLayoutAlign="space-around center" class="content">-->
-<!--              <div class="blocks">-->
-<!--                <button button="submit" mat-raised-button color="primary">-->
-<!--                  <mat-icon>add</mat-icon> Add Post-->
-<!--                </button>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <br>-->
-<!--          <div class="container">-->
-<!--            <div fxLayout="row" fxLayoutAlign="center center" class="content">-->
-<!--              <mat-card class="card" >-->
-<!--                <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">-->
-<!--                  <h3>Recent Posts</h3>-->
-<!--                </mat-card-title>-->
-<!--                <mat-card-content>-->
-<!--                  <div class="example-container mat-elevation-z8">-->
-<!--                    <mat-table #table [dataSource]="savedMovies">-->
-<!--                      <ng-container matColumnDef="date_posted">-->
-<!--                        <mat-header-cell *matHeaderCellDef> Date Posted </mat-header-cell>-->
-<!--                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
-<!--&lt;!&ndash;                        <mat-cell *matCellDef="let element"> {{element.name  | date: 'd/M/y'}} </mat-cell>&ndash;&gt;-->
-<!--                      </ng-container>-->
-<!--                      <ng-container matColumnDef="title">-->
-<!--                        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>-->
-<!--                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
-<!--                      </ng-container>-->
-<!--                      <ng-container matColumnDef="category">-->
-<!--                        <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>-->
-<!--                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
-<!--                      </ng-container>-->
-<!--                      <ng-container matColumnDef="delete">-->
-<!--                        <mat-header-cell *matHeaderCellDef></mat-header-cell>-->
-<!--                        <mat-cell *matCellDef="let element">-->
-<!--                          <a-->
-<!--                                  type="button">-->
-<!--                            <mat-icon class="icon">delete</mat-icon>-->
-<!--                          </a>-->
-<!--                        </mat-cell>-->
-<!--                      </ng-container>-->
-<!--                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
-<!--                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
-<!--                    </mat-table>-->
-<!--                  </div>-->
-<!--                </mat-card-content>-->
-<!--              </mat-card>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-
-
 
       <div class="home__body__feedRight">
         <div class="inside">

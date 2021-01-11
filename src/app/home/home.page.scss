@@ -9,6 +9,20 @@
   height: 100vh;
 }
 
+::ng-deep .customize {
+  background: #2d2d2d;
+
+  .mat-menu-item {
+    color: white !important;
+  }
+
+  button.mat-menu-item:hover {
+    background-color: #626262;
+    color: #fff !important;
+  }
+
+}
+
 .scroll-to-top {
   position: fixed;
   bottom: 15px;
@@ -361,7 +375,7 @@ ng-scrollbar {
       min-height: 20px;
       width: 100%;
       align-self: center;
-      margin-top: 30px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       gap:20px;

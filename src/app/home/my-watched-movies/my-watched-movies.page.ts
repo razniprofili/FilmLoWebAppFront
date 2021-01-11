@@ -80,6 +80,9 @@ export class MyWatchedMoviesPage implements OnInit {
 
   ngOnInit() {
     this.watchedMoviesSub = this.watchedMoviesService.myWatchedMovies.subscribe((myMovies) => {
+      myMovies.sort((a: Movie, b: Movie) => {
+        return  +new Date(b.dateTimeAdded)- +new Date(a.dateTimeAdded);
+      });
       this.watchedMovies = myMovies;
     });
 
@@ -148,6 +151,25 @@ export class MyWatchedMoviesPage implements OnInit {
         .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
   }
 
+  oldestAdded() {
+    this.watchedMovies.sort((a: Movie, b: Movie) => {
+      return  +new Date(a.dateTimeAdded)- +new Date(b.dateTimeAdded);
+    });
+  }
+
+  newestAdded() {
+    this.watchedMovies.sort((a: Movie, b: Movie) => {
+      return  +new Date(b.dateTimeAdded)- +new Date(a.dateTimeAdded);
+    });
+  }
+
+  movieNameAsc(){
+    this.watchedMovies.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  movieNameDesc(){
+    this.watchedMovies.sort((a, b) => b.name.localeCompare(a.name))
+  }
 
   getConfig(): SnotifyToastConfig {
     this.snotifyService.setDefaults({

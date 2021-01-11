@@ -21,6 +21,20 @@
   size: 50px;
 }
 
+::ng-deep .customize {
+  background: #2d2d2d;
+
+  .mat-menu-item {
+    color: white !important;
+  }
+
+  button.mat-menu-item:hover {
+    background-color: #626262;
+    color: #fff !important;
+  }
+
+}
+
 .add-button {
   font-size: 20px;
   width: 200px !important;

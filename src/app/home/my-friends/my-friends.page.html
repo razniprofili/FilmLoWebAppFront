@@ -144,6 +144,25 @@
             </div>
 
           </div>
+          <div style="margin-top: 20px; margin-left: 550px" *ngIf="friends.length != 0">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color: #ff9528">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="customize">
+              <button mat-menu-item (click)="friendNameAsc()">
+                <span>Friend name ascending</span>
+              </button>
+              <button mat-menu-item (click)="friendNameDesc()">
+                <span>Friend name descending</span>
+              </button>
+              <button mat-menu-item (click)="friendSurnameAsc()">
+                <span>Friend surname ascending</span>
+              </button>
+              <button mat-menu-item (click)="friendSurnameDesc()">
+                <span>Friend surname descending</span>
+              </button>
+            </mat-menu>
+          </div>
           <!--Loop Through All saved movies-->
           <mat-card *ngFor="let p of friends" class="posts" (click)="openFriendDetails(p)" style="
           /*border-bottom: 1px solid whitesmoke !important;*/

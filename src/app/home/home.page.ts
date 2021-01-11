@@ -162,6 +162,10 @@ export class HomePage {
     console.log('scrolled')
   }
 
+  private getTime(date?: Date) {
+    return date != null ? date.getTime() : 0;
+  }
+
   ngOnInit() {
 
     this.userSub = this.authService.currentUser.subscribe(user => {
@@ -180,7 +184,12 @@ export class HomePage {
     });
 
     this.moviesSub = this.watchedMoviesService.allFiendsMovies.subscribe((allFiendsMovies) => {
+
+      allFiendsMovies.sort((a: Movie, b: Movie) => {
+        return  +new Date(b.dateTimeAdded)- +new Date(a.dateTimeAdded);
+      });
       this.friendsMovies = allFiendsMovies;
+
       this.countFriendMovies = allFiendsMovies.length
     });
 
@@ -210,6 +219,26 @@ export class HomePage {
        }
      }
    }
+
+  oldestPosts() {
+    this.friendsMovies.sort((a: Movie, b: Movie) => {
+      return  +new Date(a.dateTimeAdded)- +new Date(b.dateTimeAdded);
+    });
+  }
+
+  newestPosts() {
+    this.friendsMovies.sort((a: Movie, b: Movie) => {
+      return  +new Date(b.dateTimeAdded)- +new Date(a.dateTimeAdded);
+    });
+  }
+
+  movieNameAsc(){
+    this.friendsMovies.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  movieNameDesc(){
+    this.friendsMovies.sort((a, b) => b.name.localeCompare(a.name))
+  }
 
   startSignalRConnection(){
     this._hubConnection = new HubConnectionBuilder()

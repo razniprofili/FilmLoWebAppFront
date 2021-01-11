@@ -8,6 +8,20 @@
   background-color: black;
   height: 100vh;
 }
+::ng-deep .customize {
+  background: #2d2d2d;
+
+  .mat-menu-item {
+    color: white !important;
+  }
+
+  button.mat-menu-item:hover {
+    background-color: #626262;
+    color: #fff !important;
+  }
+
+}
+
  .h1watched {
    font-size: 25px !important;
    margin-top: 100px;
@@ -324,7 +338,7 @@ ng-scrollbar {
 
   &__contentMiddle {
     padding: 10px;
-    margin-left: 420px;
+    margin-left: 500px;
     flex: 0.4;
     width: 40%;
     display: flex;
