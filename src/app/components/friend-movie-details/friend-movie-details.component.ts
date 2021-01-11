@@ -132,10 +132,10 @@ export class FriendMovieDetailsComponent implements OnInit {
   addToWatchedMovies(){
 
     console.log(this.movieDetails)
-    this.dialogRef.close();
+    //this.dialogRef.close();
     const dialogRef = this.matDialog.open(AddWatchedMovieComponent, {
       role: 'dialog',
-      height: '430px',
+      height: '450px',
       width: '500px',
       data: {
         dataKey: this.movieDetails,

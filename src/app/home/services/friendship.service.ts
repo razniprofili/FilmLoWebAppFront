@@ -7,6 +7,7 @@ import {map, switchMap, take, tap} from 'rxjs/operators';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
 import {UserGet} from '../../auth/user-get.model';
+import {CommentRateModel} from '../models/comment-rate.model';
 
 
 interface UserData {
@@ -34,8 +35,10 @@ export class FriendshipService {
   private _myFriends = new BehaviorSubject<UserModel[]>([]);
   private _mutualFriends = new BehaviorSubject<UserModel[]>([]);
   private _filmLoUsers = new BehaviorSubject<UserModel[]>([]);
+  private _friendsWatchedMovie = new BehaviorSubject<UserModel[]>([]);
   private _mySentRequests = new BehaviorSubject<FriendRequestModel[]>([]);
   private _myRequests = new BehaviorSubject<FriendRequestModel[]>([]);
+  private _friendCommentRate = new BehaviorSubject<CommentRateModel>(null);
 
   friendData: UserModel
   filmLoUserData: UserModel
@@ -55,13 +58,89 @@ export class FriendshipService {
       return this._filmLoUsers.asObservable();
   }
 
-    get mySentRequests(){
-        return this._mySentRequests.asObservable();
-    }
+  get mySentRequests(){
+      return this._mySentRequests.asObservable();
+  }
 
-    get myRequests(){
-        return this._myRequests.asObservable();
-    }
+  get myRequests(){
+      return this._myRequests.asObservable();
+  }
+
+  get friendsWatchedMovie(){
+      return this._friendsWatchedMovie.asObservable();
+  }
+
+  get friendCommentRate(){
+      return this._friendCommentRate.asObservable();
+  }
+
+
+  getFriendsWatchedThatMovie(movieId: string) {
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http
+                  .get<{ [key: string]: UserData }>(
+                      `https://localhost:44397/api/WatchedMovies/friendWatched/${movieId}`,
+                      {headers: new HttpHeaders({
+                              'Authorization': token
+                          })}
+                  );
+          }),
+          map((userData) => {
+              console.log(userData);
+              const users: UserModel[] = [];
+              for (const key in userData) {
+                  if (userData.hasOwnProperty(key)) {
+                      users.push(
+                          new UserModel(
+                              userData[key].id,
+                              userData[key].name,
+                              userData[key].surname,
+                              userData[key].picture
+                          ));
+                  }
+              }
+              const filmLoUsers: UserModel[] = [];
+              for(let user of users) {
+                  filmLoUsers.push(user)
+              }
+              console.log(filmLoUsers)
+              return filmLoUsers;
+          }),
+          tap(filmLoUsers => {
+              this._friendsWatchedMovie.next(filmLoUsers);
+          })
+      );
+  }
+
+  getFriendCommentRate (friendId: string, movieId: string){
+      return this.authService.token.pipe(
+          take(1),
+          switchMap((token) => {
+              return this.http
+                  .get<CommentRateModel>(
+                      `https://localhost:44397/api/WatchedMovies/commentRate/${friendId}/${movieId}`, {
+                          headers: new HttpHeaders({
+                              'Authorization': token
+                          })
+                      }
+                  );
+          }),
+          map((commentRate) => {
+              console.log(commentRate);
+              var friendCommentRate = new CommentRateModel(
+                  commentRate.rate,
+                  commentRate.comment,
+                  commentRate.dateTimeWatched
+              )
+              return friendCommentRate;
+          }),
+          tap(commRate => {
+              this._friendCommentRate.next(commRate);
+          })
+      );
+  }
 
   getFriendInfo(friendId: number){
 
@@ -220,7 +299,7 @@ export class FriendshipService {
 
   }
 
-    getMutualFriends(userId: any){
+  getMutualFriends(userId: any){
 
         return this.authService.token.pipe(
             take(1),
@@ -259,7 +338,6 @@ export class FriendshipService {
         );
 
     }
-
 
   getSentRequests() {
       return this.authService.token.pipe(

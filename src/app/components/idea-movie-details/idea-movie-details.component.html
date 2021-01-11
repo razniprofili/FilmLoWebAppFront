@@ -13,7 +13,7 @@
       </ion-col>
       <ion-col>
         <ion-row>
-          <span class="uvecanspan"> <p class="pbold"> iMDB rate: </p> {{movieDetails.imdbRating}}</span>
+          <span class="uvecanspan"> <p class="pbold"> IMDb rate: </p> {{movieDetails.imdbRating}}</span>
         </ion-row>
 
         <ion-row>
@@ -34,26 +34,47 @@
       <span class="uvecanspan"> <p class="pbold"> Plot: </p>{{movieDetails.Plot}}</span>
     </ion-row>
 
+<!--    <ion-row >-->
+<!--      <div  *ngIf="friendsWatchedThatMovie.length != 0">-->
+<!--        <ion-button shape="round" color="filmlo" (click)="seeFriends()">-->
+<!--          My friends watched that movie-->
+<!--        </ion-button>-->
+<!--      </div>-->
+<!--<div  *ngIf="friendsWatchedThatMovie.length == 0">-->
+<!--  <span> Be the first of your friends to watch this movie! </span>-->
+<!--</div>-->
+
+<!--    </ion-row>-->
+
+
     <ion-row>
       <ion-col>
+        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length != 0" style="background-color: #6275fa; color: white; margin-top: 40px" (click)="seeFriends()"
+                matTooltip="Friends watched that movie" [matTooltipPosition]='positionOptions[1]'>
+          <mat-icon>people</mat-icon>
+          Friends watched that movie
+        </button>
+<!--        <span *ngIf="friendsWatchedThatMovie.length == 0" style="color: white"> Be the first of your friends to watch this movie! </span>-->
+        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length == 0" style="background-color: #6275fa; color: white; margin-top: 40px" [disabled]="true">
+<!--          <mat-icon>people</mat-icon>-->
+          None of the friends watched
+        </button>
       </ion-col>
 
       <ion-col>
       </ion-col>
 
       <ion-col>
-       <ion-button shape="round" id="divDelete" color="filmlo" (click)="addToSavedMovies()">
-              Save
-       </ion-button>
-<!--        <button mat-flat-button id="divDelete" color="filmlo" (click)="addToSavedMovies()" > Save </button>-->
-
+       <button mat-fab id="divDelete" style="background-color: #ff8e04; color: white" (click)="addToSavedMovies()"
+               matTooltip="Save movie" [matTooltipPosition]='positionOptions[1]'>
+         <mat-icon>bookmark</mat-icon>
+       </button>
       </ion-col>
 
       <ion-col>
-        <ion-button shape="round" color="light" id="divAdd" (click)="addToWatchedMovies()">
-          Watched
-        </ion-button>
-<!--        <button mat-flat-button id="divAdd"  (click)="addToWatchedMovies()" > Watched </button>-->
+        <button mat-fab color="light" id="divAdd" (click)="addToWatchedMovies()" matTooltip="Add to watched movies" [matTooltipPosition]='positionOptions[1]'>
+          <mat-icon>add_to_queue</mat-icon>
+        </button>
       </ion-col>
 
     </ion-row>

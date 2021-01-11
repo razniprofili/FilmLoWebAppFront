@@ -8,17 +8,26 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {WatchedMovieDetailsComponent} from '../watched-movie-details/watched-movie-details.component';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
+import {Subscription} from 'rxjs';
+import {FriendshipService} from '../../home/services/friendship.service';
+import {UserData} from '../../auth/auth.service';
+import {UserModel} from '../../home/models/user.model';
+import {MutualFriendsComponent} from '../mutual-friends/mutual-friends.component';
+import {TooltipPosition} from '@angular/material/tooltip';
+import {FriendsWhachedMovieComponent} from '../friends-whached-movie/friends-whached-movie.component';
+import {CommentRateModel} from '../../home/models/comment-rate.model';
+import {FriendDataModel} from '../../home/models/friend-data.model';
 
-@NgModule({
-  imports: [MatIconModule, MatButtonModule]
-})
 
 @Component({
   selector: 'app-idea-movie-details',
   templateUrl: './idea-movie-details.component.html',
   styleUrls: ['./idea-movie-details.component.scss'],
 })
+
 export class IdeaMovieDetailsComponent implements OnInit {
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   movieDetails: MovieAPIdetails
       = {
@@ -73,19 +82,31 @@ export class IdeaMovieDetailsComponent implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  friendsSub: Subscription
+  friendsWatchedThatMovie: UserModel[] = [{
+    id: 1,
+    name: "user",
+    surname: "user",
+    picture: "https://forum.mikrotik.com/styles/canvas/theme/images/no_avatar.jpg"
+  }]
+
+  friendData: FriendDataModel[] = []
+
+  commentRate: CommentRateModel[]
+
   constructor(
       @Inject(MAT_DIALOG_DATA) public data: any, // saljemo id filma i za njega uzimamo podatke
       public dialogRef: MatDialogRef<IdeaMovieDetailsComponent>,
       private alertController: AlertController,
       private savedMoviesService: SavedMoviesService,
       private snotifyService: SnotifyService,
-      private matDialog: MatDialog
+      private matDialog: MatDialog,
+      private friendsService: FriendshipService
   ) { }
 
 
   ngOnInit() {
 
-    // pri otvaranju pozivamo API i uzimamo detalje filma
     console.log(this.data)
     try {
       fetch('http://www.omdbapi.com/?i=' + this.data.dataKey + '&apikey=4a249f8d')
@@ -93,11 +114,32 @@ export class IdeaMovieDetailsComponent implements OnInit {
           .then(movie => {
             this.movieDetails = movie;
             console.log(this.movieDetails)
+
+            this.friendsSub = this.friendsService.getFriendsWatchedThatMovie(movie.imdbID).subscribe((friends)=> {
+              console.log(friends)
+              this.friendsWatchedThatMovie = friends
+
+              for(let i = 0; i< friends.length; i++){
+                this.friendsService.getFriendCommentRate(friends[i].id, movie.imdbID).subscribe((commRate)=> {
+                  var friendData = new FriendDataModel(
+                      friends[i].id,
+                      friends[i].name,
+                      friends[i].surname,
+                      friends[i].picture,
+                      commRate.comment,
+                      commRate.rate
+                  )
+                  this.friendData.push(friendData)
+                })
+              }
+            })
           });
 
     } catch (e) {
       console.log(e);
     }
+
+
 
   }
 
@@ -165,14 +207,13 @@ export class IdeaMovieDetailsComponent implements OnInit {
   addToWatchedMovies( ){
 
     console.log(this.movieDetails)
-    this.dialogRef.close();
+   //this.dialogRef.close();
     const dialogRef = this.matDialog.open(AddWatchedMovieComponent, {
       role: 'dialog',
-      height: '430px',
+      height: '450px',
       width: '500px',
       data: {
         dataKey: this.movieDetails,
-
       }
     });
 
@@ -202,5 +243,19 @@ export class IdeaMovieDetailsComponent implements OnInit {
           }));
 
   }
+
+  seeFriends(){
+
+    const dialogRef = this.matDialog.open(FriendsWhachedMovieComponent, {
+      role: 'dialog',
+      height: '500px',
+      width: '500px',
+      data: {
+        dataKey: this.friendData,
+      }
+    });
+
+  }
+
 
 }

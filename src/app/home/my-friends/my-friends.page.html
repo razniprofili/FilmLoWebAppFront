@@ -136,7 +136,14 @@
       <div class="home__body__contentMiddle">
 
         <div class="home__body__contentMiddle__center">
-          <h2 class="h2savedmovies">My friends</h2>
+          <h2 class="h2savedmovies" *ngIf="friends.length != 0">My friends</h2>
+          <div *ngIf="friends.length == 0" style="margin-top: 100px !important;">
+            <span class="h1watched">No FilmLo friends! Find your friends now!</span>
+            <div class="div-add">
+              <button mat-raised-button class="add-button" (click)="openFilmLoUsersPage()">Find friends</button>
+            </div>
+
+          </div>
           <!--Loop Through All saved movies-->
           <mat-card *ngFor="let p of friends" class="posts" (click)="openFriendDetails(p)" style="
           /*border-bottom: 1px solid whitesmoke !important;*/

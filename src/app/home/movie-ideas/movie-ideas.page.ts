@@ -343,7 +343,7 @@ export class MovieIdeasPage implements OnInit {
     console.log(movieId)
     const dialogRef = this.matDialog.open(IdeaMovieDetailsComponent, {
       role: 'dialog',
-      height: '730px',
+      height: '750px',
       width: '500px',
       data: {
         dataKey: movieId,

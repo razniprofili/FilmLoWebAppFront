@@ -42,6 +42,7 @@ import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.com
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MutualFriendsComponent} from './components/mutual-friends/mutual-friends.component';
+import {FriendsWhachedMovieComponent} from './components/friends-whached-movie/friends-whached-movie.component';
 
 
 @NgModule({
@@ -60,7 +61,9 @@ import {MutualFriendsComponent} from './components/mutual-friends/mutual-friends
         PopularMovieDetailsComponent,
         ScrollToTopComponent,
         WelcomeComponent,
-        MutualFriendsComponent
+        MutualFriendsComponent,
+        IdeaMovieDetailsComponent,
+        FriendsWhachedMovieComponent
     ],
     entryComponents: [ScrollToTopComponent],
     imports: [BrowserModule,

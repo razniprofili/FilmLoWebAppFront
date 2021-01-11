@@ -15,8 +15,6 @@ describe('IdeaMovieDetailsComponent', () => {
       declarations: [ IdeaMovieDetailsComponent ],
       imports: [
           IonicModule.forRoot(),
-          MatButtonModule,
-          MatIconModule
       ]
     }).compileComponents();
 
