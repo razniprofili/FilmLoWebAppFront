@@ -7,25 +7,35 @@
             src = {{user.picture}}
             class="bigavatar">
 <div>
+  <div>
+      <span *ngIf="mutualFriends.length > 1" matTooltip="Click to see mutual friends" [matTooltipPosition]='positionOptions[1]'
+            style="font-size: 15px; color: #b3b3b3" (click)="seeMutualFriends()" class="mutualFriends">{{mutualFriends.length}} mutual friends</span>
+    <h1 *ngIf="mutualFriends.length == 0" style="font-size: 15px; color: #b3b3b3">No mutual friends</h1>
+    <h1 *ngIf="mutualFriends.length == 1" style="font-size: 15px; color: #b3b3b3">
+      <img alt="{{ mutualFriends[0].name }}" mat-card-avatar [src]=mutualFriends[0].picture  style="height: 15px; width: 15px;">
+      {{mutualFriends[0].name}} {{mutualFriends[0].surname}} is mutual friend</h1>
+  </div>
+
+
   <button mat-flat-button *ngIf="!myFriend && !sentRequest && !myRequest" (click)="sendFriendRequest()" style="background-color: #ff9a45;
-                                                                  margin-top: 10px;
+                                                                  margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Add as friend</button>
   <button mat-flat-button *ngIf="myFriend" (click)="viewFriendWatchMovies()" style="background-color: #ff9a45;
-                                                                  margin-top: 10px;
+                                                                  margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Watched movies list</button>
 
   <h1 *ngIf="myRequest" style="color: white; margin-top: 10px; font-size: 15px">{{user.name}} sent you friend request</h1>
   <button mat-flat-button *ngIf="myRequest" (click)="acceptRequest()" style="background-color: #00bf74;
-                                                                  margin-top: 10px;
+                                                                  margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
     Accept </button>
   <button mat-flat-button *ngIf="myRequest" (click)="declineRequest()" style="background-color: #ff3131;
-                                                                  margin-top: 10px;
+                                                                  margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   margin-left: 10px !important;
                                                                   color: white">
@@ -34,12 +44,12 @@
 </div>
     <div>
       <button mat-flat-button [disabled]="true" *ngIf="!myFriend && sentRequest"   style="background-color:#526eff ;
-                                                                  margin-top: 10px;
+                                                                  margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
         Waiting response</button>
       <button mat-flat-button *ngIf="myFriend" (click)="deleteFriend()" style="background-color: #ff4545;
-                                                                  margin-top: 10px !important;
+                                                                  margin-top: 5px !important;
                                                                   margin-bottom: 20px!important;
                                                                   color: white">
         Delete friend</button>

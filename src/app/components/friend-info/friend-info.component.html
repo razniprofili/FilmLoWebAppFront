@@ -9,6 +9,12 @@
   <div class="center">
     <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture  style="height: 120px; width: 120px; margin-top: 20px!important;">
   </div>
+    <div class="center" style="margin-top: 5px!important;">
+        <span class= 'mutualFriends' style="color: #b3b3b3; font-size: 18px; " *ngIf="mutualFriends.length > 1" (click)="seeMutualFriends()">{{mutualFriends.length}} mutual friends</span>
+        <span style="color: #b3b3b3; font-size: 18px; " *ngIf="mutualFriends.length == 1">
+          <img alt="{{ mutualFriends[0].name }}" mat-card-avatar [src]=mutualFriends[0].picture  style="height: 15px; width: 15px;"> {{mutualFriends[0].name}} {{mutualFriends[0].surname}} is mutual friend</span>
+        <span style="color: #b3b3b3; font-size: 18px; " *ngIf="mutualFriends.length == 0">No mutual friends</span>
+    </div>
 
       <div class="center" style="margin-top: 20px!important;">
         <span style="color: white; font-size: 18px; "> Total watched movies: {{countMovies}} </span>

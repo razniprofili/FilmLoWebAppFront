@@ -17,9 +17,17 @@ mat-card-avatar {
   overflow: hidden;
 }
 
+.mutualFriends {
+  cursor: pointer;
+}
+
+span.mutualFriends:hover {
+  border-bottom: 1px solid whitesmoke !important;
+}
+
 
 .bigh2 {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 30px;
   font-weight: 400;
   font-size: 35px;

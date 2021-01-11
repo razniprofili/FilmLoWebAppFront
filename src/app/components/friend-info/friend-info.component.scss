@@ -12,6 +12,14 @@ mat-card-avatar {
   overflow: hidden;
 }
 
+.mutualFriends {
+  cursor: pointer;
+}
+
+span.mutualFriends:hover {
+  border-bottom: 1px solid whitesmoke !important;
+}
+
 .seebtn {
 background-color: #FF9A45 !important;
   color: white!important;

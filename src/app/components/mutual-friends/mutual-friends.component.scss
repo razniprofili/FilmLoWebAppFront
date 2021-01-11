@@ -1,0 +1,17 @@
+.friendInfo {
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.movie-name-search {
+  display: flex;
+  flex-direction: column-reverse;
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    color: white;
+  }
+}

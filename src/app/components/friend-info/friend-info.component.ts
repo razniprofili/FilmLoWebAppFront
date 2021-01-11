@@ -6,6 +6,8 @@ import {FriendMoviesComponent} from '../friend-movies/friend-movies.component';
 import {FriendshipService} from '../../home/services/friendship.service';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendRequestModel} from '../../home/models/friend-request.model';
+import {UserModel} from '../../home/models/user.model';
+import {MutualFriendsComponent} from '../mutual-friends/mutual-friends.component';
 
 @Component({
   selector: 'app-friend-info',
@@ -51,6 +53,12 @@ export class FriendInfoComponent implements OnInit {
         statusCodeID: 'A'
       }
 
+  mutualFriends: UserModel[] = [{
+    id: 0,
+    name: 'user',
+    surname: 'user',
+    picture: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/close-up-of-white-cat-blink.jpg'
+  }]
 
   ngOnInit() {
 
@@ -63,6 +71,11 @@ export class FriendInfoComponent implements OnInit {
     this.friendshipService.getFriendInfo(this.friend.id).subscribe((friend)=> {
       this.myFriendInfo = friend;
     })
+
+    this.friendshipService.getMutualFriends(this.friend.id).subscribe((mutFriends) => {
+      this.mutualFriends = mutFriends
+      console.log(mutFriends)
+    });
   }
 
   getConfig(): SnotifyToastConfig {
@@ -122,7 +135,6 @@ export class FriendInfoComponent implements OnInit {
         }))
   }
 
-
   seeFriendMovies() {
 
     const sendingData = {
@@ -142,4 +154,14 @@ export class FriendInfoComponent implements OnInit {
     });
   }
 
+  seeMutualFriends(){
+      const dialogRef = this.matDialog.open(MutualFriendsComponent, {
+        role: 'dialog',
+        height: '500px',
+        width: '500px',
+        data: {
+          dataKey: this.mutualFriends,
+        }
+      });
+  }
 }

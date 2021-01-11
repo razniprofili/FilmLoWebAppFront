@@ -11,6 +11,8 @@ import {Movie} from '../../home/models/movie.model';
 import {UserGet} from '../../auth/user-get.model';
 import {AuthService} from '../../auth/auth.service';
 import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
+import {TooltipPosition} from '@angular/material/tooltip';
+import {MutualFriendsComponent} from '../mutual-friends/mutual-friends.component';
 
 @Component({
   selector: 'app-user-info',
@@ -85,6 +87,17 @@ export class UserInfoComponent implements OnInit {
 
   currentUserId: number
   userSub: Subscription
+
+  mutualFriendsSub: Subscription
+  mutualFriends: UserModel[] = [{
+    id: 0,
+    name: 'user',
+    surname: 'user',
+    picture: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/close-up-of-white-cat-blink.jpg'
+  }]
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+
   private _hubConnection: HubConnection;
 
   ngOnInit() {
@@ -125,12 +138,25 @@ export class UserInfoComponent implements OnInit {
         }
       }
     });
+
+    // this.mutualFriendsSub = this.friendshipService.mutualFriends.subscribe((mutFriends) => {
+    //   this.mutualFriends = mutFriends;
+    //   console.log(mutFriends)
+    // });
+
+    this.friendshipService.getMutualFriends(this.user.id).subscribe((mutFriends) => {
+      this.mutualFriends = mutFriends
+      console.log(mutFriends)
+    });
   }
 
   ionViewWillEnter(){
     this.friendshipService.getMyFriends().subscribe(myFriends =>{
       console.log(myFriends);
     });
+
+
+
   }
 
   ngOnDestroy(){
@@ -219,7 +245,7 @@ export class UserInfoComponent implements OnInit {
       'userId': this.user.id
      // 'friendMovies': this.friendMovies
     }
-    this.dialogRef.close();
+    //this.dialogRef.close();
     const dialogRef = this.matDialog.open(FriendMoviesComponent, {
       role: 'dialog',
       height: '900px',
@@ -274,4 +300,16 @@ export class UserInfoComponent implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+
+  seeMutualFriends(){
+    const dialogRef = this.matDialog.open(MutualFriendsComponent, {
+      role: 'dialog',
+      height: '500px',
+      width: '500px',
+      data: {
+        dataKey: this.mutualFriends,
+      }
+    });
+  }
 }
+

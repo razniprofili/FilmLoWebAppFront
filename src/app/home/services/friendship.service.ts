@@ -32,6 +32,7 @@ interface FriendRequestModelRes {
 export class FriendshipService {
 
   private _myFriends = new BehaviorSubject<UserModel[]>([]);
+  private _mutualFriends = new BehaviorSubject<UserModel[]>([]);
   private _filmLoUsers = new BehaviorSubject<UserModel[]>([]);
   private _mySentRequests = new BehaviorSubject<FriendRequestModel[]>([]);
   private _myRequests = new BehaviorSubject<FriendRequestModel[]>([]);
@@ -44,6 +45,10 @@ export class FriendshipService {
 
   get allMyFriends(){
     return this._myFriends.asObservable();
+  }
+
+  get mutualFriends(){
+      return this._mutualFriends.asObservable();
   }
 
   get allFilmLoUsers(){
@@ -214,6 +219,47 @@ export class FriendshipService {
     );
 
   }
+
+    getMutualFriends(userId: any){
+
+        return this.authService.token.pipe(
+            take(1),
+            switchMap((token) => {
+                return this.http
+                    .get<{ [key: string]: UserData }>(
+                        `https://localhost:44397/api/User/mutualFriends/${userId}`, {headers: new HttpHeaders({
+                                'Authorization': token
+                            })}
+                    );
+            }),
+            map((userData) => {
+                console.log(userData);
+                const mutFriends: UserModel[] = [];
+                for (const key in userData) {
+                    if (userData.hasOwnProperty(key)) {
+                        mutFriends.push(
+                            new UserModel(
+                                userData[key].id,
+                                userData[key].name,
+                                userData[key].surname,
+                                userData[key].picture
+                            ));
+                    }
+                }
+                const mutualFriends: UserModel[] = [];
+                for(let friend of mutFriends) {
+                    mutualFriends.push(friend)
+                }
+                console.log(mutualFriends)
+                return mutualFriends;
+            }),
+            tap(mutualFriends => {
+                this._mutualFriends.next(mutualFriends);
+            })
+        );
+
+    }
+
 
   getSentRequests() {
       return this.authService.token.pipe(

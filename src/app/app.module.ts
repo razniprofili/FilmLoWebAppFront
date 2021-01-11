@@ -40,6 +40,8 @@ import {PopularMovieDetailsComponent} from './components/popular-movie-details/p
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MutualFriendsComponent} from './components/mutual-friends/mutual-friends.component';
 
 
 @NgModule({
@@ -57,7 +59,8 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
         UserInfoComponent,
         PopularMovieDetailsComponent,
         ScrollToTopComponent,
-        WelcomeComponent
+        WelcomeComponent,
+        MutualFriendsComponent
     ],
     entryComponents: [ScrollToTopComponent],
     imports: [BrowserModule,
@@ -76,8 +79,8 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
               MatGridListModule,
               MatFormFieldModule,
               MatSelectModule,
-              CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'timi11'}),
-              InfiniteScrollModule
+              CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'timi11'}),
+              InfiniteScrollModule, MatTooltipModule
     ],
     providers: [
         StatusBar,
