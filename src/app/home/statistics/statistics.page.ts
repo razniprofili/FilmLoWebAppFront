@@ -307,7 +307,12 @@ export class StatisticsPage implements OnInit {
       if(minutes == 0){
         return days + " day(s)"+ " " + hours + ' hour(s)';
       } else {
-        return days + " day(s)"+ " " + hours + ' hour(s)'+ ' ' + minutes+ " minute(s)";
+        if(hours == 0){
+          return days + " day(s)"+ ' '+ minutes+ " minute(s)";
+        } else {
+          return days + " day(s)"+ " " + hours + ' hour(s)'+ ' ' + minutes+ " minute(s)";
+        }
+
       }
 
     }
