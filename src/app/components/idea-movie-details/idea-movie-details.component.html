@@ -1,13 +1,10 @@
 <section class="register">
   <div class="header">
     <h3>{{movieDetails.Title}}</h3>
-    <!--  <p>{{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}}</p>-->
     <span id="pomerenspan"> {{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}} </span>
   </div>
-
   <div id="#div1">
     <ion-row>
-
       <ion-col>
         <img src="{{movieDetails.Poster}}" class="image-card" >
       </ion-col>
@@ -33,20 +30,6 @@
     <ion-row>
       <span class="uvecanspan"> <p class="pbold"> Plot: </p>{{movieDetails.Plot}}</span>
     </ion-row>
-
-<!--    <ion-row >-->
-<!--      <div  *ngIf="friendsWatchedThatMovie.length != 0">-->
-<!--        <ion-button shape="round" color="filmlo" (click)="seeFriends()">-->
-<!--          My friends watched that movie-->
-<!--        </ion-button>-->
-<!--      </div>-->
-<!--<div  *ngIf="friendsWatchedThatMovie.length == 0">-->
-<!--  <span> Be the first of your friends to watch this movie! </span>-->
-<!--</div>-->
-
-<!--    </ion-row>-->
-
-
     <ion-row>
       <ion-col>
         <button mat-flat-button *ngIf="friendsWatchedThatMovie.length != 0" style="background-color: #6275fa; color: white; margin-top: 40px" (click)="seeFriends()"
@@ -54,9 +37,7 @@
           <mat-icon>people</mat-icon>
           Friends watched that movie
         </button>
-<!--        <span *ngIf="friendsWatchedThatMovie.length == 0" style="color: white"> Be the first of your friends to watch this movie! </span>-->
         <button mat-flat-button *ngIf="friendsWatchedThatMovie.length == 0" style="background-color: #6275fa; color: white; margin-top: 40px" [disabled]="true">
-<!--          <mat-icon>people</mat-icon>-->
           None of the friends watched
         </button>
       </ion-col>
@@ -79,8 +60,6 @@
 
     </ion-row>
   </div>
-
-
   <ng-snotify class="{{ style }}"></ng-snotify>
 </section>
 

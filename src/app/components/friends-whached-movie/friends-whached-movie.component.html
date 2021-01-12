@@ -1,16 +1,18 @@
 <div>
-  <button mat-flat-button color="warn" (click)="close()" style="margin-left: 380px!important;"> Close </button>
+    <button mat-flat-button color="warn" (click)="close()" style="margin-left: 380px!important;"> Close</button>
 </div>
-<ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
-  <div style="overflow-y: hidden">
-    <div *ngFor="let friend of friendsData" style="display: flex">
-      <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture  style="height: 70px; width: 70px; margin-top: 10px!important;">
-      <div class="movie-name-search">
-        <h3 class="comment" style="font-size: 15px !important;margin-left: 20px !important;color: #c3c3c3 !important;">
-          Rate: {{friend.rate}}, Comment: {{friend.comment}}
-        </h3>
-        <h3 style="margin-top: 10px!important;">{{friend.name}} {{friend.surname}}</h3>
-      </div>
+<ng-scrollbar #scrollable pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover">
+    <div style="overflow-y: hidden">
+        <div *ngFor="let friend of friendsData" style="display: flex">
+            <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture
+                 style="height: 70px; width: 70px; margin-top: 10px!important;">
+            <div class="movie-name-search">
+                <h3 class="comment"
+                    style="font-size: 15px !important;margin-left: 20px !important;color: #c3c3c3 !important;">
+                    Rate: {{friend.rate}}, Comment: {{friend.comment}}
+                </h3>
+                <h3 style="margin-top: 10px!important;">{{friend.name}} {{friend.surname}}</h3>
+            </div>
+        </div>
     </div>
-  </div>
 </ng-scrollbar>

@@ -73,6 +73,7 @@ export class MySavedMoviesPage implements OnInit {
 
   private _hubConnection: HubConnection;
 
+  empty
 
   constructor( private authService: AuthService,
                private alertController: AlertController,
@@ -91,6 +92,12 @@ export class MySavedMoviesPage implements OnInit {
         return  +new Date(b.dateTimeSaved)- +new Date(a.dateTimeSaved);
       });
       this.savedMovies = savedMovies;
+
+      if(savedMovies.length == 0) {
+        this.empty = true;
+      } else {
+        this.empty = false
+      }
     });
 
     this.userSub = this.authService.currentUser.subscribe(user => {
@@ -158,6 +165,23 @@ export class MySavedMoviesPage implements OnInit {
         .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
   }
 
+  search(ev: any) {
+    this.initialize();
+    const val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.savedMovies = this.savedMovies.filter((item) => {
+        return (item.name.toLocaleLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+    }
+  }
+
+  initialize() {
+    this.savedMoviesService.allSavedMovies.subscribe((movies) => {
+      this.savedMovies = movies;
+    });
+
+  }
+
   oldestSaved() {
     this.savedMovies.sort((a: SavedMovieModel, b: SavedMovieModel) => {
       return  +new Date(a.dateTimeSaved)- +new Date(b.dateTimeSaved);
@@ -199,6 +223,7 @@ export class MySavedMoviesPage implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+
   getConfigError(): SnotifyToastConfig {
     this.snotifyService.setDefaults({
       global: {
@@ -238,6 +263,7 @@ export class MySavedMoviesPage implements OnInit {
       this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
     });
   }
+
   logout() {
 
 
@@ -271,6 +297,7 @@ export class MySavedMoviesPage implements OnInit {
   openHome() {
     this.router.navigateByUrl("/home", { replaceUrl: true });
   }
+
   openSearchApi(){
 
     this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
@@ -279,6 +306,7 @@ export class MySavedMoviesPage implements OnInit {
   openWatchedMoviesPage(){
     this.router.navigateByUrl("/home/my-watched-movies", { replaceUrl: true })
   }
+
   openMyProfile (){
     this.router.navigateByUrl("/home/my-profile", { replaceUrl: true })
   }
@@ -287,16 +315,4 @@ export class MySavedMoviesPage implements OnInit {
     this.router.navigateByUrl("/home/my-friends", { replaceUrl: true })
   }
 
-
-  otvori(){
-    this.snotifyService.confirm("Kliknuto", {
-      buttons: [
-        {text: 'Okay',
-          action: toast => {
-          this.snotifyService.remove(toast.id)
-        }
-        }
-      ]
-    });
-  }
 }

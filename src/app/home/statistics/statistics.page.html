@@ -1,4 +1,3 @@
-
 <div class="home-container">
   <div class="home__header">
     <div class="home__header__left">
@@ -26,7 +25,6 @@
         <span class="name">{{ user.name || 'Indranil'}}</span>
       </div>
 
-
       <div *ngIf="notifications > 0">
         <mat-icon matBadge= {{notifications}}
                   matBadgeColor="warn"
@@ -45,7 +43,6 @@
               <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
               <button mat-flat-button color="warn" style="margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
             </mat-card-content>
-
           </mat-card>
         </mat-menu>
       </div>
@@ -62,9 +59,7 @@
         </mat-menu>
       </div>
 
-
       <div>
-
         <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
@@ -72,13 +67,11 @@
           </button>
         </mat-menu>
       </div>
-
     </div>
   </div>
 
   <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
     <div class="home__body">
-
       <div class="home__body__sidebarLeft">
         <div class="inside">
           <div class="user-avatar" (click)="openUserProfile()" style="margin-left: 10px!important;">
@@ -86,7 +79,6 @@
                     alt=""
                     mat-card-avatar
                     src = {{user.picture}}>
-
             <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
 
@@ -114,17 +106,13 @@
       </div>
 
       <div class="home__body__contentMiddle">
-
-
         <div class="home__body__contentMiddle__center" style="width: 1000px!important;">
           <h2 class="h2savedmovies">My statistics</h2>
 
           <div *ngIf="yearData.length != 0">
             <div id="chartContainer" style="height: 370px; width: 80%;"></div>
           </div>
-
           <div>
-
             <h2>
               <mat-icon style="color: #FF9A45; font-size:30px"> functions</mat-icon>
               Total number of watched movies: {{statistic.totalCount}}</h2>
@@ -150,15 +138,12 @@
             <p>No watched movies with rate 5.</p>
           </div>
 
-
           <table mat-table *ngIf="popularMovies.length != 0" [dataSource]="popularMovies"  style="width: 80%!important; background-color: #1a1a1a;">
-
 
             <ng-container matColumnDef="position" >
               <th mat-header-cell *matHeaderCellDef style="width: 20% !important; font-size: 20px!important; color: white!important;"> No. </th>
               <td mat-cell *matCellDef="let element; let i = index" style="color: white!important;"> {{i + 1}} </td>
             </ng-container>
-
 
             <ng-container matColumnDef="movieName">
               <th mat-header-cell *matHeaderCellDef style="font-size: 20px!important; color: white!important; width: 70%!important;"> Name </th>
@@ -175,9 +160,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-
         </div>
-
       </div>
 
       <div class="home__body__feedRight">
@@ -185,7 +168,6 @@
 
         </div>
       </div>
-
     </div>
   </ng-scrollbar>
   <ng-snotify class="{{ style }}"></ng-snotify>

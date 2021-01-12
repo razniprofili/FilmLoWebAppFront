@@ -3,15 +3,11 @@
 </div>
 <ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >
 <div style="overflow-y: hidden">
-
   <div *ngFor="let friend of mutualFriends" style="display: flex">
     <img alt="{{ friend.name }}" mat-card-avatar [src]=friend.picture  style="height: 70px; width: 70px; margin-top: 10px!important;">
     <div class="movie-name-search">
       <h3 style="margin-top: 10px!important;">{{friend.name}} {{friend.surname}}</h3>
-
     </div>
-
   </div>
-
 </div>
 </ng-scrollbar>

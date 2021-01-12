@@ -21,6 +21,19 @@
   size: 50px;
 }
 
+.on-your-mind {
+  background-color: #F0F2F5;
+  color: black;
+  //display: inline-block;
+  outline: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  width: 85%;
+  height: 60%;
+  margin-top: 20px;
+}
+
 ::ng-deep .customize {
   background: #2d2d2d;
 
@@ -450,15 +463,15 @@ ng-scrollbar {
             flex:1;
           }
 
-          form > input.on-your-mind {
-            background-color: #F0F2F5;
-            display: inline-block;
-            outline: none;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            width: 100%;
-          }
+          // input.on-your-mind {
+          //  background-color: #F0F2F5;
+          //  display: inline-block;
+          //  outline: none;
+          //  border: none;
+          //  padding: 10px 20px;
+          //  border-radius: 20px;
+          //  width: 100%;
+          //}
         }
 
 

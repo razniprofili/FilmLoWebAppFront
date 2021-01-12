@@ -19,6 +19,8 @@ import {FriendshipService} from './services/friendship.service';
 import {FriendRequestModel} from './models/friend-request.model';
 import {DOCUMENT} from '@angular/common';
 import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
+import {UserModel} from './models/user.model';
+import {FriendInfoComponent} from '../components/friend-info/friend-info.component';
 
 
 @Component({
@@ -238,6 +240,17 @@ export class HomePage {
 
   movieNameDesc(){
     this.friendsMovies.sort((a, b) => b.name.localeCompare(a.name))
+  }
+
+  openFriendDetails (friend: UserGet){
+    const dialogRef = this.matDialog.open(FriendInfoComponent, {
+      role: 'dialog',
+      height: '500px',
+      width: '500px',
+      data: {
+        dataKey: friend,
+      }
+    });
   }
 
   startSignalRConnection(){

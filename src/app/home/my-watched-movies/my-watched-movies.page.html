@@ -1,15 +1,7 @@
-<!--<ng-scrollbar #scrollable  pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover" >-->
 <div class="home-container">
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-<!--      <div class="input">-->
-<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
-<!--        <form>-->
-<!--          <input placeholder="Search FilmLo" type="text">-->
-<!--        </form>-->
-<!--      </div>-->
-
     </div>
 
     <div class="home__header__middle">
@@ -39,9 +31,6 @@
                   matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
-          <!--          <button mat-menu-item>-->
-          <!--            <mat-icon>add</mat-icon> Smtng-->
-          <!--          </button>-->
           <mat-card *ngFor="let p of myRequests" class="posts">
             <mat-card-header class="posts__header">
               <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
@@ -61,7 +50,6 @@
       <div *ngIf="notifications == 0">
         <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
         <mat-menu #menu="matMenu">
-<!--          <h1 style="color: black!important; font-size: 12px!important;">No notifications</h1>-->
           <mat-card >
             <mat-card-header >
               <div >
@@ -72,9 +60,7 @@
         </mat-menu>
       </div>
 
-
       <div>
-
         <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
@@ -95,39 +81,30 @@
             <img
                     alt=""
                     mat-card-avatar
-                    src = {{user.picture}}>
+                    src = {{user.picture}}
+                    style="margin-left: 10px!important;">
             <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
 
-<!--          <div>-->
-<!--            <mat-icon>add_to_queue</mat-icon>-->
-<!--            <span>Add watched movie</span>-->
-<!--          </div>-->
-
           <div class="active">
-            <mat-icon>theaters</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
             <span>Watched movies</span>
           </div>
 
           <div (click)="openMyFriends()">
-            <mat-icon>people_alt</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
             <span>FilmLo friends</span>
           </div>
 
           <div (click)="openFilmLoUsersPage()">
-            <mat-icon>person_search</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
             <span>Search FilmLo users</span>
           </div>
 
           <div (click)="openStatistics()">
-            <mat-icon>insights</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
             <span>Statistics</span>
           </div>
-
-<!--          <div>-->
-<!--            <mat-icon class="see-more">expand_more</mat-icon>-->
-<!--            <span>See More</span>-->
-<!--          </div>-->
 
         </div>
       </div>
@@ -136,32 +113,35 @@
       <div class="home__body__contentMiddle">
 
         <div class="home__body__contentMiddle__center">
-          <h2 class="h2savedmovies" *ngIf="watchedMovies.length != 0">My watched movies</h2>
-          <div *ngIf="watchedMovies.length == 0" style="margin-top: 100px !important;">
+          <h2 class="h2savedmovies" *ngIf="!empty">My watched movies</h2>
+          <div *ngIf="empty" style="margin-top: 100px !important;">
             <span class="h1watched">No watched movies! Find, save or add movies now!</span>
             <div class="div-add">
               <button mat-raised-button class="add-button" (click)="openSearchApi()">Let's go!</button>
             </div>
-
           </div>
-          <div style="margin-top: 20px; margin-left: 550px" *ngIf="watchedMovies.length != 0">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color: #ff9528">
-              <mat-icon>filter_list</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" class="customize">
-              <button mat-menu-item (click)="oldestAdded()">
-                <span>The oldest added first</span>
+
+          <div style="display: flex" *ngIf="!empty">
+            <input class="on-your-mind" name="message" placeholder="Search watched movies" type="text" (input)="search($event)">
+            <div style="margin-top: 20px; margin-left: 50px" *ngIf="!empty">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color: #ff9528">
+                <mat-icon>filter_list</mat-icon>
               </button>
-              <button mat-menu-item (click)="newestAdded()">
-                <span>The newest added first</span>
-              </button>
-              <button mat-menu-item (click)="movieNameAsc()">
-                <span>Movie name ascending</span>
-              </button>
-              <button mat-menu-item (click)="movieNameDesc()">
-                <span>Movie name descending</span>
-              </button>
-            </mat-menu>
+              <mat-menu #menu="matMenu" class="customize">
+                <button mat-menu-item (click)="oldestAdded()">
+                  <span>The oldest added first</span>
+                </button>
+                <button mat-menu-item (click)="newestAdded()">
+                  <span>The newest added first</span>
+                </button>
+                <button mat-menu-item (click)="movieNameAsc()">
+                  <span>Movie name ascending</span>
+                </button>
+                <button mat-menu-item (click)="movieNameDesc()">
+                  <span>Movie name descending</span>
+                </button>
+              </mat-menu>
+            </div>
           </div>
           <div class="center" *ngFor="let p of watchedMovies" (click)="openMovieDetails(p.id)" style=" background-color: #212121;
           /*border-bottom: 1px solid whitesmoke !important;*/
@@ -169,7 +149,6 @@
           /*                            border-left: 1px solid whitesmoke !important;*/
           /*                            border-right: 1px solid whitesmoke !important;*/
 width: 600px">
-
             <mat-grid-list cols="2" rowHeight="65px">
               <mat-grid-tile [colspan]="1" [rowspan]="2">
                 <img alt="{{ p.name }}" class="shape-poster" float-left [src]=p.poster >
@@ -185,19 +164,15 @@ width: 600px">
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
-
           </div>
         </div>
-
       </div>
-
 
       <div class="home__body__feedRight">
         <div class="inside">
           <!--        <img alt="feed" src="assets/feed.jpg">-->
         </div>
       </div>
-
     </div>
   </ng-scrollbar>
   <ng-snotify class="{{ style }}"></ng-snotify>

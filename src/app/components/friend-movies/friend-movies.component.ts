@@ -58,6 +58,7 @@ export class FriendMoviesComponent implements OnInit {
 
   //friendMovies = this.data.dataKey.friendMovies
 
+    disabled = false
 
     friendMovies: Movie [] = [{
         id: "string",

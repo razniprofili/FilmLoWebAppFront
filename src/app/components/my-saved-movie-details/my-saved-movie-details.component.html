@@ -1,13 +1,10 @@
 <section class="register">
   <div class="header">
   <h3>{{movieDetails.Title}}</h3>
-<!--  <p>{{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}}</p>-->
     <span id="pomerenspan"> {{movieDetails.Year}}, {{movieDetails.Genre}}, {{movieDetails.Runtime}} </span>
   </div>
-
   <div id="#div1">
     <ion-row>
-
       <ion-col>
         <img src="{{movieDetails.Poster}}" class="image-card" >
       </ion-col>
@@ -42,22 +39,12 @@
       </ion-col>
 
       <ion-col>
-
-<!--          <div (click)="delete()" >-->
-<!--            <span id="divDelete" class="material-icons">delete</span>-->
-<!--            &lt;!&ndash;          <mat-icon>delete</mat-icon>&ndash;&gt;-->
-<!--          </div>-->
         <button mat-fab id="divDelete" (click)="delete()">
           <mat-icon>delete</mat-icon>
         </button>
-
-
       </ion-col>
 
       <ion-col>
-<!--        <div (click)="addToWatchedMovies()">-->
-<!--          <span id="divAdd" class="material-icons">add_circle</span>-->
-<!--        </div>-->
         <button mat-fab id="divAdd" (click)="addToWatchedMovies()">
           <mat-icon>add</mat-icon>
         </button>
@@ -65,7 +52,6 @@
 
     </ion-row>
   </div>
-
 
   <ng-snotify class="{{ style }}"></ng-snotify>
 </section>

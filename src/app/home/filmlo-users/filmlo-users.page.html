@@ -3,13 +3,6 @@
   <div class="home__header">
     <div class="home__header__left">
       <img mat-card-avatar src="assets/logo/logo.png"/>
-<!--      <div class="input">-->
-<!--        <mat-icon class="search-icon">search_outline</mat-icon>-->
-<!--        <form>-->
-<!--          <input placeholder="Search FilmLo" type="text">-->
-<!--        </form>-->
-<!--      </div>-->
-
     </div>
 
     <div class="home__header__middle">
@@ -40,9 +33,6 @@
                   matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
-          <!--          <button mat-menu-item>-->
-          <!--            <mat-icon>add</mat-icon> Smtng-->
-          <!--          </button>-->
           <mat-card *ngFor="let p of myRequests" class="posts">
             <mat-card-header class="posts__header">
               <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
@@ -62,7 +52,6 @@
       <div *ngIf="notifications == 0">
         <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
         <mat-menu #menu="matMenu">
-<!--          <h1 style="color: black!important; font-size: 12px!important;">No notifications</h1>-->
           <mat-card >
             <mat-card-header >
               <div >
@@ -73,9 +62,7 @@
         </mat-menu>
       </div>
 
-
       <div>
-
         <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
@@ -83,7 +70,6 @@
           </button>
         </mat-menu>
       </div>
-
     </div>
   </div>
 
@@ -96,38 +82,30 @@
             <img
                     alt=""
                     mat-card-avatar
-                    src = {{user.picture}}>
+                    src = {{user.picture}}
+                    style="margin-left: 10px!important;">
             <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
-          <!--          <div>-->
-          <!--            <mat-icon>add_to_queue</mat-icon>-->
-          <!--            <span>Add watched movie</span>-->
-          <!--          </div>-->
 
           <div (click)="openWatchedMoviesPage()">
-            <mat-icon>theaters</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
             <span>Watched movies</span>
           </div>
 
           <div (click)="openFilmLoFriendsPage()">
-            <mat-icon>people_alt</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
             <span>FilmLo friends</span>
           </div>
 
           <div class="active">
-            <mat-icon>person_search</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
             <span>Search FilmLo users</span>
           </div>
 
           <div (click)="openStatistics()">
-            <mat-icon>insights</mat-icon>
+            <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
             <span>Statistics</span>
           </div>
-
-          <!--          <div>-->
-          <!--            <mat-icon class="see-more">expand_more</mat-icon>-->
-          <!--            <span>See More</span>-->
-          <!--          </div>-->
 
         </div>
       </div>
@@ -169,16 +147,13 @@ width: 600px ">
             </mat-card-header>
           </mat-card>
         </div>
-
       </div>
-
 
       <div class="home__body__feedRight">
         <div class="inside">
           <!--        <img alt="feed" src="assets/feed.jpg">-->
         </div>
       </div>
-
     </div>
   </ng-scrollbar>
   <ng-snotify class="{{ style }}"></ng-snotify>

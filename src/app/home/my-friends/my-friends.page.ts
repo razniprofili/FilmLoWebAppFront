@@ -69,6 +69,8 @@ export class MyFriendsPage implements OnInit {
 
   userSub: Subscription
 
+  empty
+
   private _hubConnection: HubConnection;
 
   constructor( private authService: AuthService,
@@ -86,6 +88,12 @@ export class MyFriendsPage implements OnInit {
     this.friendsSub = this.friendshipService.allMyFriends.subscribe((myFriends) => {
       myFriends.sort((a, b) => a.name.localeCompare(b.name))
       this.friends = myFriends;
+
+      if(myFriends.length == 0) {
+        this.empty = true
+      } else {
+        this.empty = false
+      }
     });
 
     this.userSub = this.authService.currentUser.subscribe(user => {
@@ -105,6 +113,23 @@ export class MyFriendsPage implements OnInit {
     });
 
     this.startSignalRConnection();
+  }
+
+  search(ev: any) {
+    this.initialize();
+    const val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.friends = this.friends.filter((item) => {
+        return (item.name.toLocaleLowerCase().indexOf(val.toLowerCase()) > -1 || item.surname.toLocaleLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+    }
+  }
+
+  initialize() {
+    this.friendshipService.allMyFriends.subscribe((friends) => {
+      this.friends = friends;
+    });
+
   }
 
   friendNameAsc(){
@@ -251,6 +276,7 @@ export class MyFriendsPage implements OnInit {
       }
     });
   }
+
   openFilmLoUsersPage(){
     this.router.navigateByUrl("/home/filmlo-users", { replaceUrl: true })
   }
@@ -262,6 +288,7 @@ export class MyFriendsPage implements OnInit {
   openHome() {
     this.router.navigateByUrl("/home", { replaceUrl: true });
   }
+
   openSearchApi(){
     this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
 

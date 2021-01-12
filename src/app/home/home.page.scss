@@ -365,6 +365,7 @@ ng-scrollbar {
           position: absolute;
           top: 10px;
           left: 10px;
+          cursor: pointer;
         }
 
       }
@@ -446,7 +447,7 @@ color: white;
           display:flex;
 
           img {
-
+            cursor: pointer;
           }
 
           .posts__header__right {
@@ -460,6 +461,12 @@ color: white;
               margin-bottom: 0;
              // color: white;
                color: #FF9A45;
+              cursor: pointer;
+
+              h3.posts__header:hover {
+                border-bottom: 1px solid #FF9A45;
+              }
+
             }
           }
 
@@ -476,6 +483,7 @@ color: white;
               text-space: 20px;
               //color: white;
              // color: #FF9A45;
+
             }
           }
         }

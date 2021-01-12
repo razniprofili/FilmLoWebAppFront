@@ -1,58 +1,63 @@
-
-<div>
-  <button mat-flat-button color="warn" (click)="exit()" style="margin-left: 1220px!important;"> Close </button>
-    <h1 style=" font-weight: bold;font-size: 32px; color: white">
-    {{friendName}} {{friendSurname}} - Watched movies
-    </h1>
-</div>
-
-<table mat-table
-       [dataSource]="friendsMoviesString" multiTemplateDataRows
-       class="mat-elevation-z8" style="background-color: #1d1d1d;">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay" style="color: white!important;">
-    <th mat-header-cell *matHeaderCellDef class="tableHeader"> {{column}} </th>
-    <td mat-cell *matCellDef="let element" class="tableElements"> {{element[column]}}</td>
-  </ng-container>
-
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div >
-          <div>
-            <img src="{{element.poster}}" class="image-card" >
-          </div>
+<ng-scrollbar #scrollable pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover">
+    <div style="overflow-y: hidden">
+        <div>
+            <button mat-flat-button color="warn" (click)="exit()" style="margin-left: 1220px!important;"> Close</button>
+            <h1 style=" font-weight: bold;font-size: 32px; color: white">
+                {{friendName}} {{friendSurname}} - Watched movies
+            </h1>
         </div>
-        <div class="example-element-description">
-          <div class="tableElements"> <b> Genre: </b>{{element.genre}}</div>
-          <div class="tableElementsDetails"> <b> Actors: </b>{{element.actors}} </div>
-          <div class="tableElementsDetails"> <b> Year: </b> {{element.year}} </div>
-          <div class="tableElementsDetails"> <b> Director: </b>{{element.director}} </div>
-          <div class="tableElementsDetails"> <b> Duration: </b>{{element.duration}} min</div>
-          <div class="tableElementsDetails"> <b> Country: </b>{{element.country}} </div>
-        </div>
-        <div style="padding-top: 180px !important; padding-left:300px !important;">
-          <button mat-fab style="background-color: #FF9A45 !important;" (click)="saveMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
-            <mat-icon>favorite</mat-icon>
-          </button>
-          <button mat-fab style="background-color: black; margin-left: 10px"
-                  (click)="addMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
-            <mat-icon>add</mat-icon>
-          </button>
 
-        </div>
-      </div>
+        <table mat-table
+               [dataSource]="friendsMoviesString" multiTemplateDataRows
+               class="mat-elevation-z8" style="background-color: #1d1d1d;">
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay"
+                          style="color: white!important;">
+                <th mat-header-cell *matHeaderCellDef class="tableHeader"> {{column}} </th>
+                <td mat-cell *matCellDef="let element" class="tableElements"> {{element[column]}}</td>
+            </ng-container>
 
-    </td>
-  </ng-container>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <div>
+                            <div>
+                                <img src="{{element.poster}}" class="image-card">
+                            </div>
+                        </div>
+                        <div class="example-element-description">
+                            <div class="tableElements"><b> Genre: </b>{{element.genre}}</div>
+                            <div class="tableElementsDetails"><b> Actors: </b>{{element.actors}} </div>
+                            <div class="tableElementsDetails"><b> Year: </b> {{element.year}} </div>
+                            <div class="tableElementsDetails"><b> Director: </b>{{element.director}} </div>
+                            <div class="tableElementsDetails"><b> Duration: </b>{{element.duration}} min</div>
+                            <div class="tableElementsDetails"><b> Country: </b>{{element.country}} </div>
+                        </div>
+                        <div style="padding-top: 180px !important; padding-left:300px !important;">
+                            <button mat-fab style="background-color: #FF9A45 !important;"
+                                    (click)="saveMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
+                                <mat-icon>favorite</mat-icon>
+                            </button>
+                            <button mat-fab style="background-color: black; margin-left: 10px"
+                                    (click)="addMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
+                                <mat-icon>add</mat-icon>
+                            </button>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-      class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = expandedElement === element ? null : element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
+                        </div>
+                    </div>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+    </div>
+</ng-scrollbar>
 <ng-snotify class="{{ style }}"></ng-snotify>

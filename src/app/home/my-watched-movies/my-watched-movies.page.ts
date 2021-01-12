@@ -59,6 +59,7 @@ export class MyWatchedMoviesPage implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  empty
 
   myRequests: FriendRequestModel[]
   myRequestsSub: Subscription
@@ -84,6 +85,12 @@ export class MyWatchedMoviesPage implements OnInit {
         return  +new Date(b.dateTimeAdded)- +new Date(a.dateTimeAdded);
       });
       this.watchedMovies = myMovies;
+
+      if(myMovies.length == 0) {
+        this.empty = true
+      } else {
+        this.empty = false
+      }
     });
 
     this.userSub = this.authService.currentUser.subscribe(user => {
@@ -116,6 +123,7 @@ export class MyWatchedMoviesPage implements OnInit {
     });
 
   }
+
   ngOnDestroy(){
 
     this.userSub.unsubscribe()
@@ -125,6 +133,23 @@ export class MyWatchedMoviesPage implements OnInit {
     this._hubConnection.stop()
         .then(() => console.log('Connection STOPPED'))
         .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
+  }
+
+  search(ev: any) {
+    this.initialize();
+    const val = ev.target.value;
+    if (val && val.trim() !== '') {
+      this.watchedMovies = this.watchedMovies.filter((item) => {
+        return (item.name.toLocaleLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+    }
+  }
+
+  initialize() {
+    this.watchedMoviesService.myWatchedMovies.subscribe((movies) => {
+      this.watchedMovies = movies;
+    });
+
   }
 
   startSignalRConnection(){
@@ -192,6 +217,7 @@ export class MyWatchedMoviesPage implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+
   getConfigError(): SnotifyToastConfig {
     this.snotifyService.setDefaults({
       global: {
@@ -231,6 +257,7 @@ export class MyWatchedMoviesPage implements OnInit {
       this.snotifyService.error("Error while declining the request. Request is not declined.", "Error", this.getConfigError());
     });
   }
+
   logout() {
 
 
@@ -265,6 +292,7 @@ export class MyWatchedMoviesPage implements OnInit {
     this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
 
   }
+
   openFilmLoUsersPage(){
     this.router.navigateByUrl("/home/filmlo-users", { replaceUrl: true })
   }
