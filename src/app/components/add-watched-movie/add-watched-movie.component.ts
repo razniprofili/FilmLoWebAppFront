@@ -8,14 +8,10 @@ import {Movie} from '../../home/models/movie.model';
 import {AuthService} from '../../auth/auth.service';
 import {User} from '../../auth/user.model';
 import {UserGet} from '../../auth/user-get.model';
+import {DatePipe} from '@angular/common';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 
-// @NgModule({
-//   declarations: [],
-//   imports: [],
-//   providers: [],
-//   exports: [FormsModule],
-//   bootstrap: []
-// })
+
 @Component({
   selector: 'app-add-watched-movie',
   templateUrl: './add-watched-movie.component.html',
@@ -48,12 +44,20 @@ export class AddWatchedMovieComponent implements OnInit {
 
     rates: Number[] = [1, 2, 3, 4, 5]
 
+    textValue = new Date()
+    currentRate = 0
+    noRate
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<AddWatchedMovieComponent>,
               private alertController: AlertController,
               private watchedMoviesService: WatchedMoviesService,
               private snotifyService: SnotifyService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private config: NgbRatingConfig)
+  {
+        config.max = 5;
+  }
 
   ngOnInit() {
 
@@ -111,36 +115,53 @@ export class AddWatchedMovieComponent implements OnInit {
         };
     }
 
+    seeStars(){
+        console.log("stars:", this.currentRate)
+    }
+
+    closeDialog(){
+        this.dialogRef.close()
+    }
+
     addMovie(){
 
       let movieDetails = this.data.dataKey
 
-       let movie = new Movie(movieDetails.imdbID, movieDetails.Actors, Number(movieDetails.Year), movieDetails.Title, movieDetails.Director,
-           Number(movieDetails.Runtime.substring(0, movieDetails.Runtime.length-4)), movieDetails.Genre, movieDetails.Country,
-           Number(this.form.value['rate']), this.form.value["comment"],
-           this.form.value['date'], new Date(), movieDetails.Poster, this.user)
-console.log(movie)
-      this.watchedMoviesService.addWatchedMovie(movie).subscribe( () => {
+        if(this.currentRate == 0){
+            this.noRate = true;
+        } else {
+            this.noRate = false;
 
-              //  uspesno = true;
-              this.dialogRef.close();
-              this.snotifyService.success(this.body, this.title, this.getConfig());
-          },
-          (error => {
-              // uspesno = false;
-              console.log(error)
-              this.dialogRef.close();
+            let movie = new Movie(movieDetails.imdbID, movieDetails.Actors, Number(movieDetails.Year), movieDetails.Title, movieDetails.Director,
+                Number(movieDetails.Runtime.substring(0, movieDetails.Runtime.length-4)), movieDetails.Genre, movieDetails.Country,
+                Number(this.currentRate), this.form.value["comment"],
+                new DatePipe('en').transform(this.textValue, 'dd.MM.yyyy.'), new Date(), movieDetails.Poster, this.user)
 
-              if(error.error.erroe == "WatchedMovie currently exists!") {
+            console.log(movie)
+            this.watchedMoviesService.addWatchedMovie(movie).subscribe( () => {
 
-                  this.snotifyService.error("This movie already exists in the watch list. You can't add it!", "Error", this.getConfigError());
+                    //  uspesno = true;
+                    this.dialogRef.close();
+                    this.snotifyService.success(this.body, this.title, this.getConfig());
+                },
+                (error => {
+                    // uspesno = false;
+                    console.log(error)
+                    this.dialogRef.close();
 
-              } else {
+                    if(error.error.erroe == "WatchedMovie currently exists!") {
 
-                  this.snotifyService.error("Error while adding the movie. Movie is not added.", "Error", this.getConfigError());
-              }
+                        this.snotifyService.error("This movie already exists in the watch list. You can't add it!", "Error", this.getConfigError());
 
-          }));
+                    } else {
+
+                        this.snotifyService.error("Error while adding the movie. Movie is not added.", "Error", this.getConfigError());
+                    }
+
+                }));
+        }
+
+
 
   }
 }

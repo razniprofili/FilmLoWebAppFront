@@ -28,7 +28,8 @@
       <div *ngIf="notifications > 0">
         <mat-icon matBadge= {{notifications}}
                   matBadgeColor="warn"
-                  matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
+                  matBadgeOverlap="false" [matMenuTriggerFor]="menu"
+        style="color: white!important;">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
           <mat-card *ngFor="let p of myRequests" class="posts">
@@ -40,15 +41,16 @@
               </div>
             </mat-card-header>
             <mat-card-content class="posts__body" style="margin-top: 10px!important;">
-              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
-              <button mat-flat-button color="warn" style="margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
+              <button mat-flat-button  style="border: none!important; outline:none !important;margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
+              <button mat-flat-button color="warn" style="border: none!important; outline:none !important;
+              margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
             </mat-card-content>
 
           </mat-card>
         </mat-menu>
       </div>
       <div *ngIf="notifications == 0">
-        <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">notifications</mat-icon>
         <mat-menu #menu="matMenu">
           <mat-card >
             <mat-card-header >
@@ -61,9 +63,9 @@
       </div>
 
       <div>
-        <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()">
+          <button mat-menu-item (click)="logout()" style="border: none!important; outline:none !important;">
             <mat-icon>exit_to_app</mat-icon> Logout
           </button>
         </mat-menu>
@@ -83,27 +85,27 @@
                   mat-card-avatar
                   src = {{user.picture}}
                   style="margin-left: 10px!important;">
-          <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
+          <span  style="color: white!important;" class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
         </div>
 
         <div (click)="openWatchedMoviesPage()">
           <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
-          <span>Watched movies</span>
+          <span style="color: white!important;">Watched movies</span>
         </div>
 
         <div (click)="openFilmLoFriendsPage()">
           <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
-          <span>FilmLo friends</span>
+          <span style="color: white!important;">FilmLo friends</span>
         </div>
 
         <div (click)="openFilmLoUsersPage()">
           <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
-          <span>Search FilmLo users</span>
+          <span style="color: white!important;">Search FilmLo users</span>
         </div>
 
         <div (click)="openStatistics()">
           <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
-          <span>Statistics</span>
+          <span style="color: white!important;">Statistics</span>
         </div>
 
       </div>
@@ -123,20 +125,21 @@
           </mat-card>
         </div>
         <div style="margin-top: 20px; margin-left: 700px">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter posts" style="background-color: #ff9528">
-            <mat-icon>filter_list</mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter posts" style="background-color:
+          #ff9528; border: none!important; outline:none !important;">
+            <mat-icon style="color: white!important;">filter_list</mat-icon>
           </button>
           <mat-menu #menu="matMenu" class="customize">
-            <button mat-menu-item (click)="oldestPosts()">
+            <button mat-menu-item (click)="oldestPosts()" style="border: none!important; outline:none !important;">
               <span>The oldest posts first</span>
             </button>
-            <button mat-menu-item (click)="newestPosts()">
+            <button mat-menu-item (click)="newestPosts()" style="border: none!important; outline:none !important;">
               <span>The newest posts first</span>
             </button>
-            <button mat-menu-item (click)="movieNameAsc()">
+            <button mat-menu-item (click)="movieNameAsc()" style="border: none!important; outline:none !important;">
               <span>Movie name ascending</span>
             </button>
-            <button mat-menu-item (click)="movieNameDesc()">
+            <button mat-menu-item (click)="movieNameDesc()" style="border: none!important; outline:none !important;">
               <span>Movie name descending</span>
             </button>
           </mat-menu>
@@ -162,9 +165,11 @@
 
       </div>
     <div class="home__body__contentMiddle" style="margin-left: 500px" *ngIf="countFriendMovies == 0">
-      <h3 style="margin-top: 200px; font-size: 25px">Your home page is empty!</h3>
-      <h3 style="font-size: 20px">You'll have more FilmLo user's watched movies if you add more friends.</h3>
-      <button mat-flat-button style="background-color: #ff9a1c; color: white; width: 200px; height: 50px; margin-left: 150px!important;" (click)="openFilmLoUsersPage()"> Find FilmLo friends </button>
+      <h3 style="margin-top: 200px; font-size: 25px; color: white!important;">Your home page is empty!</h3>
+      <h3 style="font-size: 20px; color: white!important;">You'll have more FilmLo user's watched movies if you add more friends.</h3>
+      <button mat-flat-button style=" border: none!important; outline:none !important; background-color: #ff9a1c;
+      color: white!important; width: 200px; height: 50px;
+      margin-left: 150px!important;" (click)="openFilmLoUsersPage()"> Find FilmLo friends </button>
     </div>
     <div class="home__body__feedRight">
 
@@ -173,20 +178,24 @@
         <div>
           <div  style="border-bottom: 1px solid whitesmoke; height: 180px">
             <h1 style="font-size: 18px; color: #f58d0b;"> FilmLo- movies statistics and predictions</h1>
-            <h1 style="font-size: 15px"> Interesting in movies statistics and popularity prediction?</h1>
-            <button mat-flat-button class="explore-button" (click)="openFilmloPage()"> Explore now! </button>
+            <h1 style="font-size: 15px; color: white!important;"> Interesting in movies statistics and popularity prediction?</h1>
+            <button mat-flat-button class="explore-button" (click)="openFilmloPage()" style="border: none!important; outline:none !important;"> Explore now! </button>
           </div>
 
           <div  style="border-bottom: 1px solid whitesmoke; height: 180px; margin-top: 15px">
             <h1 style="font-size: 18px; color: #f58d0b;"> FilmLo- popular movies</h1>
-            <h1 style="font-size: 15px"> Explore currently popular movies on popular platforms- Netflix, Hulu, Disney+ or Prime Video! </h1>
-            <button mat-flat-button class="explore-button" (click)="openPopularMoviesPage()" > See popular movies </button>
+            <h1 style="font-size: 15px; color: white!important;"> Explore currently popular movies on popular platforms- Netflix, Hulu,
+              Disney+ or Prime Video! </h1>
+            <button mat-flat-button class="explore-button" (click)="openPopularMoviesPage()" style="border: none!important; outline:none !important;" > See popular movies
+            </button>
           </div>
 
           <div  style="border-bottom: 1px solid whitesmoke; height: 180px; margin-top: 15px">
             <h1 style="font-size: 18px; color: #f58d0b;"> FilmLo- all movies statistics</h1>
-            <h1 style="font-size: 15px"> Explore movies statistics from popular platforms- Netflix, Hulu, Disney+ or Prime Video! </h1>
-            <button mat-flat-button class="explore-button" (click)="openMoviesStatsPage()" > See statistics </button>
+            <h1 style="font-size: 15px; color: white!important;"> Explore movies statistics from popular platforms- Netflix,
+              Hulu,
+              Disney+ or Prime Video! </h1>
+            <button mat-flat-button class="explore-button" (click)="openMoviesStatsPage()" style="border: none!important; outline:none !important;"> See statistics </button>
           </div>
 
         </div>

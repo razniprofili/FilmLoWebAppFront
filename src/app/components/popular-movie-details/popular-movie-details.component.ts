@@ -134,21 +134,21 @@ export class PopularMovieDetailsComponent implements OnInit {
         }));
   }
 
-  editMovie(){
-
-    this.dialogRef.close();
-    const dialogRef = this.matDialog.open(UpdateMovieComponent, {
-      role: 'dialog',
-      height: '430px',
-      width: '500px',
-      data: {
-        dataKey: this.data.dataKey // its movie id
-      }
-    });
-    let instance= dialogRef.componentInstance;
-    instance.myRate = this.movie.rate;
-    instance.myComment = this.movie.comment;
-    instance.dateTimeWatched = this.movie.dateTimeWatched
-  }
+  // editMovie(){
+  //
+  //   this.dialogRef.close();
+  //   const dialogRef = this.matDialog.open(UpdateMovieComponent, {
+  //     role: 'dialog',
+  //     height: '430px',
+  //     width: '500px',
+  //     data: {
+  //       dataKey: this.data.dataKey // its movie id
+  //     }
+  //   });
+  //   let instance= dialogRef.componentInstance;
+  //   instance.myRate = this.movie.rate;
+  //   instance.myComment = this.movie.comment;
+  //   instance.dateTimeWatched = this.movie.dateTimeWatched
+  // }
 
 }

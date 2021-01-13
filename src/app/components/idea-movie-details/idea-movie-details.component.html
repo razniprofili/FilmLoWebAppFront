@@ -32,12 +32,14 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length != 0" style="background-color: #6275fa; color: white; margin-top: 40px" (click)="seeFriends()"
+        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length != 0" style="background-color: #6275fa; color:
+        white; margin-top: 40px; border: none!important; outline: none!important;" (click)="seeFriends()"
                 matTooltip="Friends watched that movie" [matTooltipPosition]='positionOptions[1]'>
           <mat-icon>people</mat-icon>
           Friends watched that movie
         </button>
-        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length == 0" style="background-color: #6275fa; color: white; margin-top: 40px" [disabled]="true">
+        <button mat-flat-button *ngIf="friendsWatchedThatMovie.length == 0" style="background-color: #6275fa; border: none!important; outline: none!important; color:
+         white; margin-top: 40px" [disabled]="true">
           None of the friends watched
         </button>
       </ion-col>
@@ -46,14 +48,15 @@
       </ion-col>
 
       <ion-col>
-       <button mat-fab id="divDelete" style="background-color: #ff8e04; color: white" (click)="addToSavedMovies()"
+       <button mat-fab id="divDelete" style="background-color: #ff8e04; color: white; border: none!important; outline: none!important;" (click)="addToSavedMovies()"
                matTooltip="Save movie" [matTooltipPosition]='positionOptions[1]'>
          <mat-icon>bookmark</mat-icon>
        </button>
       </ion-col>
 
       <ion-col>
-        <button mat-fab color="light" id="divAdd" (click)="addToWatchedMovies()" matTooltip="Add to watched movies" [matTooltipPosition]='positionOptions[1]'>
+        <button mat-fab color="light" id="divAdd" (click)="addToWatchedMovies()" matTooltip="Add to watched movies" [matTooltipPosition]='positionOptions[1]'
+        style="border: none!important; outline: none!important;">
           <mat-icon>add_to_queue</mat-icon>
         </button>
       </ion-col>

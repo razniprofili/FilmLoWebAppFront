@@ -8,6 +8,7 @@ import {AlertController} from '@ionic/angular';
 import {WatchedMoviesService} from '../../home/services/watched-movies.service';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 import {MovieAPIdetails} from '../../home/models/movieAPIdetails.model';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 @Component({
   providers: [DatePipe],
@@ -16,6 +17,8 @@ import {MovieAPIdetails} from '../../home/models/movieAPIdetails.model';
   styleUrls: ['./friend-movie-details.component.scss'],
 })
 export class FriendMovieDetailsComponent implements OnInit {
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   // for notifications:
 

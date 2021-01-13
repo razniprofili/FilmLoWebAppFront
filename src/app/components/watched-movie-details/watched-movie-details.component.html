@@ -47,7 +47,8 @@
 
       <ion-col>
 
-<button mat-fab (click)="delete()" id="divDelete">
+<button mat-fab (click)="delete()" id="divDelete" style="border: none!important; outline: none!important;"
+        matTooltip="Delete movie" [matTooltipPosition]='positionOptions[1]'>
   <mat-icon>delete</mat-icon>
 </button>
 
@@ -55,7 +56,8 @@
 
       <ion-col>
 
-        <button mat-fab (click)="editMovie()" id="divAdd">
+        <button mat-fab (click)="editMovie()" id="divAdd" style="border: none!important; outline: none!important;"
+                matTooltip="Edit watching date, rate or comment" [matTooltipPosition]='positionOptions[1]'>
           <mat-icon>edit</mat-icon>
         </button>
       </ion-col>

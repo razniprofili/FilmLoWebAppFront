@@ -7,6 +7,8 @@ import {AuthService} from '../../auth/auth.service';
 import {NgForm} from '@angular/forms';
 import {User} from '../../auth/user.model';
 import {UserGet} from '../../auth/user-get.model';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-update-movie',
@@ -15,11 +17,13 @@ import {UserGet} from '../../auth/user-get.model';
 })
 export class UpdateMovieComponent implements OnInit {
 
-  @ViewChild('form', {static: true}) form: NgForm;
+  @ViewChild('form', {static: true}) form : NgForm;
 
-  @Input() dateTimeWatched: any
-  @Input() myRate: any
-  @Input() myComment: string
+  @Input() textValue : any
+  @Input() currentRate : any
+  @Input() myComment : string
+
+  dateWatched = this.textValue
 
   // for notifications:
 
@@ -27,7 +31,7 @@ export class UpdateMovieComponent implements OnInit {
   title = 'Done!';
   body = 'Movie updated!';
   timeout = 3000;
-  position: SnotifyPosition = SnotifyPosition.rightBottom;
+  position : SnotifyPosition = SnotifyPosition.rightBottom;
   progressBar = true;
   closeClick = true;
   newTop = true;
@@ -39,21 +43,31 @@ export class UpdateMovieComponent implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
-  currentUser: User
-  user: UserGet
+  currentUser : User
+  user : UserGet
 
-  rates: Number[] = [1, 2, 3, 4, 5]
+  rates : Number[] = [1, 2, 3, 4, 5]
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-              public dialogRef: MatDialogRef<UpdateMovieComponent>,
-              private alertController: AlertController,
-              private watchedMoviesService: WatchedMoviesService,
-              private snotifyService: SnotifyService,
-              private authService: AuthService) { }
+  // textValue
+  noComment
 
-  ngOnInit() {}
+  // currentRate
 
-  getConfig(): SnotifyToastConfig {
+  constructor(@Inject(MAT_DIALOG_DATA) public data : any,
+              public dialogRef : MatDialogRef<UpdateMovieComponent>,
+              private alertController : AlertController,
+              private watchedMoviesService : WatchedMoviesService,
+              private snotifyService : SnotifyService,
+              private authService : AuthService,
+              private config : NgbRatingConfig) {
+    config.max = 5
+  }
+
+  ngOnInit() {
+    console.log(this.textValue)
+  }
+
+  getConfig() : SnotifyToastConfig {
     this.snotifyService.setDefaults({
       global: {
         newOnTop: this.newTop,
@@ -75,7 +89,7 @@ export class UpdateMovieComponent implements OnInit {
     };
   }
 
-  getConfigError(): SnotifyToastConfig {
+  getConfigError() : SnotifyToastConfig {
     this.snotifyService.setDefaults({
       global: {
         newOnTop: this.newTop,
@@ -97,95 +111,37 @@ export class UpdateMovieComponent implements OnInit {
     };
   }
 
+  closeDialog() {
+    this.dialogRef.close()
+  }
+
   updateMovie() {
+
+    // check white spaces : !this.form.value['comment'].replace(/\s/g, '').length
+
     console.log('clicked!')
+    console.log(this.textValue, this.currentRate, this.myComment)
 
-    if( this.form.value['rate'] == this.myRate && this.form.value['comment'] == this.myComment && this.form.value['date'] == this.dateTimeWatched) {
-
-      this.dialogRef.close();
-      this.snotifyService.success("", "No changes. ", this.getConfig());
-
+    if( this.textValue == "") {
+      this.noComment = true
     } else {
-
-      if(this.form.value['rate'] == "" || !String(this.form.value['rate']).replace(/\s/g, '').length) {
-
-        this.watchedMoviesService.updateMovie(
-            this.data.dataKey,
-            Number(this.myRate),
-            String(this.form.value['date']),
-            this.form.value['comment']).subscribe( (res) => {
-              console.log(res)
-              this.dialogRef.close();
-              this.snotifyService.success(this.body, this.title, this.getConfig());
-            },(error => {
-              // uspesno = false;
-              console.log(error)
-              this.dialogRef.close();
-              this.snotifyService.error("Error while updating the movie. Movie is not updated.", "Error", this.getConfigError());
-            })
-        );
-
-      } else {
-        if(this.form.value['comment'] == "" || !this.form.value['comment'].replace(/\s/g, '').length) {
-
-          this.watchedMoviesService.updateMovie(
-              this.data.dataKey,
-              Number(this.form.value['rate']),
-              String(this.form.value['date']),
-              this.myComment).subscribe( (res) => {
-                console.log(res)
-                this.dialogRef.close();
-                this.snotifyService.success(this.body, this.title, this.getConfig());
-              },(error => {
-                // uspesno = false;
-                console.log(error)
-                this.dialogRef.close();
-                this.snotifyService.error("Error while updating the movie. Movie is not updated.", "Error", this.getConfigError());
-              })
-          );
-
-        } else {
-          if(this.form.value['date'] == "" || !String(this.form.value['date']).replace(/\s/g, '').length) {
-
-            this.watchedMoviesService.updateMovie(
-                this.data.dataKey,
-                Number(this.form.value['rate']),
-                String(this.dateTimeWatched),
-                this.form.value['comment']).subscribe( (res) => {
-                  console.log(res)
-                  this.dialogRef.close();
-                  this.snotifyService.success(this.body, this.title, this.getConfig());
-                },(error => {
-                  // uspesno = false;
-                  console.log(error)
-                  this.dialogRef.close();
-                  this.snotifyService.error("Error while updating the movie. Movie is not updated.", "Error", this.getConfigError());
-                })
-            );
-
-          }
-          else {
-            this.watchedMoviesService.updateMovie(
-                this.data.dataKey,
-                Number(this.form.value['rate']),
-                String(this.form.value['date']),
-                this.form.value['comment']).subscribe( (res) => {
-                  console.log(res)
-                  this.dialogRef.close();
-                  this.snotifyService.success(this.body, this.title, this.getConfig());
-                },(error => {
-                  // uspesno = false;
-                  console.log(error)
-                  this.dialogRef.close();
-                  this.snotifyService.error("Error while updating the movie. Movie is not updated.", "Error", this.getConfigError());
-                })
-            );
-          }
-        }
-      }
-
+      this.noComment = false
+      this.watchedMoviesService.updateMovie(
+          this.data.dataKey,
+          this.currentRate,
+          new DatePipe('en').transform(this.textValue, 'dd.MM.yyyy.'),
+          this.form.value[ 'comment' ]
+      ).subscribe((res) => {
+            console.log(res)
+            this.dialogRef.close();
+            this.snotifyService.success(this.body, this.title, this.getConfig());
+          }, (error => {
+            // uspesno = false;
+            console.log(error)
+            this.dialogRef.close();
+            this.snotifyService.error("Error while updating the movie. Movie is not updated.", "Error", this.getConfigError());
+          })
+      );
     }
-
-
   }
 }

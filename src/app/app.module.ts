@@ -43,6 +43,11 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MutualFriendsComponent} from './components/mutual-friends/mutual-friends.component';
 import {FriendsWhachedMovieComponent} from './components/friends-whached-movie/friends-whached-movie.component';
+import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
+import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -83,12 +88,20 @@ import {FriendsWhachedMovieComponent} from './components/friends-whached-movie/f
               MatFormFieldModule,
               MatSelectModule,
               CloudinaryModule.forRoot(Cloudinary, {cloud_name: 'timi11'}),
-              InfiniteScrollModule, MatTooltipModule
+              InfiniteScrollModule,
+              MatTooltipModule,
+              MatDatepickerModule,
+              MatNativeDateModule,
+              MatInputModule,
+              NgbModule,
+             // NgbModule,
+              NgbRatingModule
     ],
     providers: [
         StatusBar,
         SplashScreen,
         DatePipe,
+        MatNativeDateModule,
 
         // UserService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

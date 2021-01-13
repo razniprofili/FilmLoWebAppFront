@@ -28,7 +28,8 @@
             <div *ngIf="notifications > 0">
                 <mat-icon matBadge={{notifications}}
                           matBadgeColor="warn"
-                          matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
+                          matBadgeOverlap="false" [matMenuTriggerFor]="menu"
+                          style="color: white!important;">notifications
                 </mat-icon>
                 <mat-menu #menu="matMenu">
                     <mat-card *ngFor="let p of myRequests" class="posts">
@@ -43,10 +44,12 @@
                         </mat-card-header>
                         <mat-card-content class="posts__body" style="margin-top: 10px!important;">
                             <button mat-flat-button
-                                    style="margin-left: 70px!important; background-color: #00bf74; color: white"
+                                    style="margin-left: 70px!important; background-color: #00bf74; color: white; border: none!important;
+                                                                  outline:  none!important;"
                                     (click)="acceptRequest(p.userSenderId)"> Accept
                             </button>
-                            <button mat-flat-button color="warn" style="margin-left:8px!important"
+                            <button mat-flat-button color="warn" style="margin-left:8px!important; border: none!important;
+                                                                  outline:  none!important;"
                                     (click)="declineRequest(p.userSenderId)"> Decline
                             </button>
                         </mat-card-content>
@@ -55,7 +58,7 @@
                 </mat-menu>
             </div>
             <div *ngIf="notifications == 0">
-                <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
+                <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">notifications</mat-icon>
                 <mat-menu #menu="matMenu">
                     <mat-card>
                         <mat-card-header>
@@ -68,9 +71,10 @@
             </div>
 
             <div>
-                <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+                <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">expand_more</mat-icon>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="logout()">
+                    <button mat-menu-item (click)="logout()" style="border: none!important;
+                                                                  outline:  none!important;">
                         <mat-icon>exit_to_app</mat-icon>
                         Logout
                     </button>
@@ -90,27 +94,27 @@
                                 mat-card-avatar
                                 src={{user.picture}}
                                 style="margin-left: 10px!important;">
-                        <span class="name">{{ user.name || 'Indranil'}} {{ user.surname }}</span>
+                        <span class="name" style="color: white!important;">{{ user.name || 'Indranil'}} {{ user.surname }}</span>
                     </div>
 
                     <div (click)="openWatchedMovies()">
                         <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
-                        <span>Watched movies</span>
+                        <span style="color: white!important;">Watched movies</span>
                     </div>
 
                     <div (click)="openFriends()">
                         <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
-                        <span>FilmLo friends</span>
+                        <span style="color: white!important;">FilmLo friends</span>
                     </div>
 
                     <div (click)="openFilmLoUsersPage()">
                         <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
-                        <span>Search FilmLo users</span>
+                        <span style="color: white!important;">Search FilmLo users</span>
                     </div>
 
                     <div (click)="openStatistics()">
                         <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
-                        <span>Statistics</span>
+                        <span style="color: white!important;">Statistics</span>
                     </div>
 
                 </div>
@@ -126,23 +130,27 @@
                                       border-top: 1px solid whitesmoke !important;
                                       border-left: 1px solid whitesmoke !important;
                                       border-right: 1px solid whitesmoke !important;">
-                        <h3 class="bigh2">{{user.name}} {{user.surname}}</h3>
+                        <h3 class="bigh2" style="color: white!important;">{{user.name}} {{user.surname}}</h3>
                         <img
                                 alt=""
                                 mat-card-avatar
                                 src={{user.picture}}
                                 class="bigavatar"
                         >
-                        <h4>{{currentUser.email}}</h4>
+                        <h4 style="color: white!important;">{{currentUser.email}}</h4>
                         <button mat-flat-button (click)="openUpdateDialog()" style="background-color: #ff9a45;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white;
+                                                                  border: none!important;
+                                                                  outline:  none!important;">
                             Update my profile
                         </button>
                         <div>
                             <button mat-flat-button (click)="deleteAccount()" style="background-color:#fa4747 ;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white;
+                                                                  border: none!important;
+                                                                  outline:  none!important;">
                                 Delete account
                             </button>
                         </div>

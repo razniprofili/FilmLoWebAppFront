@@ -1,29 +1,47 @@
 <section class="register">
   <div class="header">
-    <h3>Update your comment, rate or watching date</h3>
+    <h3>Update comment, rate and watching date</h3>
+    <button mat-fab style="border: none!important; outline:none !important; background-color: #f85050; color: white"
+            (click)="closeDialog()">
+      <mat-icon>clear</mat-icon>
+    </button>
   </div>
 
   <div class="body">
     <form #form="ngForm">
       <div class="user_name">
-        <input type="text" placeholder="Watching date" name="date" #date="ngModel" [ngModel]="dateTimeWatched" >
-      </div>
-<!--      <div style="margin-top: 5px; margin-bottom: 5px">-->
-<!--        <span *ngIf="date.invalid && date.touched" class="required">This field must have value</span>-->
-<!--      </div>-->
-      <div class="user_name">
-        <input type="text" placeholder="Your rate" name="rate" #rate="ngModel" [ngModel]="myRate" >
+        <!--        <input type="text" placeholder="Watching date" name="date" #date="ngModel" ngModel required="This field is required">-->
+        <mat-form-field appearance="fill" style="border: none!important; outline:none !important;">
+          <!--              <mat-label>Watching date</mat-label>-->
+          <input matInput [matDatepicker]="dp3" disabled name="date" #date="ngModel" ngModel [(ngModel)]="textValue"
+
+                 required="This field is required">
+          <mat-datepicker-toggle matSuffix [for]="dp3" ></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false" style="border: none!important; outline:none !important;"></mat-datepicker>
+        </mat-form-field>
       </div>
       <div style="margin-top: 5px; margin-bottom: 5px">
-        <span *ngIf="rate.invalid" class="required">Rate must be 1-5.</span>
+        <span *ngIf="date.invalid && date.touched" class="required">This field is required</span>
+      </div>
+      <div >
+        <!--          <mat-label style="color: white!important;">Your rate</mat-label>-->
+        <ngb-rating [(rate)]="currentRate" style="border: none!important; outline:none !important;">
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star" [class.filled]="fill === 0" >&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+<!--        <mat-error *ngIf="noRate" class="required">Please choose a rate</mat-error>-->
+      </div>
+      <div style="margin-top: 5px; margin-bottom: 5px">
       </div>
       <div class="email_password">
         <input type="text" placeholder="Your comment" name="comment" #comment="ngModel" [ngModel]="myComment">
       </div>
-<!--      <div style="margin-top: 5px; margin-bottom: 5px">-->
-<!--        <span *ngIf="comment.invalid && comment.touched" class="required">This field is required</span>-->
-<!--      </div>-->
-      <button type="submit" class="submit-button"  (click)="updateMovie()" >Update movie</button>
+      <div style="margin-top: 5px; margin-bottom: 5px">
+        <span *ngIf="noComment" class="required">This field is required</span>
+      </div>
+      <button type="submit" class="submit-button" [disabled]="form.invalid" (click)="updateMovie()" style="border:
+      none!important; outline:none !important;">Update movie</button>
     </form>
   </div>
 

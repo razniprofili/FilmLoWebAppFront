@@ -52,14 +52,16 @@
             </ion-col>
             <ion-col class="kolonaslika">
                 <button mat-fab (click)="addToSavedMovies()"
-                        style="background-color: #ff9438; color: white; margin-left: 30px!important;">
+                        style="background-color: #ff9438; color: white; margin-left: 30px!important; border:
+      none!important; outline:none !important;" matTooltip="Save movie" [matTooltipPosition]='positionOptions[1]'>
                     <mat-icon>favorite</mat-icon>
                 </button>
             </ion-col>
 
             <ion-col class="kolonaslika">
-                <button mat-fab (click)="addToWatchedMovies()" style="background-color: white; color:black">
-                    <mat-icon>add</mat-icon>
+                <button mat-fab (click)="addToWatchedMovies()" style="background-color: white; color:black; border:
+      none!important; outline:none !important;" matTooltip="Add to watched movies" [matTooltipPosition]='positionOptions[1]'>
+                    <mat-icon>add_to_queue</mat-icon>
                 </button>
             </ion-col>
         </ion-row>

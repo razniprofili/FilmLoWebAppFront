@@ -20,25 +20,26 @@
   <button mat-flat-button *ngIf="!myFriend && !sentRequest && !myRequest" (click)="sendFriendRequest()" style="background-color: #ff9a45;
                                                                   margin-top: 5px;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white;
+border: none; outline: none">
     Add as friend</button>
   <button mat-flat-button *ngIf="myFriend" (click)="viewFriendWatchMovies()" style="background-color: #ff9a45;
                                                                   margin-top: 5px;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white; border: none; outline: none">
     Watched movies list</button>
 
   <h1 *ngIf="myRequest" style="color: white; margin-top: 10px; font-size: 15px">{{user.name}} sent you friend request</h1>
   <button mat-flat-button *ngIf="myRequest" (click)="acceptRequest()" style="background-color: #00bf74;
                                                                   margin-top: 5px;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white; border: none; outline: none">
     Accept </button>
   <button mat-flat-button *ngIf="myRequest" (click)="declineRequest()" style="background-color: #ff3131;
                                                                   margin-top: 5px;
                                                                   margin-bottom: 20px!important;
                                                                   margin-left: 10px !important;
-                                                                  color: white">
+                                                                  color: white; border: none; outline: none">
     Decline </button>
 
 </div>
@@ -46,12 +47,12 @@
       <button mat-flat-button [disabled]="true" *ngIf="!myFriend && sentRequest"   style="background-color:#526eff ;
                                                                   margin-top: 5px;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white; border: none; outline: none">
         Waiting response</button>
       <button mat-flat-button *ngIf="myFriend" (click)="deleteFriend()" style="background-color: #ff4545;
                                                                   margin-top: 5px !important;
                                                                   margin-bottom: 20px!important;
-                                                                  color: white">
+                                                                  color: white; border: none; outline: none">
         Delete friend</button>
     </div>
   </div>

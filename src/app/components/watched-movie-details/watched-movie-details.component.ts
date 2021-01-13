@@ -9,6 +9,7 @@ import {WatchedMoviesService} from '../../home/services/watched-movies.service';
 import {UserGet} from '../../auth/user-get.model';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 import {UpdateMovieComponent} from '../update-movie/update-movie.component';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-watched-movie-details',
@@ -16,6 +17,8 @@ import {UpdateMovieComponent} from '../update-movie/update-movie.component';
   styleUrls: ['./watched-movie-details.component.scss'],
 })
 export class WatchedMovieDetailsComponent implements OnInit {
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   movie: Movie = {
     id: "string",
@@ -146,7 +149,13 @@ export class WatchedMovieDetailsComponent implements OnInit {
 
   editMovie(){
 
-    this.dialogRef.close();
+    var days = this.movie.dateTimeWatched.substr(0,3)
+    var month = this.movie.dateTimeWatched.substr(3,3)
+    var year = this.movie.dateTimeWatched.substr(6,5)
+    var newDate = month+days+year
+    console.log(newDate)
+
+   // this.dialogRef.close();
     const dialogRef = this.matDialog.open(UpdateMovieComponent, {
       role: 'dialog',
       height: '430px',
@@ -156,9 +165,9 @@ export class WatchedMovieDetailsComponent implements OnInit {
       }
     });
     let instance= dialogRef.componentInstance;
-    instance.myRate = this.movie.rate;
+    instance.currentRate = this.movie.rate;
     instance.myComment = this.movie.comment;
-    instance.dateTimeWatched = this.movie.dateTimeWatched
+    instance.textValue = new Date(newDate)
   }
 
 }

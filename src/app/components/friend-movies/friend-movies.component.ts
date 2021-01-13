@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {UserGet} from '../../auth/user-get.model';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 class MovieStringDate {
     constructor(
@@ -55,6 +56,8 @@ export class FriendMoviesComponent implements OnInit {
       private matDialog: MatDialog,
       private savedMoviesService: SavedMoviesService
   ) { }
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   //friendMovies = this.data.dataKey.friendMovies
 

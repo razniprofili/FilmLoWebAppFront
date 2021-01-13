@@ -1,7 +1,9 @@
 <ng-scrollbar #scrollable pointerEventsMethod="scrollbar" [disabled]="disabled" visibility="hover">
     <div style="overflow-y: hidden">
         <div>
-            <button mat-flat-button color="warn" (click)="exit()" style="margin-left: 1220px!important;"> Close</button>
+            <button mat-flat-button color="warn" (click)="exit()" style="margin-left: 1220px!important; border:none!important; outline:none !important;">
+                Close
+            </button>
             <h1 style=" font-weight: bold;font-size: 32px; color: white">
                 {{friendName}} {{friendSurname}} - Watched movies
             </h1>
@@ -35,13 +37,17 @@
                             <div class="tableElementsDetails"><b> Country: </b>{{element.country}} </div>
                         </div>
                         <div style="padding-top: 180px !important; padding-left:300px !important;">
-                            <button mat-fab style="background-color: #FF9A45 !important;"
+                            <button mat-fab style="background-color: #FF9A45 !important; border:none!important; outline:none !important;"
+                                    matTooltip="Save movie"
+                                    [matTooltipPosition]='positionOptions[1]'
                                     (click)="saveMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
                                 <mat-icon>favorite</mat-icon>
                             </button>
-                            <button mat-fab style="background-color: black; margin-left: 10px"
+                            <button mat-fab style="background-color: black; margin-left: 10px; border:none!important; outline:none !important;"
+                                    matTooltip="Add to watched ovies"
+                                    [matTooltipPosition]='positionOptions[1]'
                                     (click)="addMovie(element.id, element.genre, element.director, element.actors, element.year, element.duration, element.country, element.poster, element.name)">
-                                <mat-icon>add</mat-icon>
+                                <mat-icon>add_to_queue</mat-icon>
                             </button>
 
                         </div>

@@ -39,14 +39,15 @@
       </ion-col>
 
       <ion-col>
-        <button mat-fab id="divDelete" (click)="delete()">
+        <button mat-fab id="divDelete" (click)="delete()" matTooltip="Delete movie"
+                [matTooltipPosition]='positionOptions[1]'>
           <mat-icon>delete</mat-icon>
         </button>
       </ion-col>
 
       <ion-col>
-        <button mat-fab id="divAdd" (click)="addToWatchedMovies()">
-          <mat-icon>add</mat-icon>
+        <button mat-fab id="divAdd" (click)="addToWatchedMovies()" matTooltip="Add to watched movies" [matTooltipPosition]='positionOptions[1]'>
+          <mat-icon>add_to_queue</mat-icon>
         </button>
       </ion-col>
 

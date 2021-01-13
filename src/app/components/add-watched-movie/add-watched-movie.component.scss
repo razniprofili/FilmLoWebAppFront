@@ -8,6 +8,7 @@
   color: #ffa62b;
 }
 
+
 ::ng-deep.mat-dialog-container {
   background-color: #0c0c0c !important;
   border-bottom: 1px solid whitesmoke !important;
@@ -21,11 +22,44 @@
   border-bottom: 1px solid lightgray;
   width:100%;
 
+  display: flex;
+
   h3 {
     font-weight: bold;
     font-size: 32px;
     color: white;
+    display: flex;
   }
+
+
+}
+.star {
+  font-size: 3rem;
+  //color: #ffffff;
+  color: #fdaa18;
+}
+.filled {
+  //color: #fdaa18;
+  color: #ffffff;
+}
+//.bad {
+//  color: #fdaa18;
+//}
+//.filled.bad {
+//  color: #ffffff;
+//}
+
+//::ng-deep .mat-form-field-label {
+//  /*change color of label*/
+//  color: white !important;
+//  font-size: 15px!important;
+//}
+
+
+mat-datepicker-toggle {
+  color: white !important;
+  border: none!important;
+  outline:none !important;
 }
 
 .body {
@@ -41,16 +75,19 @@
 
   .user_name {
     display: flex;
-    align-items: center;
+    //align-items: center;
     gap:10px;
     width:100%;
+   // flex-direction: column;
     input {
-      flex:1;
+      //flex:1;
       outline:none;
       border:1px solid lightgray;
       border-radius: 8px;
       padding: 10px;
       background-color: #F5F6F7;
+     // width: 60% !important;
+      //margin-top: 1px !important;
     }
   }
 
@@ -67,6 +104,7 @@
       border-radius: 8px;
       padding: 10px;
       background-color: #F5F6F7;
+      height: 120px;
     }
   }
 

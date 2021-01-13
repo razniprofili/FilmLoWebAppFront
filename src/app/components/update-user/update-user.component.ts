@@ -102,17 +102,46 @@ export class UpdateUserComponent implements OnInit {
 
     var newImg = document.getElementById('userPic') as HTMLImageElement
 
-    this.userService.updateUser(this.form.value['name'], newImg.src, this.form.value['surname']).subscribe( (res) => {
-          console.log(res)
-          this.dialogRef.close();
-          this.snotifyService.success(this.body, this.title, this.getConfig());
-        },(error => {
-          // uspesno = false;
-          console.log(error)
-          this.dialogRef.close();
-          this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
-        })
-    );
+    if(this.form.value['name'] ==""){
+      this.userService.updateUser(this.myName, newImg.src, this.form.value['surname']).subscribe( (res) => {
+            console.log(res)
+            this.dialogRef.close();
+            this.snotifyService.success(this.body, this.title, this.getConfig());
+          },(error => {
+            // uspesno = false;
+            console.log(error)
+            this.dialogRef.close();
+            this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
+          })
+      );
+    } else {
+      if(this.form.value['surname'] ==""){
+        this.userService.updateUser(this.form.value['name'], newImg.src, this.mySurname).subscribe( (res) => {
+              console.log(res)
+              this.dialogRef.close();
+              this.snotifyService.success(this.body, this.title, this.getConfig());
+            },(error => {
+              // uspesno = false;
+              console.log(error)
+              this.dialogRef.close();
+              this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
+            })
+        );
+      } else {
+        this.userService.updateUser(this.form.value['name'], newImg.src, this.form.value['surname']).subscribe( (res) => {
+              console.log(res)
+              this.dialogRef.close();
+              this.snotifyService.success(this.body, this.title, this.getConfig());
+            },(error => {
+              // uspesno = false;
+              console.log(error)
+              this.dialogRef.close();
+              this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
+            })
+        );
+      }
+    }
+
 
   }
 

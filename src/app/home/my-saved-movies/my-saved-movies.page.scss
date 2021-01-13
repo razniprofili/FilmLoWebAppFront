@@ -14,6 +14,7 @@
 .h1watched {
   font-size: 25px !important;
   margin-top: 100px;
+  color: white!important;
 }
 .div-add {
   margin-top: 50px;
@@ -55,6 +56,9 @@
   //color: #00A400 !important;
   background-color: #FF9A45 !important;
   margin-left: 200px !important;
+  color: white!important;
+  border: none!important;
+  outline: none!important;
 }
 .snotify-icon {
   object-fit: cover;
@@ -96,7 +100,7 @@ a {
 }
 
 .h2savedmovies {
-  color: white;
+  color: white!important;
   font-size: 40px;
  // font-family: "Sofia" !important;
 }

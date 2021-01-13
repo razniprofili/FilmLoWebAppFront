@@ -5,6 +5,7 @@ import {AlertController} from '@ionic/angular';
 import {SavedMoviesService} from '../../home/services/saved-movies.service';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-my-saved-movie-details',
@@ -13,6 +14,7 @@ import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.c
 })
 export class MySavedMovieDetailsComponent implements OnInit {
 
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
   movieDetails: MovieAPIdetails
       = {
 

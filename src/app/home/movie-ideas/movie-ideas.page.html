@@ -30,7 +30,8 @@
       <div *ngIf="notifications > 0">
         <mat-icon matBadge= {{notifications}}
                   matBadgeColor="warn"
-                  matBadgeOverlap="false" [matMenuTriggerFor]="menu">notifications
+                  matBadgeOverlap="false" [matMenuTriggerFor]="menu"
+        style="color: white!important;">notifications
         </mat-icon>
         <mat-menu  #menu="matMenu">
           <mat-card *ngFor="let p of myRequests" class="posts">
@@ -42,15 +43,17 @@
               </div>
             </mat-card-header>
             <mat-card-content class="posts__body" style="margin-top: 10px!important;">
-              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
-              <button mat-flat-button color="warn" style="margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
+              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white;
+              border: none!important; outline: none!important;" (click)="acceptRequest(p.userSenderId)"> Accept </button>
+              <button mat-flat-button color="warn" style="margin-left:8px!important; border: none!important; outline: none!important;"
+                      (click)="declineRequest(p.userSenderId)"> Decline </button>
             </mat-card-content>
 
           </mat-card>
         </mat-menu>
       </div>
       <div *ngIf="notifications == 0">
-        <mat-icon [matMenuTriggerFor]="menu">notifications</mat-icon>
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">notifications</mat-icon>
         <mat-menu #menu="matMenu">
           <mat-card >
             <mat-card-header >
@@ -65,9 +68,9 @@
 
       <div>
 
-        <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()">
+          <button mat-menu-item (click)="logout()" style="border: none!important; outline:none !important;">
             <mat-icon>exit_to_app</mat-icon> Logout
           </button>
         </mat-menu>
@@ -87,27 +90,27 @@
                     mat-card-avatar
                     src = {{user.picture}}
                     style="margin-left: 10px!important;">
-            <span class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
+            <span style="color: white!important;" class="name">{{ user.name|| 'Indranil'}} {{ user.surname }}</span>
           </div>
 
           <div (click)="openWatchedMoviesPage()">
             <mat-icon style="margin-left: 10px!important;">theaters</mat-icon>
-            <span>Watched movies</span>
+            <span style="color: white!important;">Watched movies</span>
           </div>
 
           <div (click)="openFilmLoFriendsPage()">
             <mat-icon style="margin-left: 10px!important;">people_alt</mat-icon>
-            <span>FilmLo friends</span>
+            <span style="color: white!important;">FilmLo friends</span>
           </div>
 
           <div (click)="openFilmLoUsersPage()">
             <mat-icon style="margin-left: 10px!important;">person_search</mat-icon>
-            <span>Search FilmLo users</span>
+            <span style="color: white!important;">Search FilmLo users</span>
           </div>
 
           <div (click)="openStatistics()">
             <mat-icon style="margin-left: 10px!important;">insights</mat-icon>
-            <span>Statistics</span>
+            <span style="color: white!important;">Statistics</span>
           </div>
 
         </div>
@@ -148,12 +151,14 @@ width: 600px; background-color: #212121;">
                 <img alt="{{ p.Title }}" class="shape-poster" float-left [src]=p.Poster >
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
-                  <span style="font-size: 25px!important; margin-top: 20px !important; float: left!important; line-height: 1">
+                  <span style="font-size: 25px!important; margin-top: 20px !important; float: left!important;
+                  line-height: 1; color: white!important;">
                     {{p.Title}}
                   </span>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1" style="text-align: left!important;">
-                <div style="size: 20px!important; margin-top: 40px!important; float: right!important; ">
+                <div style="size: 20px!important; margin-top: 40px!important; float: right!important; color:
+                white!important">
                   Year: {{p.Year}}
                 </div>
               </mat-grid-tile>
