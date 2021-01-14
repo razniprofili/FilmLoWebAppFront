@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../auth/user.model';
 import {UserGet} from '../../auth/user-get.model';
-import {Movie} from '../models/movie.model';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../auth/auth.service';
 import {AlertController, LoadingController} from '@ionic/angular';
@@ -10,7 +9,6 @@ import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
 import {FriendshipService} from '../services/friendship.service';
 import {UserModel} from '../models/user.model';
-import {WatchedMovieDetailsComponent} from '../../components/watched-movie-details/watched-movie-details.component';
 import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';

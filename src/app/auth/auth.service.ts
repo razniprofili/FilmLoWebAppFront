@@ -56,8 +56,6 @@ export class AuthService {
 
   tokenUser: string;
   userLocalID: number;
-  //gde god se pretplatimo na User-a imacemo na uvid svaku promenu!
-  //dobijamo najnoviju prethodno emitovanu vrednost
 
   constructor(private http: HttpClient) { }
 
@@ -67,10 +65,9 @@ export class AuthService {
 
   get isUserAuth() {
     return this._user.asObservable().pipe(
-        //posto menjamo vrednost koja se vraca koristimo map
         map((user) => {
           if (user) {
-            return !!user.token; //truthy samo ako nije prazan! proveravamo to i istovremeno ga vracamo
+            return !!user.token;
           } else {
             return false;
           }
@@ -132,59 +129,59 @@ export class AuthService {
 
   getUser(userId: number) {
 
-      return this.token.pipe(
-    take(1),
-    switchMap ((token)=> {
-        console.log(token)
-        return this.http.get<ResponseUserData>(`https://localhost:44397/api/User/?id=${userId}`, {headers: new HttpHeaders({
-                'Authorization': token
-            })});
-    } ), map((userData) => {
-        console.log(userData)
-        const user: UserGet= new UserGet(userData.name, userData.surname, userData.picture)
-        console.log(user)
-        return user;
-    }), tap(userGet => {
-        this._userGet.next(userGet);
-    }));
+      return this.token.pipe (
+          take (1),
+          switchMap ((token) => {
+              console.log (token);
+              return this.http.get<ResponseUserData> (`https://localhost:44397/api/User/?id=${userId}`, {
+                  headers: new HttpHeaders ({
+                                                'Authorization': token
+                                            })
+              });
+          }), map ((userData) => {
+              console.log (userData);
+              const user : UserGet = new UserGet (userData.name, userData.surname, userData.picture);
+              console.log (user);
+              return user;
+          }), tap (userGet => {
+              this._userGet.next (userGet);
+          }));
   }
 
   login(user: UserData) {
-    this.ulogovan = true;
+      this.ulogovan = true;
 
-    return this.http.post<JsonResponse>(`https://localhost:44397/api/User/Login`,
-        {
-          email: user.email,
-          password: user.password
-        }).pipe(tap(userData => {
-        console.log(userData.AuthResponseData)
-        const expirationDate = new Date(userData.AuthResponseData.expirationTime);
-        const newUser = new User(userData.AuthResponseData.id, userData.AuthResponseData.mail, userData.AuthResponseData.token, expirationDate);
-      this.tokenUser = userData.AuthResponseData.token;
-      this.userLocalID = userData.AuthResponseData.id;
-      this._user.next(newUser); // postavljamo ovog usera, i dalje mozemo da ga koristimo
-    }));
+      return this.http.post<JsonResponse> (`https://localhost:44397/api/User/Login`,
+                                           {
+                                               email: user.email,
+                                               password: user.password
+                                           }).pipe (tap (userData => {
+          console.log (userData.AuthResponseData);
+          const expirationDate = new Date (userData.AuthResponseData.expirationTime);
+          const newUser = new User (userData.AuthResponseData.id, userData.AuthResponseData.mail, userData.AuthResponseData.token, expirationDate);
+          this.tokenUser = userData.AuthResponseData.token;
+          this.userLocalID = userData.AuthResponseData.id;
+          this._user.next (newUser); // postavljamo ovog usera, i dalje mozemo da ga koristimo
+      }));
   }
 
   logout() {
-    // this.ulogovan = false;
     this._user.next(null);
-   // this._userGet.next(null);
   }
 
   deleteAccount(){
 
-    console.log("usao delete")
-    console.log(this.tokenUser)
+      console.log (this.tokenUser);
 
-      // brisemo current usera
-     // this._user.next(null);
-      return this.token.pipe(
-          take(1),
-          switchMap((token) => {
-              return this.http.put<AuthResponseData>(`https://localhost:44397/api/User/delete`, "" ,{headers: new HttpHeaders({
-                      'Authorization': token
-                  })});
+      // this._user.next(null);
+      return this.token.pipe (
+          take (1) ,
+          switchMap ((token)=>{
+              return this.http.put<AuthResponseData> (`https://localhost:44397/api/User/delete` , '' , {
+                  headers: new HttpHeaders ({
+                                                'Authorization': token
+                                            })
+              });
           }));
   }
 

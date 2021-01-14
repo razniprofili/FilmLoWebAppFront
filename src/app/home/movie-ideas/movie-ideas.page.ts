@@ -12,7 +12,6 @@ import {Router} from '@angular/router';
 import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
 import {NgForm} from '@angular/forms';
-import {MySavedMovieDetailsComponent} from '../../components/my-saved-movie-details/my-saved-movie-details.component';
 import {MatDialog} from '@angular/material/dialog';
 import {IdeaMovieDetailsComponent} from '../../components/idea-movie-details/idea-movie-details.component';
 import {FriendshipService} from '../services/friendship.service';
@@ -288,7 +287,6 @@ export class MovieIdeasPage implements OnInit {
     await alert.present();
   }
 
-
   logout() {
 
 
@@ -297,7 +295,6 @@ export class MovieIdeasPage implements OnInit {
             this.router.navigateByUrl("/log-in")
 
   }
-
 
   // open div/page
 

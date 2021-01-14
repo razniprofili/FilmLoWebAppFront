@@ -15,6 +15,7 @@ export class MutualFriendsComponent implements OnInit {
 
   disabled = false
   mutualFriends = this.data.dataKey
+
   ngOnInit() {}
 
 

@@ -10,6 +10,7 @@ import {UserGet} from '../../auth/user-get.model';
 import {AddWatchedMovieComponent} from '../add-watched-movie/add-watched-movie.component';
 import {UpdateMovieComponent} from '../update-movie/update-movie.component';
 import {TooltipPosition} from '@angular/material/tooltip';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-watched-movie-details',
@@ -59,8 +60,9 @@ export class WatchedMovieDetailsComponent implements OnInit {
   titleMaxLength = 15;
   bodyMaxLength = 80;
 
+  moveSub: Subscription
   constructor(
-      @Inject(MAT_DIALOG_DATA) public data: any, // saljemo id filma i za njega uzimamo podatke
+      @Inject(MAT_DIALOG_DATA) public data: any,
       public dialogRef: MatDialogRef<WatchedMovieDetailsComponent>,
       private alertController: AlertController,
       private watchedMoviesService: WatchedMoviesService,
@@ -72,18 +74,14 @@ export class WatchedMovieDetailsComponent implements OnInit {
 
   ngOnInit() {
 
-    // pri otvaranju pozivamo API i uzimamo detalje filma
-
     this.watchedMoviesService.getWatchedMovie(this.data.dataKey).subscribe( movie => {
       this.movie = movie;
       console.log(this.movie)
-    },
-        (error => {
-          console.log(error)
-          this.dialogRef.close();
-          this.snotifyService.error("Error while loading movie data.", "Error", this.getConfigError());
-        }));
-
+    }, (error => {
+      console.log(error)
+      this.dialogRef.close();
+      this.snotifyService.error("Error while loading movie data.", "Error", this.getConfigError());
+    }));
   }
 
   getConfig(): SnotifyToastConfig {
@@ -155,7 +153,7 @@ export class WatchedMovieDetailsComponent implements OnInit {
     var newDate = month+days+year
     console.log(newDate)
 
-   // this.dialogRef.close();
+    this.dialogRef.close();
     const dialogRef = this.matDialog.open(UpdateMovieComponent, {
       role: 'dialog',
       height: '430px',

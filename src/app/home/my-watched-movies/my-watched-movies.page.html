@@ -148,12 +148,8 @@
               </mat-menu>
             </div>
           </div>
-          <div class="center" *ngFor="let p of watchedMovies" (click)="openMovieDetails(p.id)" style=" background-color: #212121;
-          /*border-bottom: 1px solid whitesmoke !important;*/
-          /*                            border-top: 1px solid whitesmoke !important;*/
-          /*                            border-left: 1px solid whitesmoke !important;*/
-          /*                            border-right: 1px solid whitesmoke !important;*/
-width: 600px">
+          <div class="center" *ngFor="let p of watchedMovies" (click)="openMovieDetails(p.id)" style="
+          background-color: #212121; width: 600px">
             <mat-grid-list cols="2" rowHeight="65px">
               <mat-grid-tile [colspan]="1" [rowspan]="2">
                 <img alt="{{ p.name }}" class="shape-poster" float-left [src]=p.poster >

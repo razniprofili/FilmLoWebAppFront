@@ -147,20 +147,15 @@ export class FriendMovieDetailsComponent implements OnInit {
     });
   }
 
-
-
   addToSavedMovies(){
 
     this.savedMoviesService.addSavedMovie(this.movie.id, this.movie.name, this.movie.poster,
         Number(this.movie.year), this.movie.genre, this.movie.actors, this.movie.country,
         this.movie.director, this.movie.duration ).subscribe( () => {
-
-          //  uspesno = true;
           this.dialogRef.close();
           this.snotifyService.success(this.body, this.title, this.getConfig());
         },
         (error => {
-          // uspesno = false;
           console.log(error)
           this.dialogRef.close();
           if( error.error.erroe == "SavedMovie currently exists!") {
@@ -168,7 +163,6 @@ export class FriendMovieDetailsComponent implements OnInit {
           } else {
             this.snotifyService.error("Error while saving the movie. Movie is not saved.", "Error", this.getConfigError());
           }
-
         }));
   }
 }

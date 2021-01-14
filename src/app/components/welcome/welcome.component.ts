@@ -18,7 +18,6 @@ export class WelcomeComponent implements OnInit {
     console.log(this.data)
   }
 
-
   close(){
     this.dialogRef.close();
   }

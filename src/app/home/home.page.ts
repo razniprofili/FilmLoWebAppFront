@@ -149,6 +149,7 @@ export class HomePage {
       this.windowScrolled = false;
     }
   }
+
   scrollToTop() {
     (function smoothscroll() {
       var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -174,11 +175,6 @@ export class HomePage {
       this.currentUser = user;
       console.log(user);
     });
-
-    // this.userInfoSub = this.authService.currentUserInfo.subscribe(user => {
-    //   this.user = user;
-    //   console.log('user info home', user)
-    // });
 
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
@@ -456,6 +452,7 @@ export class HomePage {
   openFilmloPage(){
     window.open("http://localhost:8080/", "_blank");
   }
+
   openPopularMoviesPage(){
     window.open("http://localhost:8080/movies-popularity", "_blank");
   }

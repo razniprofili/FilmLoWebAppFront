@@ -5,11 +5,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../../auth/auth.service';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 import {UserGet} from '../../auth/user-get.model';
-import {SavedMovieAddModel} from '../models/saved-movie-add.model';
-import {SavedMovieModel} from '../models/saved-movie.model';
 import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
 import {DatePipe} from '@angular/common';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SavedMoviesService} from './saved-movies.service';
 
 interface MovieData {
@@ -73,30 +70,28 @@ interface Link {
   providedIn: 'root'
 })
 
-
-
 export class WatchedMoviesService {
 
   private _allFiendsMovies = new BehaviorSubject<Movie[]>([]);
   private _myWatchedMovies = new BehaviorSubject<Movie[]>([]);
- // private _friendMovies = new BehaviorSubject<Movie[]>([]);
   movieData: Movie;
+  private _movie = new BehaviorSubject<Movie>(null);
 
   constructor(private http: HttpClient, private authService: AuthService, private datePipe: DatePipe,
               private savedMoviesService: SavedMoviesService) { }
 
-  // geters
+  // getters
 
   get allFiendsMovies(){
     return this._allFiendsMovies.asObservable();
   }
 
-    // get myFriendMovies(){
-    //     return this._friendMovies.asObservable();
-    // }
-
   get myWatchedMovies(){
     return this._myWatchedMovies.asObservable();
+  }
+
+  get movie(){
+      return this._movie.asObservable();
   }
 
 // methods
@@ -277,7 +272,10 @@ export class WatchedMoviesService {
                   new Date(resData.DateTimeAdded),
                   resData.Poster,
                   resData.User
-              );
+              )
+          }), tap(movie => {
+              console.log(movie)
+              this._movie.next(movie);
           })
       );
   }

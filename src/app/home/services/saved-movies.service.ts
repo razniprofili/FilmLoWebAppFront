@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Movie} from '../models/movie.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../../auth/auth.service';
 import {map, switchMap, take, tap} from 'rxjs/operators';
-import {UserGet} from '../../auth/user-get.model';
 import {SavedMovieModel} from '../models/saved-movie.model';
 import {SavedMovieAddModel} from '../models/saved-movie-add.model';
-import {IonDatetime} from '@ionic/angular';
+
 
 interface MovieData {
   id: string,
@@ -37,7 +35,6 @@ export interface addedMovie {
     links : Links[]
 }
 
-
 export interface JsonResponse {
     addedMovie: addedMovie
 
@@ -49,7 +46,6 @@ export interface JsonResponse {
 export class SavedMoviesService {
 
    _savedMovies = new BehaviorSubject<SavedMovieModel[]>([]);
- // movieData: Movie;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

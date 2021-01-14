@@ -9,7 +9,6 @@ import {Router} from '@angular/router';
 import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
 import {FriendshipService} from '../services/friendship.service';
-import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
 import {UpdateUserComponent} from '../../components/update-user/update-user.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
@@ -194,6 +193,7 @@ export class MyProfilePage implements OnInit {
       pauseOnHover: this.pauseHover
     };
   }
+
   logout() {
 
 
@@ -232,8 +232,6 @@ export class MyProfilePage implements OnInit {
     });
   }
 
-
-
   openUpdateDialog(){
     const dialogRef = this.matDialog.open(UpdateUserComponent, {
       role: 'dialog',
@@ -252,6 +250,7 @@ export class MyProfilePage implements OnInit {
   openHome() {
     this.router.navigateByUrl("/home", { replaceUrl: true });
   }
+
   openSearchApi(){
     this.router.navigateByUrl("/home/movie-ideas", { replaceUrl: true })
   }
@@ -267,9 +266,11 @@ export class MyProfilePage implements OnInit {
   openFriends(){
     this.router.navigateByUrl("/home/my-friends", { replaceUrl: true })
   }
+
   openWatchedMovies(){
     this.router.navigateByUrl("/home/my-watched-movies", { replaceUrl: true })
   }
+
   openStatistics() {
     this.router.navigateByUrl("/home/statistics", { replaceUrl: true })
   }

@@ -108,7 +108,6 @@ export class UpdateUserComponent implements OnInit {
             this.dialogRef.close();
             this.snotifyService.success(this.body, this.title, this.getConfig());
           },(error => {
-            // uspesno = false;
             console.log(error)
             this.dialogRef.close();
             this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
@@ -121,7 +120,6 @@ export class UpdateUserComponent implements OnInit {
               this.dialogRef.close();
               this.snotifyService.success(this.body, this.title, this.getConfig());
             },(error => {
-              // uspesno = false;
               console.log(error)
               this.dialogRef.close();
               this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());
@@ -133,7 +131,6 @@ export class UpdateUserComponent implements OnInit {
               this.dialogRef.close();
               this.snotifyService.success(this.body, this.title, this.getConfig());
             },(error => {
-              // uspesno = false;
               console.log(error)
               this.dialogRef.close();
               this.snotifyService.error("Error while updating profile. Profile data is not updated.", "Error", this.getConfigError());

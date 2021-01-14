@@ -221,18 +221,15 @@ export class IdeaMovieDetailsComponent implements OnInit {
 
   addToSavedMovies (){
 
-    let sacuvan
-
       this.savedMoviesService.addSavedMovie(this.movieDetails.imdbID, this.movieDetails.Title, this.movieDetails.Poster,
           Number(this.movieDetails.Year), this.movieDetails.Genre, this.movieDetails.Actors, this.movieDetails.Country,
           this.movieDetails.Director, Number(this.movieDetails.Runtime.substring(0, this.movieDetails.Runtime.length-4)) ).subscribe( () => {
 
-            //  uspesno = true;
             this.dialogRef.close();
             this.snotifyService.success(this.body, this.title, this.getConfig());
           },
           (error => {
-            // uspesno = false;
+
             console.log(error)
             this.dialogRef.close();
             if( error.error.erroe == "SavedMovie currently exists!") {

@@ -140,12 +140,10 @@ export class AddWatchedMovieComponent implements OnInit {
             console.log(movie)
             this.watchedMoviesService.addWatchedMovie(movie).subscribe( () => {
 
-                    //  uspesno = true;
                     this.dialogRef.close();
                     this.snotifyService.success(this.body, this.title, this.getConfig());
                 },
                 (error => {
-                    // uspesno = false;
                     console.log(error)
                     this.dialogRef.close();
 

@@ -48,10 +48,8 @@ export class UpdateMovieComponent implements OnInit {
 
   rates : Number[] = [1, 2, 3, 4, 5]
 
-  // textValue
   noComment
 
-  // currentRate
 
   constructor(@Inject(MAT_DIALOG_DATA) public data : any,
               public dialogRef : MatDialogRef<UpdateMovieComponent>,

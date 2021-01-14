@@ -66,7 +66,6 @@ export class UserInfoComponent implements OnInit {
   mySentRequests: FriendRequestModel[]
   myRequests: FriendRequestModel[]
 
-  //friendMovies: Movie []
 
    friendMovies: Movie [] = [{
     id: "string",
@@ -139,11 +138,6 @@ export class UserInfoComponent implements OnInit {
       }
     });
 
-    // this.mutualFriendsSub = this.friendshipService.mutualFriends.subscribe((mutFriends) => {
-    //   this.mutualFriends = mutFriends;
-    //   console.log(mutFriends)
-    // });
-
     this.friendshipService.getMutualFriends(this.user.id).subscribe((mutFriends) => {
       this.mutualFriends = mutFriends
       console.log(mutFriends)
@@ -173,6 +167,7 @@ export class UserInfoComponent implements OnInit {
       this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
     });
   }
+
   declineRequest() {
     this.friendshipService.declineRequest(this.user.id).subscribe(()=> {
       this.dialogRef.close()
@@ -190,7 +185,6 @@ export class UserInfoComponent implements OnInit {
       this.snotifyService.success(this.body, this.title, this.getConfig());
     },
         (error => {
-          // uspesno = false;
           console.log(error)
           this.snotifyService.error("Error while deleting friend. Friend is not deleted!", "Error", this.getConfigError());
         }))
@@ -209,8 +203,6 @@ export class UserInfoComponent implements OnInit {
   //       }));
   //
   // }
-
-
 
   startSignalRConnection(){
     this._hubConnection = new HubConnectionBuilder()

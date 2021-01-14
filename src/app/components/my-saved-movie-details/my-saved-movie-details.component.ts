@@ -79,9 +79,7 @@ export class MySavedMovieDetailsComponent implements OnInit {
 
 
   ngOnInit() {
-
-    // pri otvaranju pozivamo API i uzimamo detalje filma
-console.log(this.data)
+    console.log(this.data)
     try {
       fetch('http://www.omdbapi.com/?i=' + this.data.dataKey + '&apikey=4a249f8d')
           .then(response => response.json())

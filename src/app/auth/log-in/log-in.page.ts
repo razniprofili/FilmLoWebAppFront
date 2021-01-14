@@ -3,15 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../auth.service';
-// import {UserService} from '../../user.service';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {NotificationComponent} from '../../components/notification/notification.component';
 import {MatDialog} from '@angular/material/dialog';
 import {RegisterComponent} from '../../components/register/register.component';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
-import {AddWatchedMovieComponent} from '../../components/add-watched-movie/add-watched-movie.component';
-import {WelcomeComponent} from '../../components/welcome/welcome.component';
+
 
 @Component({
   selector: 'app-log-in',
@@ -45,8 +43,8 @@ export class LogInPage implements OnInit {
               private snackBar: MatSnackBar, private matDialog: MatDialog, public alert: AlertController,
               private snotifyService: SnotifyService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
     getConfig(): SnotifyToastConfig {
         this.snotifyService.setDefaults({
             global: {
@@ -68,6 +66,7 @@ export class LogInPage implements OnInit {
             pauseOnHover: this.pauseHover
         };
     }
+
     getConfigError(): SnotifyToastConfig {
         this.snotifyService.setDefaults({
             global: {
@@ -96,36 +95,28 @@ export class LogInPage implements OnInit {
             height: '380px',
             width: '480px'
         });
-
-        dialogRef.afterClosed().subscribe(result => {
-            const {name, surname, email, password} = result;
-
-            if (result !== undefined) {
-
-                    console.log(result);
-                    this.authService.register(result).subscribe(resData => {
-                            console.log(resData);
-                            this.router.navigateByUrl('/home');
-                            const dialogRef = this.matDialog.open(WelcomeComponent, {
-                                role: 'dialog',
-                                height: '380px',
-                                width: '480px',
-                                data: {
-                                    dataKey: result,
-                                }
-                            });
-                        },
-                        (error)=>{
-                            console.log(error)
-                            const errorMessage = error.error.erroe;
-                            console.log(errorMessage)
-                            this.snotifyService.error(errorMessage, "Error", this.getConfigError());
-                        });
-
-            }
-            return;
-        });
     }
+
+    async onLogIn(form: NgForm) {
+        const{email1, password1} = this;
+        if (form.valid) {
+
+            this.authService.login(form.value).subscribe((resData) => {
+                                                             console.log(resData);
+                                                             console.log('uspesna prijava');
+                                                             this.error = false;
+                                                             this.router.navigateByUrl('/home');
+                                                         },
+                                                         errRes => {
+                                                             console.log(errRes)
+                                                             this.error = true;
+                                                             this.snotifyService.error(errRes.error.erroe, "Error", this.getConfigError());
+                                                         });
+        }
+    }
+
+
+    //unused but useful things:
 
     async presentAlert(title: string, content: string) {
         const alert = await this.alert.create({
@@ -137,29 +128,7 @@ export class LogInPage implements OnInit {
         await alert.present();
     }
 
-  async onLogIn(form: NgForm) {
-    const{email1, password1} = this;
-    if (form.valid) {
-
-        this.authService.login(form.value).subscribe((resData) => {
-              console.log(resData);
-              console.log('uspesna prijava');
-              this.error = false;
-              this.router.navigateByUrl('/home'); // kada se ulogujemo idemo na ovu stranicu
-            },
-            errRes => {
-              console.log(errRes)
-              this.error = true;
-                this.snotifyService.error(errRes.error.erroe, "Error", this.getConfigError());
-            });
-    }
-  }
-    // npr kad se nesto odradi trajace par sek, a poruke upozorenja dok ne klikne ok
-    // negde ce vertical pos biti gore negde dole
-    // nede ce horizontal biti center, left, right
-    // zato dozvoljavamo unose ovih parametara :)
-
-  openSnackBar(message: string, action: string, duration: number, verticalPos: any, horizontalPos: any){
+    openSnackBar(message: string, action: string, duration: number, verticalPos: any, horizontalPos: any){
      let snackBarRef = this.snackBar.openFromComponent(NotificationComponent, {
          data: {
            message: message,
@@ -206,12 +175,12 @@ export class LogInPage implements OnInit {
         // }
     };
 
-     progressData = {
+    progressData = {
         animation: 'shrink',
         direction: 'horizontal',
     }
 
-     designData = {
+    designData = {
         background: '#f7900a',
         color: '#FFFFFF',
         successBackground: '#00e175',

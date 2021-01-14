@@ -60,7 +60,6 @@ export class PopularMovieDetailsComponent implements OnInit {
                     private matDialog: MatDialog) { }
 
   ngOnInit() {
-    // pri otvaranju pozivamo API i uzimamo detalje filma
 
     this.watchedMoviesService.getWatchedMovie(this.data.dataKey).subscribe( movie => {
           this.movie = movie;
@@ -121,34 +120,15 @@ export class PopularMovieDetailsComponent implements OnInit {
     console.log(this.data.dataKey)
 
     this.watchedMoviesService.delete(this.data.dataKey).subscribe( () => {
-          //  uspesno = true;
           this.dialogRef.close();
           this.snotifyService.success(this.body, this.title, this.getConfig());
 
         },
         (error => {
-          // uspesno = false;
           console.log(error)
           this.dialogRef.close();
           this.snotifyService.error("Error while deleting the movie. Movie is not deleted.", "Error", this.getConfigError());
         }));
   }
-
-  // editMovie(){
-  //
-  //   this.dialogRef.close();
-  //   const dialogRef = this.matDialog.open(UpdateMovieComponent, {
-  //     role: 'dialog',
-  //     height: '430px',
-  //     width: '500px',
-  //     data: {
-  //       dataKey: this.data.dataKey // its movie id
-  //     }
-  //   });
-  //   let instance= dialogRef.componentInstance;
-  //   instance.myRate = this.movie.rate;
-  //   instance.myComment = this.movie.comment;
-  //   instance.dateTimeWatched = this.movie.dateTimeWatched
-  // }
 
 }

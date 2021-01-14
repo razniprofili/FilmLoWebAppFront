@@ -59,7 +59,6 @@ export class FriendMoviesComponent implements OnInit {
 
   positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
-  //friendMovies = this.data.dataKey.friendMovies
 
     disabled = false
 
@@ -101,7 +100,6 @@ export class FriendMoviesComponent implements OnInit {
     friendSurname = this.data.dataKey.userSurname
     friendId = this.data.dataKey.userId
 
-   // friendMovies: Movie[] = new Array();
 
   columnsToDisplay = ['name', 'rate', 'comment', 'dateTimeAdded'];
   expandedElement: Movie | null

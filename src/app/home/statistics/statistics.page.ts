@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
-import {Movie} from '../models/movie.model';
 import {SavedMovieModel} from '../models/saved-movie.model';
 import {MovieAPI} from '../models/movieAPI.model';
 import {User} from '../../auth/user.model';
@@ -15,11 +14,9 @@ import {SavedMoviesService} from '../services/saved-movies.service';
 import {MatDialog} from '@angular/material/dialog';
 import {FriendshipService} from '../services/friendship.service';
 import {NgForm} from '@angular/forms';
-import {FriendMovieDetailsComponent} from '../../components/friend-movie-details/friend-movie-details.component';
 import {StatisticModel} from '../models/statistic.model';
 import {StatisticService} from '../services/statistic.service';
 import {PopularMovieModel} from '../models/popular-movie.model';
-import {WatchedMovieDetailsComponent} from '../../components/watched-movie-details/watched-movie-details.component';
 import * as CanvasJS from './canvasjs.min';
 import {PopularMovieDetailsComponent} from '../../components/popular-movie-details/popular-movie-details.component';
 import {YearStatisticModel} from '../models/year-statistic.model';
@@ -38,7 +35,6 @@ export class StatisticsPage implements OnInit {
   searchApiVisibility = false
 
   // movies
-
 
   savedMovies: SavedMovieModel[];
   moviesSearchApi: MovieAPI[];
@@ -218,7 +214,6 @@ export class StatisticsPage implements OnInit {
     this.startSignalRConnection()
 
   }
-
 
   ionViewWillEnter(){
     console.log('ion will enter done')
@@ -418,7 +413,6 @@ export class StatisticsPage implements OnInit {
 
   }
 
-
   postMessage(form: NgForm): void {
     console.log("kliknuto")
     // const {message} = form.value;
@@ -446,7 +440,6 @@ export class StatisticsPage implements OnInit {
     console.log($element);
     $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
-
 
   // open div/page
 
@@ -477,6 +470,5 @@ export class StatisticsPage implements OnInit {
   openUserProfile() {
     this.router.navigateByUrl("/home/my-profile", { replaceUrl: true })
   }
-
 
 }

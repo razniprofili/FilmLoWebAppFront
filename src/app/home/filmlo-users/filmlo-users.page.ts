@@ -15,7 +15,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import {FriendshipService} from '../services/friendship.service';
 import {UserModel} from '../models/user.model';
-import {FriendInfoComponent} from '../../components/friend-info/friend-info.component';
 import {UserInfoComponent} from '../../components/user-info/user-info.component';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
@@ -130,8 +129,6 @@ export class FilmloUsersPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log('izvrsen ion will enter')
-
     this.authService.getUser(this.currentUser.id).subscribe(user => {
       this.user = user;
       console.log('user info home', user)

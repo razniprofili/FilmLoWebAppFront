@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AuthResponseData, AuthService, ResponseUserData} from '../../auth/auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {BehaviorSubject} from 'rxjs';
 import {UserModel} from '../models/user.model';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 import {FriendRequestModel} from '../models/friend-request.model';
-import {WatchedMovieAddModel} from '../models/watched-movie-add.model';
-import {UserGet} from '../../auth/user-get.model';
 import {CommentRateModel} from '../models/comment-rate.model';
 
 
@@ -73,7 +71,6 @@ export class FriendshipService {
   get friendCommentRate(){
       return this._friendCommentRate.asObservable();
   }
-
 
   getFriendsWatchedThatMovie(movieId: string) {
       return this.authService.token.pipe(

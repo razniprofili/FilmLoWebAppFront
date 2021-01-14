@@ -8,14 +8,12 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {WatchedMoviesService} from '../services/watched-movies.service';
 import {SavedMoviesService} from '../services/saved-movies.service';
-import {RegisterComponent} from '../../components/register/register.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MySavedMovieDetailsComponent} from '../../components/my-saved-movie-details/my-saved-movie-details.component';
 import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {FriendshipService} from '../services/friendship.service';
 import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
-import {Movie} from '../models/movie.model';
 
 @Component({
   selector: 'app-my-saved-movies',
