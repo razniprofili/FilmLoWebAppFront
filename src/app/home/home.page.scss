@@ -9,8 +9,17 @@
   height: 100vh;
 }
 
+  //.button {
+  //  display: none;
+  //}
+  //
+  //mat-card:hover + .button, .button:hover {
+  //  display: inline-block;
+  //}
+
+
 ::ng-deep .customize {
-  background: #2d2d2d;
+  background:  #212121;
 
   .mat-menu-item {
     color: white !important;
@@ -22,6 +31,20 @@
   }
 
 }
+
+//::ng-deep .notifications {
+//  background: #2d2d2d;
+//
+//  .mat-menu-item {
+//    color: white !important;
+//  }
+//
+//  button.mat-menu-item:hover {
+//    background-color: #626262;
+//    color: #fff !important;
+//  }
+//
+//}
 
 .scroll-to-top {
   position: fixed;
