@@ -14,21 +14,23 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {SnotifyModule} from 'ng-snotify';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        MyProfilePageRoutingModule,
-        MatIconModule,
-        NgScrollbarModule,
-        MatMenuModule,
-        MatCardModule,
-        MatButtonModule,
-        SnotifyModule,
-        MatBadgeModule
-    ],
+              imports: [
+                  CommonModule ,
+                  FormsModule ,
+                  IonicModule ,
+                  MyProfilePageRoutingModule ,
+                  MatIconModule ,
+                  NgScrollbarModule ,
+                  MatMenuModule ,
+                  MatCardModule ,
+                  MatButtonModule ,
+                  SnotifyModule ,
+                  MatBadgeModule ,
+                  MatTooltipModule
+              ],
   declarations: [MyProfilePage]
 })
 export class MyProfilePageModule {}

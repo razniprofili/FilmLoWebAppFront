@@ -14,21 +14,23 @@ import {NgScrollbarModule} from 'ngx-scrollbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        FilmloUsersPageRoutingModule,
-        SnotifyModule,
-        MatCardModule,
-        MatIconModule,
-        NgScrollbarModule,
-        MatMenuModule,
-        MatBadgeModule,
-        MatButtonModule
-    ],
+              imports: [
+                  CommonModule ,
+                  FormsModule ,
+                  IonicModule ,
+                  FilmloUsersPageRoutingModule ,
+                  SnotifyModule ,
+                  MatCardModule ,
+                  MatIconModule ,
+                  NgScrollbarModule ,
+                  MatMenuModule ,
+                  MatBadgeModule ,
+                  MatButtonModule ,
+                  MatTooltipModule
+              ],
   declarations: [FilmloUsersPage]
 })
 export class FilmloUsersPageModule {}

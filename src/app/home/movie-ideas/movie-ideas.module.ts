@@ -15,22 +15,24 @@ import {SnotifyModule} from 'ng-snotify';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        MovieIdeasPageRoutingModule,
-        MatIconModule,
-        MatMenuModule,
-        NgScrollbarModule,
-        MatCardModule,
-        SnotifyModule,
-        MatGridListModule,
-        MatBadgeModule,
-        MatButtonModule
-    ],
+              imports: [
+                  CommonModule ,
+                  FormsModule ,
+                  IonicModule ,
+                  MovieIdeasPageRoutingModule ,
+                  MatIconModule ,
+                  MatMenuModule ,
+                  NgScrollbarModule ,
+                  MatCardModule ,
+                  SnotifyModule ,
+                  MatGridListModule ,
+                  MatBadgeModule ,
+                  MatButtonModule ,
+                  MatTooltipModule
+              ],
     exports: [FormsModule],
   declarations: [MovieIdeasPage],
 

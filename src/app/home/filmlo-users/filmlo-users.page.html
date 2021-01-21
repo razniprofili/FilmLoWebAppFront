@@ -31,34 +31,106 @@
         <mat-icon matBadge= {{notifications}}
                   matBadgeColor="warn"
                   matBadgeOverlap="false" [matMenuTriggerFor]="menu"
-                  style="color: white">notifications
+                  style="color: white!important;">people
         </mat-icon>
-        <mat-menu  #menu="matMenu">
-          <mat-card *ngFor="let p of myRequests" class="posts">
+        <mat-menu  #menu="matMenu" class="customize">
+          <h1 style="color: white; font-size: 24px; font-weight: bold; letter-spacing: 1px; margin-left: 5px;
+          margin-top: 5px">
+            Friend requests
+          </h1>
+          <mat-card *ngFor="let p of myRequests" class="posts" style="
+                                   background-color: #212121 !important;">
             <mat-card-header class="posts__header">
               <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 80px!important; height: 80px!important;" mat-card-avatar src={{p.userSender.picture}}>
               <div class="posts__header__right">
-                <h3 style="font-size: 20px!important; font-weight: bold!important;"> {{p.userSender.name}} {{p.userSender.surname}} </h3>
-                <span>{{ p.friendshipDate| date:'dd.MM.yyyy HH:mm' }}</span>
+                <h3 style="font-size: 20px!important; font-weight: bold!important; color: white"> {{p.userSender.name}}
+                  {{p.userSender.surname}} </h3>
+                <!--                <span style="color: white">{{ p.friendshipDate| date:'dd.MM.yyyy HH:mm' }}</span>-->
+                <span *ngIf="calculateTimeFriendship(p.friendshipDate) == p.friendshipDate" style="color: white">{{
+                  p.friendshipDate|
+                          date:'dd.MM.yyyy HH:mm' }}</span>
+                <span style="color: white">{{calculateTimeFriendship(p.friendshipDate)}}</span>
               </div>
             </mat-card-header>
             <mat-card-content class="posts__body" style="margin-top: 10px!important;">
-              <button mat-flat-button  style="margin-left: 70px!important; background-color: #00bf74; color: white;
-              border: none; outline: none" (click)="acceptRequest(p.userSenderId)"> Accept </button>
-              <button mat-flat-button color="warn" style="margin-left:8px!important; border: none; outline: none"
-                      (click)="declineRequest(p.userSenderId)"> Decline </button>
+              <button mat-flat-button  style="border: none!important; outline:none !important;margin-left: 70px!important; background-color: #00bf74; color: white" (click)="acceptRequest(p.userSenderId)"> Accept </button>
+              <button mat-flat-button color="warn" style="border: none!important; outline:none !important;
+              margin-left:8px!important" (click)="declineRequest(p.userSenderId)"> Decline </button>
             </mat-card-content>
 
           </mat-card>
         </mat-menu>
       </div>
+
       <div *ngIf="notifications == 0">
-        <mat-icon [matMenuTriggerFor]="menu" style="color: white">notifications</mat-icon>
-        <mat-menu #menu="matMenu">
-          <mat-card >
-            <mat-card-header >
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">people</mat-icon>
+        <mat-menu #menu="matMenu" class="customize">
+          <h1 style="color: white; font-size: 24px; font-weight: bold; letter-spacing: 1px; margin-left: 5px;
+          margin-top: 5px">
+            Friend requests
+          </h1>
+          <mat-card class="posts" style="background-color: #212121 !important;">
+            <mat-card-header class="posts__header">
               <div >
-                <h1 style="color: black!important; font-size: 18px">No notifications</h1>
+                <h1 style="color: white; font-size: 18px">No requests</h1>
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </mat-menu>
+      </div>
+
+      <div *ngIf="notificationsNum > 0">
+        <mat-icon matBadge= {{notificationsNum}}
+                  matBadgeColor="warn"
+                  matBadgeOverlap="false" [matMenuTriggerFor]="menu"
+                  style="color: white!important;">notifications
+        </mat-icon>
+        <mat-menu  #menu="matMenu" class="customize">
+          <h1 style="color: white; font-size: 24px; font-weight: bold; letter-spacing: 1px; margin-left: 5px;
+          margin-top: 5px">
+            Notifications
+          </h1>
+          <mat-card *ngFor="let p of myNotifications" class="posts" style="
+                                   background-color: #212121 !important;">
+            <mat-card-header class="posts__header">
+              <img alt="{{ p.userSender.name }} {{ p.userSender.surname }}" style="width: 45px!important; height:
+              45px!important;" mat-card-avatar src={{p.userSender.picture}}>
+              <div class="posts__header__right">
+                <span style="color: white">{{p.text}}</span>
+
+              </div>
+            </mat-card-header>
+            <mat-card-content class="posts__body" style="margin-top: 10px!important;">
+                              <span *ngIf="calculateTime(p.sendingDate) == p.sendingDate"
+                                    style="color:  #c8c8c8; font-size: 12px; margin-left: 80px">{{
+                                p.sendingDate|
+                                        date:'dd.MM.yyyy HH:mm' }}</span>
+              <span style="color: #c8c8c8; font-size: 12px; margin-left: 80px">{{calculateTime(p.sendingDate)}}</span>
+
+              <div style=" margin-left: 200px" >
+                <button mat-fab (click)="deleteNotification(p.id)" style="height: 35px; width:
+                35px; border: none; outline: none; background-color: #212121" matTooltip="Delete notification"
+                        [matTooltipPosition]='positionOptions[1]'>
+                  <mat-icon style="font-size:12px; text-align: center;">delete</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+
+          </mat-card>
+        </mat-menu>
+      </div>
+
+      <div *ngIf="notificationsNum == 0">
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">notifications</mat-icon>
+        <mat-menu #menu="matMenu" class="customize">
+          <h1 style="color: white; font-size: 24px; font-weight: bold; letter-spacing: 1px; margin-left: 5px;
+          margin-top: 5px">
+            Notifications
+          </h1>
+          <mat-card class="posts" style="background-color: #212121 !important;">
+            <mat-card-header class="posts__header">
+              <div >
+                <h1 style="color: white; font-size: 18px">No notifications</h1>
               </div>
             </mat-card-header>
           </mat-card>
@@ -66,10 +138,10 @@
       </div>
 
       <div>
-        <mat-icon [matMenuTriggerFor]="menu" style="color: white">expand_more</mat-icon>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()" style="border: none; outline: none">
-            <mat-icon>exit_to_app</mat-icon> Logout
+        <mat-icon [matMenuTriggerFor]="menu" style="color: white!important;">expand_more</mat-icon>
+        <mat-menu #menu="matMenu" class="customize">
+          <button mat-menu-item (click)="logout()" style="border: none!important; outline:none !important; background-color:#212121 !important;">
+            <mat-icon style="color: white">exit_to_app</mat-icon> Logout
           </button>
         </mat-menu>
       </div>

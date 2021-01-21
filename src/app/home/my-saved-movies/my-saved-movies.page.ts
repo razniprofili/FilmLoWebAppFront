@@ -14,6 +14,9 @@ import {SnotifyPosition, SnotifyService, SnotifyToastConfig} from 'ng-snotify';
 import {FriendRequestModel} from '../models/friend-request.model';
 import {FriendshipService} from '../services/friendship.service';
 import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
+import {NotificationModel} from '../models/notification.model';
+import {TooltipPosition} from '@angular/material/tooltip';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-my-saved-movies',
@@ -70,6 +73,13 @@ export class MySavedMoviesPage implements OnInit {
   userSub: Subscription
 
   private _hubConnection: HubConnection;
+  private _hubNotificationConnection: HubConnection;
+
+  notificationSub: Subscription
+  myNotifications: NotificationModel[]
+  notificationsNum
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   empty
 
@@ -82,7 +92,8 @@ export class MySavedMoviesPage implements OnInit {
                private loadingCtrl: LoadingController,
                private matDialog: MatDialog,
                private snotifyService: SnotifyService,
-               private friendshipService: FriendshipService) {}
+               private friendshipService: FriendshipService,
+               private notificationService: NotificationService) {}
 
   ngOnInit() {
     this.savedMoviesSub = this.savedMoviesService.allSavedMovies.subscribe((savedMovies) => {
@@ -115,6 +126,16 @@ export class MySavedMoviesPage implements OnInit {
     });
 
     this.startSignalRConnection()
+    this.notificationSignalRConnection()
+
+    // I received notifications from other FilmLo users:
+    this.notificationSub = this.notificationService.myNotifications.subscribe( (myNotifications) => {
+      myNotifications.sort((a: NotificationModel, b: NotificationModel) => {
+        return  +new Date(b.sendingDate)- +new Date(a.sendingDate);
+      });
+      this.myNotifications = myNotifications;
+      this.notificationsNum = myNotifications.length
+    });
   }
 
   ionViewWillEnter(){
@@ -133,10 +154,17 @@ export class MySavedMoviesPage implements OnInit {
     this.userSub.unsubscribe()
     this.myRequestsSub.unsubscribe()
     this.savedMoviesSub.unsubscribe()
+    if(this.notificationSub){
+      this.notificationSub.unsubscribe();
+    }
 
     this._hubConnection.stop()
         .then(() => console.log('Connection STOPPED'))
         .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
+
+    this._hubNotificationConnection.stop()
+        .then(() => console.log('Connection notification STOPPED'))
+        .catch((err) => console.log('Error while stopping SignalR notification connection: ' + err));
   }
 
   startSignalRConnection(){
@@ -161,6 +189,123 @@ export class MySavedMoviesPage implements OnInit {
     this._hubConnection.start()
         .then(() => console.log('Connection started'))
         .catch((err) => console.log('Error while establishing SignalR connection: ' + err));
+  }
+
+  notificationSignalRConnection(){
+    this._hubNotificationConnection = new HubConnectionBuilder()
+        .withUrl('https://localhost:44397/sendNotification')
+        .build();
+
+    this._hubNotificationConnection.on('NotificationReceived', (notification) => {
+      console.log(notification)
+      if(this.currentUser.id == notification.userRecipientId) {
+        console.log('Notification successfully Received!');
+        // Other FilmLo users send me request:
+        this.notificationService.getMyNotifications().subscribe((myNotifications)=>{
+          myNotifications.sort((a: NotificationModel, b: NotificationModel) => {
+            return  +new Date(b.sendingDate)- +new Date(a.sendingDate);
+          });
+          this.myNotifications = myNotifications;
+          this.notificationsNum = myNotifications.length;
+          console.log(myNotifications)
+        });
+        this.snotifyService.info(notification.text, '', this.getConfig());
+      }
+    });
+
+    this._hubNotificationConnection.start()
+        .then(() => console.log('Notification Connection started'))
+        .catch((err) => console.log('Error while establishing SignalR notification connection: ' + err));
+  }
+
+  calculateTime(notificationDate: Date){
+    var seconds = Math.floor((new Date().valueOf() - new Date(notificationDate).valueOf() ) / 1000);
+
+    var interval = seconds / 31536000;
+
+    interval = seconds / 86400;
+    if (interval > 1) {
+      if(Math.floor(interval) < 7) {
+        if(Math.floor(interval) == 1) {
+          return Math.floor(interval) + " day ago";
+        } else {
+          return Math.floor(interval) + " days ago";
+        }
+
+      } else {
+        return notificationDate;
+      }
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      if(Math.floor(interval) == 1) {
+        return Math.floor(interval) + " hour ago";
+      } else {
+        return Math.floor(interval) + " hours ago";
+      }
+
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      if(Math.floor(interval) == 1) {
+        return Math.floor(interval) + " minute ago";
+      } else {
+        return Math.floor(interval) + " minutes ago";
+      }
+
+    }
+    // return Math.floor(seconds) + " seconds ago";
+    return "few seconds ago";
+  }
+
+  calculateTimeFriendship(friendshipDate: string){
+    var seconds = Math.floor((new Date().valueOf() - new Date(friendshipDate).valueOf() ) / 1000);
+
+    var interval = seconds / 31536000;
+
+    interval = seconds / 86400;
+    if (interval > 1) {
+      if(Math.floor(interval) < 7) {
+        if(Math.floor(interval) == 1) {
+          return Math.floor(interval) + " day ago";
+        } else {
+          return Math.floor(interval) + " days ago";
+        }
+
+      } else {
+        return friendshipDate;
+      }
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      if(Math.floor(interval) == 1) {
+        return Math.floor(interval) + " hour ago";
+      } else {
+        return Math.floor(interval) + " hours ago";
+      }
+
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      if(Math.floor(interval) == 1) {
+        return Math.floor(interval) + " minute ago";
+      } else {
+        return Math.floor(interval) + " minutes ago";
+      }
+
+    }
+    // return Math.floor(seconds) + " seconds ago";
+    return "few seconds ago";
+  }
+
+  deleteNotification(id: number){
+    this.notificationService.deleteNotification(id).subscribe( () => {
+                                                                 this.snotifyService.success("Notification successfully deleted.", "", this.getConfig());
+                                                               },
+                                                               (error => {
+                                                                 console.log(error)
+                                                                 this.snotifyService.error("Error while deleting the notification. Notification is not deleted.", "Error", this.getConfigError());
+                                                               }));
   }
 
   search(ev: any) {
@@ -244,13 +389,28 @@ export class MySavedMoviesPage implements OnInit {
     };
   }
 
+  // acceptRequest(userId: number){
+  //   this.friendshipService.acceptRequest(userId).subscribe(()=> {
+  //     this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+  //   }, (error)=> {
+  //     console.log(error)
+  //     this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
+  //   });
+  // }
+
+  // signalR Accept request
   acceptRequest(userId: number){
     this.friendshipService.acceptRequest(userId).subscribe(()=> {
       this.snotifyService.success('Friend request accepted!', 'Done', this.getConfig());
+      this._hubNotificationConnection.invoke("NotifyFriend", this.currentUser.id,
+                                             { "Text": this.user.name+ " "+ this.user.surname+ " " +"accepted your friend request!",
+                                               "UserRecipientId": userId
+                                             });
     }, (error)=> {
       console.log(error)
       this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
     });
+
   }
 
   declineRequest(userId: number){

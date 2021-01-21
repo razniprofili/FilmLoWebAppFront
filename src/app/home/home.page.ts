@@ -321,7 +321,6 @@ export class HomePage {
     return "few seconds ago";
   }
 
-
   deleteNotification(id: number){
     this.notificationService.deleteNotification(id).subscribe( () => {
          this.snotifyService.success("Notification successfully deleted.", "", this.getConfig());
@@ -456,18 +455,19 @@ export class HomePage {
       this.userSub.unsubscribe();
     }
 
-    // if(this.userInfoSub){
-    //   this.userInfoSub.unsubscribe();
-    // }
+
+    if(this.notificationSub){
+      this.notificationSub.unsubscribe();
+    }
 
 
     this._hubConnection.stop()
         .then(() => console.log('Connection STOPPED'))
         .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
 
-    this._hubConnection.stop()
-        .then(() => console.log('Connection STOPPED'))
-        .catch((err) => console.log('Error while stopping SignalR connection: ' + err));
+    this._hubNotificationConnection.stop()
+        .then(() => console.log('Connection notification STOPPED'))
+        .catch((err) => console.log('Error while stopping SignalR notification connection: ' + err));
   }
 
   // no SignalR
@@ -493,7 +493,6 @@ export class HomePage {
         console.log(error)
         this.snotifyService.error("Error while accepting the request. Request is not accepted.", "Error", this.getConfigError());
       });
-
   }
 
 

@@ -15,22 +15,24 @@ import {SnotifyModule} from 'ng-snotify';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        StatisticsPageRoutingModule,
-        MatIconModule,
-        MatMenuModule,
-        MatCardModule,
-        NgScrollbarModule,
-        SnotifyModule,
-        MatTableModule,
-        MatButtonModule,
-        MatBadgeModule
-    ],
+              imports: [
+                  CommonModule ,
+                  FormsModule ,
+                  IonicModule ,
+                  StatisticsPageRoutingModule ,
+                  MatIconModule ,
+                  MatMenuModule ,
+                  MatCardModule ,
+                  NgScrollbarModule ,
+                  SnotifyModule ,
+                  MatTableModule ,
+                  MatButtonModule ,
+                  MatBadgeModule ,
+                  MatTooltipModule
+              ],
   declarations: [StatisticsPage]
 })
 export class StatisticsPageModule {}
