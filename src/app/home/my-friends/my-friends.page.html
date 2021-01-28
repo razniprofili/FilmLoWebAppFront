@@ -47,7 +47,7 @@
                 <span *ngIf="calculateTimeFriendship(p.friendshipDate) == p.friendshipDate" style="color: white">{{
                   p.friendshipDate|
                           date:'dd.MM.yyyy HH:mm' }}</span>
-                <span style="color: white">{{calculateTimeFriendship(p.friendshipDate)}}</span>
+                <span style="color: white" *ngIf="calculateTimeFriendship(p.friendshipDate) != p.friendshipDate">{{calculateTimeFriendship(p.friendshipDate)}}</span>
               </div>
             </mat-card-header>
             <mat-card-content class="posts__body" style="margin-top: 10px!important;">
@@ -103,7 +103,8 @@
                                     style="color:  #c8c8c8; font-size: 12px; margin-left: 80px">{{
                                 p.sendingDate|
                                         date:'dd.MM.yyyy HH:mm' }}</span>
-              <span style="color: #c8c8c8; font-size: 12px; margin-left: 80px">{{calculateTime(p.sendingDate)}}</span>
+              <span style="color: #c8c8c8; font-size: 12px; margin-left: 80px" *ngIf="calculateTime(p.sendingDate) !=
+               p.sendingDate">{{calculateTime(p.sendingDate)}}</span>
 
               <div style=" margin-left: 200px" >
                 <button mat-fab (click)="deleteNotification(p.id)" style="height: 35px; width:
