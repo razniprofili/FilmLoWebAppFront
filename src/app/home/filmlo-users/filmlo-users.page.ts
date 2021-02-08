@@ -388,7 +388,7 @@ export class FilmloUsersPage implements OnInit {
     this.resultusers = new Array()
 
     for(var i=0; i< this.allUsers.length; i++){
-      if(this.allUsers[i].name.includes(this.userSearchName) || this.allUsers[i].surname.includes(this.userSearchName)) {
+      if(this.allUsers[i].name.toLowerCase().includes(this.userSearchName.toLowerCase()) || this.allUsers[i].surname.toLowerCase().includes(this.userSearchName.toLowerCase())) {
         this.resultusers.push(this.allUsers[i])
       }
     }
