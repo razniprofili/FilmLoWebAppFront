@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
       this.snotifyService.error('You must fulfil all fields!', '', this.getConfigError());
     } else {
 
-      if(!/^[a-zA-Z]+$/.test(this.form.value[ 'name' ]) || !/^[a-zA-Z]+$/.test(this.form.value[ 'surname' ])) {
+      if(!/^[a-zA-ZšŠžŽćĆčČđĐ]+$/.test(this.form.value[ 'name' ]) || !/^[a-zA-ZšŠžŽćĆčČđĐ]+$/.test(this.form.value[ 'surname' ])) {
         this.snotifyService.error('Name and surname can only contain letters!', '', this.getConfigError());
       } else {
         if(!this.validateEmail(this.form.value[ 'email' ])) {

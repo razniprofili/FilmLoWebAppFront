@@ -9,7 +9,8 @@
 <div>
   <div>
       <span *ngIf="mutualFriends.length > 1" matTooltip="Click to see mutual friends" [matTooltipPosition]='positionOptions[1]'
-            style="font-size: 15px; color: #b3b3b3" (click)="seeMutualFriends()" class="mutualFriends">{{mutualFriends.length}} mutual friends</span>
+            style="font-size: 15px; color: #b3b3b3; margin-top: 10px" (click)="seeMutualFriends()"
+            class="mutualFriends">{{mutualFriends.length}} mutual friends</span>
     <h1 *ngIf="mutualFriends.length == 0" style="font-size: 15px; color: #b3b3b3">No mutual friends</h1>
     <h1 *ngIf="mutualFriends.length == 1" style="font-size: 15px; color: #b3b3b3">
       <img alt="{{ mutualFriends[0].name }}" mat-card-avatar [src]=mutualFriends[0].picture  style="height: 15px; width: 15px;">
@@ -18,7 +19,7 @@
 
 
   <button mat-flat-button *ngIf="!myFriend && !sentRequest && !myRequest" (click)="sendFriendRequest()" style="background-color: #ff9a45;
-                                                                  margin-top: 5px;
+                                                                  margin-top: 15px;
                                                                   margin-bottom: 20px!important;
                                                                   color: white;
 border: none; outline: none">
