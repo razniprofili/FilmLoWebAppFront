@@ -9,6 +9,11 @@
   height: 100vh;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px white inset !important; /* Change the color to your own background color */
+  -webkit-text-fill-color: black !important;
+}
+
 ng-scrollbar {
   --scrollbar-size: 8px;
   // --scrollbar-thumb-color: rgba(94, 175, 255, 0.5);
@@ -90,6 +95,7 @@ ng-scrollbar {
           font-size: 15px;
         }
       }
+
 
       .search-icon {
         position: absolute;

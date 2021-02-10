@@ -10,7 +10,8 @@
       <mat-card class="login__header__right__card">
         <mat-card-content class="login__header__right__card__content">
           <form #form="ngForm" (ngSubmit)="onLogIn(form)" class="login-form">
-            <input name="email" ngModel placeholder="Email address" required type="text">
+            <input name="email" ngModel placeholder="Email address" required type="text" style="background-color:
+            white!important;">
             <input name="password" type="password" ngModel placeholder="Password" required >
             <button [disabled]="form.invalid || form.pending"
                     class="login-button"

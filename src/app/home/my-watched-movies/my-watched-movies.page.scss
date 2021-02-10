@@ -21,6 +21,11 @@
   }
 
 }
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px white inset !important; /* Change the color to your own background color */
+  -webkit-text-fill-color: black !important;
+}
+
 
 .on-your-mind {
   background-color: #F0F2F5;

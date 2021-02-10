@@ -12,6 +12,11 @@ mat-card-avatar {
   height: 100vh;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px white inset !important; /* Change the color to your own background color */
+  -webkit-text-fill-color: black !important;
+}
+
 .h2savedmovies {
   color: white;
   font-size: 40px;
@@ -80,11 +85,17 @@ ng-scrollbar {
         padding: 10px 40px;
         border-radius: 20px;
 
+
+
         &::placeholder {
           padding-left: 20px;
           font-size: 15px;
         }
+
+
       }
+
+
 
       .search-icon {
         position: absolute;
@@ -95,6 +106,8 @@ ng-scrollbar {
       }
 
     }
+
+
   }
 
   // Left Ends Here

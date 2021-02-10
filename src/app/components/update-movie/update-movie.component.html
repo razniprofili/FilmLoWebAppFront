@@ -11,7 +11,7 @@
       <div class="user_name">
         <mat-form-field appearance="fill" style="border: none!important; outline:none !important;">
           <input matInput [matDatepicker]="dp3" disabled name="date" #date="ngModel" ngModel [(ngModel)]="textValue"
-                 required="This field is required">
+                 required="This field is required" style="color: black">
           <mat-datepicker-toggle matSuffix [for]="dp3" ></mat-datepicker-toggle>
           <mat-datepicker #dp3 disabled="false" style="border: none!important; outline:none !important;"></mat-datepicker>
         </mat-form-field>

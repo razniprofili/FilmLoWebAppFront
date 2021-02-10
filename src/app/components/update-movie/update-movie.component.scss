@@ -8,6 +8,11 @@
   color: #ffa62b;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px white inset !important; /* Change the color to your own background color */
+  -webkit-text-fill-color: black !important;
+}
+
 
 ::ng-deep.mat-dialog-container {
   background-color: #0c0c0c !important;

@@ -196,7 +196,8 @@
           </div>
 
           <div style="display: flex" *ngIf="!empty">
-            <input class="on-your-mind" name="message" placeholder="Search saved movies" type="text" (input)="search($event)">
+            <input class="on-your-mind" name="message" placeholder="Search my friends" type="text"
+                   (input)="search($event)">
             <div style="margin-top: 20px; margin-left: 50px" *ngIf="!empty">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Filter movies" style="background-color:
               #ff9528; color: white; outline: none; border: none">
